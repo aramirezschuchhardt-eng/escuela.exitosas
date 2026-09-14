@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Empaqueta la presentación en UN SOLO archivo .html autocontenido.
+Empaqueta el Manual de Broker en UN SOLO archivo .html autocontenido.
 
 Mete dentro del archivo el CSS, los cuatro módulos de JavaScript y todas las
 fotografías locales (como data URI), de modo que el resultado se pueda enviar
@@ -15,7 +15,7 @@ de marca y el texto se lee igual.
 import base64, mimetypes, pathlib, re, sys
 
 AQUI = pathlib.Path(__file__).parent
-destino = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else AQUI / 'escuela-de-brokers.html')
+destino = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else AQUI / 'manual-de-broker.html')
 
 def data_uri(ruta):
     p = AQUI / ruta

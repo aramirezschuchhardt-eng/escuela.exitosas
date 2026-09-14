@@ -17,7 +17,7 @@ export const LAMINAS = [
       <div class="placa-marca" style="margin-bottom:42px" data-anima="1">
         <img src="${IMG.logo}" alt="Avance Inmobiliario">
       </div>
-      <span class="rotulo claro" data-anima="2" style="display:block;margin-bottom:20px">Escuela de Brokers · Formación inicial</span>
+      <span class="rotulo claro" data-anima="2" style="display:block;margin-bottom:20px">Manual de Broker · Formación inicial</span>
       <h1 class="titular-xl" data-anima="3" style="margin-bottom:26px">
         De cero a tu<br>primera <span style="color:var(--naranja-claro)">venta</span>
       </h1>
@@ -995,7 +995,7 @@ export const LAMINAS = [
       </p>
       <div style="display:flex;gap:12px;align-items:center" data-anima="4">
         <span class="pildora naranja">Bienvenida a Avance</span>
-        <span class="pildora contorno-claro">Escuela de Brokers</span>
+        <span class="pildora contorno-claro">Manual de Broker</span>
       </div>
     </div>`
 },

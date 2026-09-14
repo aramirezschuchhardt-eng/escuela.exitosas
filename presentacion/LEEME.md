@@ -1,4 +1,4 @@
-# Escuela de Brokers · Avance Inmobiliario
+# Manual de Broker · Avance Inmobiliario
 
 Presentación de formación inicial para nuevas brokers. 32 láminas en 16:9,
 pensadas para proyectarse en una reunión o clase.
@@ -63,7 +63,7 @@ Para mandarla por correo o abrirla sin servidor:
 python3 empaquetar.py
 ```
 
-Genera `escuela-de-brokers.html`, un archivo único (~3 MB) con el CSS, el
+Genera `manual-de-broker.html`, un archivo único (~3 MB) con el CSS, el
 JavaScript y todas las fotografías locales adentro. Se abre con doble clic.
 
 Las fotos de escena remotas siguen siendo remotas: sin conexión, esas láminas

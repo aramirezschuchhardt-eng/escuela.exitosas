@@ -38,7 +38,7 @@ const svgPlano = (n) => `<svg viewBox="0 0 24 24">${ICONOS[n] || ICONOS.chispa}<
 /* Pie de página de cada lámina */
 const pie = (etiqueta) => `
   <div class="pie">
-    <span class="marca"><b>AVANCE</b> Escuela de Brokers</span>
+    <span class="marca"><b>AVANCE</b> Manual de Broker</span>
     <span>${etiqueta}</span>
   </div>`;
 

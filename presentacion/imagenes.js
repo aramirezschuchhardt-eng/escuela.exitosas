@@ -1,5 +1,5 @@
 /* ───────────────────────────────────────────────────────────────────
-   MANIFIESTO DE IMÁGENES · Escuela de Brokers · Avance Inmobiliario
+   MANIFIESTO DE IMÁGENES · Manual de Broker · Avance Inmobiliario
 
    Cada lámina pide su fotografía por NOMBRE, nunca por URL.
    Para cambiar una foto, reemplaza aquí el valor y listo: la
