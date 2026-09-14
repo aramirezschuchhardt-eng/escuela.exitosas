@@ -40,6 +40,13 @@ export async function readWorkbook(file: File): Promise<WorkbookData> {
   return { fileName: file.name, sheets };
 }
 
+/**
+ * U+FFFD: el carácter que inserta `TextDecoder` cuando los bytes no son UTF-8
+ * válido. Va como expresión regular y no como literal de texto para que el
+ * carácter no quede incrustado tal cual en el bundle.
+ */
+const TIENE_CARACTER_DE_REEMPLAZO = /\ufffd/;
+
 function esTextoPlano(file: File): boolean {
   return /\.(csv|tsv|txt)$/i.test(file.name) || file.type.startsWith('text/');
 }
@@ -55,7 +62,7 @@ function esTextoPlano(file: File): boolean {
  */
 function decodificarTexto(buffer: ArrayBuffer): string {
   const utf8 = new TextDecoder('utf-8').decode(buffer);
-  if (!utf8.includes('\ufffd')) return utf8;
+  if (!TIENE_CARACTER_DE_REEMPLAZO.test(utf8)) return utf8;
   try {
     return new TextDecoder('windows-1252').decode(buffer);
   } catch {
