@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Escuela de Brokers · Avance Inmobiliario</title>
+<meta name="description" content="Presentación de formación inicial para nuevas brokers de Avance Inmobiliario: propiedades nuevas y usadas, captación, proceso comercial, roleplay y cierre.">
+<link rel="icon" href="img/marca/avance-inmobiliario.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+<div id="progreso"></div>
+
+<main id="escenario" aria-live="polite"></main>
+
+<div class="zona atras" aria-hidden="true"></div>
+<div class="zona adelante" aria-hidden="true"></div>
+
+<nav id="mandos" aria-label="Controles de la presentación">
+  <button id="btn-atras" type="button" title="Anterior (←)" aria-label="Lámina anterior">
+    <svg viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></svg>
+  </button>
+  <span id="contador">01 / 32</span>
+  <button id="btn-adelante" type="button" title="Siguiente (→)" aria-label="Lámina siguiente">
+    <svg viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>
+  </button>
+  <button id="btn-panorama" type="button" title="Ver todas (O)" aria-label="Ver todas las láminas">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/></svg>
+  </button>
+  <button id="btn-pantalla" type="button" title="Pantalla completa (F)" aria-label="Pantalla completa">
+    <svg viewBox="0 0 24 24"><path d="M4 9V5.5A1.5 1.5 0 0 1 5.5 4H9M15 4h3.5A1.5 1.5 0 0 1 20 5.5V9M20 15v3.5a1.5 1.5 0 0 1-1.5 1.5H15M9 20H5.5A1.5 1.5 0 0 1 4 18.5V15"/></svg>
+  </button>
+</nav>
+
+<div id="ayuda">← → navegar · O vista general · F pantalla completa · P imprimir</div>
+
+<div id="panorama">
+  <h2>Escuela de Brokers · Avance Inmobiliario <span>Pulsa una lámina para ir · Esc para cerrar</span></h2>
+  <div class="panorama-rejilla" id="panorama-rejilla"></div>
+</div>
+
+<script type="module" src="deck.js"></script>
+</body>
+</html>
