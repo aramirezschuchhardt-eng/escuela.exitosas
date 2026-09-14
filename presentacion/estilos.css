@@ -442,6 +442,18 @@ img.sin-foto { visibility: hidden }
 }
 #ayuda.visible { opacity: 1 }
 
+/* Aviso cuando el navegador no ejecuta JavaScript: sin esto la página
+   quedaría completamente en negro, porque las láminas las monta el script. */
+.sin-js {
+  position: fixed; inset: 0; z-index: 90;
+  display: flex; flex-direction: column; justify-content: center;
+  gap: 14px; padding: 48px; text-align: center;
+  background: var(--lienzo); color: var(--tinta);
+}
+.sin-js h1 { font-size: 34px; color: var(--naranja) }
+.sin-js p { font-size: 17px; line-height: 1.6; max-width: 46ch; margin: 0 auto }
+.sin-js .pista { color: var(--gris); font-size: 15px }
+
 /* ═══ IMPRESIÓN / PDF ═══ */
 @media print {
   @page { size: 1280px 720px; margin: 0 }

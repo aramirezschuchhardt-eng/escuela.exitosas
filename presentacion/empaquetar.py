@@ -45,8 +45,10 @@ html = html.replace(
     '<style>\n' + (AQUI / 'estilos.css').read_text(encoding='utf-8') + '\n</style>')
 html = html.replace('<link rel="icon" href="img/marca/avance-inmobiliario.png">',
                     f'<link rel="icon" href="{data_uri("img/marca/avance-inmobiliario.png")}">')
+# Script clásico a propósito: Safari bloquea <script type="module"> cuando la
+# página se abre como archivo local (file://), y la presentación quedaría en negro.
 html = html.replace('<script type="module" src="deck.js"></script>',
-                    '<script type="module">\n' + js + '\n</script>')
+                    '<script>\n' + js + '\n</script>')
 
 destino.write_text(html, encoding='utf-8')
 print(f'{destino}  ·  {destino.stat().st_size/1048576:.1f} MB  ·  {incrustadas} fotografías empotradas')
