@@ -4,3 +4,4 @@ dist
 .DS_Store
 e2e/*.xlsx
 e2e/shot-*.png
+undefined/
