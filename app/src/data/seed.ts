@@ -20,6 +20,9 @@ import { VISTA_AMUNATEGUI_UNITS } from './projects/vista-amunategui-units';
  * hoja «Info Com»). El administrador debe mantenerlo actualizado.
  */
 export const UF_PLANILLA = 40901.94;
+
+/** Logotipo de la empresa, recortado y con fondo transparente. */
+const LOGO_URL = `${import.meta.env.BASE_URL}marca/avance-inmobiliario.png`;
 export const UF_PLANILLA_FECHA = '2025-09-01T00:00:00.000Z';
 
 /** Id determinista por unidad, para que reimportar no duplique el stock. */
@@ -49,6 +52,7 @@ export function seedDatabase(): Database {
       ...settings,
       ufValue: UF_PLANILLA,
       ufActualizadaEl: UF_PLANILLA_FECHA,
+      brand: { ...settings.brand, logoUrl: LOGO_URL },
     },
   };
 }

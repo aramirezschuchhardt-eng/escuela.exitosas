@@ -48,15 +48,25 @@ function Topbar() {
     <header className="topbar no-print">
       <div className="container topbar-inner">
         <NavLink to="/" className="brand">
-          <span className="brand-mark">
-            {brand?.logoUrl ? <img src={brand.logoUrl} alt={nombre} /> : <MarcaPorDefecto />}
-          </span>
-          <span style={{ minWidth: 0 }}>
-            <span className="brand-name">{nombre}</span>
-            <span className="brand-sub" style={{ display: 'block' }}>
-              Cotizador
-            </span>
-          </span>
+          {/*
+            Con logotipo se muestra sólo el logotipo: ya dice el nombre de la
+            empresa, y repetirlo al lado lo duplicaría.
+          */}
+          {brand?.logoUrl ? (
+            <img className="brand-logo" src={brand.logoUrl} alt={nombre} />
+          ) : (
+            <>
+              <span className="brand-mark">
+                <MarcaPorDefecto />
+              </span>
+              <span style={{ minWidth: 0 }}>
+                <span className="brand-name">{nombre}</span>
+                <span className="brand-sub" style={{ display: 'block' }}>
+                  Cotizador
+                </span>
+              </span>
+            </>
+          )}
         </NavLink>
         <nav className="topnav">
           <NavLink to="/" end className={({ isActive }) => (isActive ? 'active' : '')}>

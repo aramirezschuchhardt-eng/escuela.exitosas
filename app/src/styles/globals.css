@@ -31,8 +31,10 @@
   --ok-soft:    #E4F3EC;
   --warn:       #9A6508;
   --warn-soft:  #FBF0DC;
-  --danger:     #A8331F;
-  --danger-soft:#FAEAE6;
+  /* Rojo frío, bien separado del naranjo de marca: en una herramienta
+     financiera un número en rojo tiene que leerse como pérdida, no como acento. */
+  --danger:     #B00020;
+  --danger-soft:#FBE9EC;
   --info-soft:  #EAF0F6;
 
   --radius:     14px;
@@ -84,8 +86,14 @@ ul { list-style: none; }
 
 @media (min-width: 768px) { .container { padding: 0 32px; } }
 
-.section { padding: 28px 0; }
-@media (min-width: 768px) { .section { padding: 40px 0; } }
+/*
+  `padding-block` y no el atajo `padding`: como `.section` viene después de
+  `.container` con la misma especificidad, un `padding: 28px 0` le borraba el
+  padding lateral y el contenido quedaba pegado al borde en toda pantalla más
+  angosta que el ancho máximo del contenedor.
+*/
+.section { padding-block: 28px; }
+@media (min-width: 768px) { .section { padding-block: 40px; } }
 
 .stack { display: flex; flex-direction: column; min-width: 0; }
 .stack-xs > * + * { margin-top: 6px; }
@@ -128,7 +136,11 @@ ul { list-style: none; }
   display: grid; place-items: center;
   font-family: var(--serif); font-size: 15px; font-weight: 600;
 }
-.brand-mark img { width: 100%; height: 100%; object-fit: contain; border-radius: 9px; }
+.brand-logo {
+  height: 38px; width: auto; max-width: 200px;
+  object-fit: contain; object-position: left center;
+}
+@media (max-width: 520px) { .brand-logo { height: 32px; max-width: 148px; } }
 .brand-name { font-family: var(--serif); font-size: 16px; font-weight: 600; letter-spacing: -.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .brand-sub { font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-4); }
 

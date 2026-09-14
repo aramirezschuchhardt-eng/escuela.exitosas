@@ -31,9 +31,12 @@ await paso('Abrir el cotizador con el depto 207', async () => {
   await p.waitForTimeout(400);
 });
 
-await paso('La marca aparece como Avance Inmobiliario', async () => {
-  const t = await p.locator('.topbar').innerText();
-  debe(contiene(t, 'Avance Inmobiliario'), 'marca: ' + t);
+await paso('El logotipo de Avance Inmobiliario está en la barra', async () => {
+  const logo = p.locator('.topbar .brand-logo');
+  debe((await logo.count()) === 1, 'no hay logotipo en la barra');
+  debe(contiene(await logo.getAttribute('alt'), 'Avance Inmobiliario'), 'alt del logotipo');
+  const ok = await logo.evaluate((i) => i.complete && i.naturalWidth > 0);
+  debe(ok, 'el logotipo no cargó');
 });
 
 await paso('Cash flow mensual descuenta dividendo y crédito directo', async () => {
@@ -89,7 +92,11 @@ await paso('La cotización lleva el cash flow', async () => {
   await p.click('text=GENERAR COTIZACIÓN');
   await p.waitForSelector('.doc');
   const t = await p.locator('.doc').innerText();
-  debe(contiene(t, 'Cash flow mensual'), 'falta el cash flow en el documento');
+  debe(contiene(t, 'Arriendo, costos y flujo mensual'), 'falta el cash flow en el documento');
+  debe(contiene(t, 'Rentabilidad bruta anual estimada'), 'falta la rentabilidad');
+  // El documento no debe repetir el flujo en dos secciones distintas.
+  const vecesFlujo = (t.match(/Flujo mensual, primeros/gi) ?? []).length;
+  debe(vecesFlujo === 1, `el flujo mensual aparece ${vecesFlujo} veces, debería ser 1`);
   debe(contiene(t, 'Proyección con plusvalía de 4,5% anual'), 'falta la proyección');
   debe(contiene(t, 'Año 10'), 'faltan los horizontes');
   debe(contiene(t, 'no considera impuestos'), 'falta la advertencia de la proyección');

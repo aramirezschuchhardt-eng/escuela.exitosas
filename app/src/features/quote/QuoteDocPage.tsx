@@ -182,7 +182,11 @@ export default function QuoteDocPage() {
           <header className="doc-header">
             <div className="row" style={{ gap: 12 }}>
               {brand?.logoUrl && (
-                <img src={brand.logoUrl} alt="" style={{ height: 42, width: 'auto' }} />
+                <img
+                  src={brand.logoUrl}
+                  alt={brand.nombreEmpresa}
+                  style={{ height: 46, width: 'auto', maxWidth: 220, objectFit: 'contain' }}
+                />
               )}
               <div>
                 <p className="eyebrow">{brand?.nombreEmpresa || 'Cotización'}</p>
@@ -373,47 +377,17 @@ export default function QuoteDocPage() {
             </Seccion>
           )}
 
-          {quote.arriendoCLP != null && dividendo && (
-            <Seccion titulo="Arriendo mensual estimado y flujo">
-              <DL>
-                <Row label="Arriendo mensual estimado" value={formatCLP(quote.arriendoCLP)} />
-                <Row label="Arriendo anual estimado" value={formatCLP(quote.arriendoAnualCLP)} />
-                <Row
-                  label="Rentabilidad bruta anual estimada"
-                  value={formatPct(quote.rentabilidadBrutaAnual, 2)}
-                />
-                <Row
-                  label={hayCd ? `Flujo mensual primeros ${quote.creditoDirectoCuotas} meses` : 'Flujo mensual'}
-                  value={
-                    <span className={(dividendo.flujoEtapa1CLP ?? 0) >= 0 ? 'pos' : 'neg'}>
-                      {formatCLPSigned(dividendo.flujoEtapa1CLP)}
-                    </span>
-                  }
-                />
-                {hayCd && (
-                  <Row
-                    label={`Flujo mensual desde el mes ${quote.creditoDirectoCuotas + 1}`}
-                    value={
-                      <span className={(dividendo.flujoEtapa2CLP ?? 0) >= 0 ? 'pos' : 'neg'}>
-                        {formatCLPSigned(dividendo.flujoEtapa2CLP)}
-                      </span>
-                    }
-                  />
-                )}
-              </DL>
-              <p className="xs dim" style={{ marginTop: 8 }}>
-                Arriendo mensual estimado, no garantizado. No constituye promesa de renta ni de
-                rentabilidad.
-              </p>
-            </Seccion>
-          )}
-
-          {cashflow && (
-            <Seccion titulo="Cash flow mensual">
+          {cashflow && quote.arriendoCLP != null && (
+            <Seccion titulo="Arriendo, costos y flujo mensual">
               <DL>
                 <Row
                   label="Arriendo mensual estimado"
                   value={formatCLP(cashflow.mensual.etapa1.arriendoBrutoUF * cashflow.ufValue)}
+                />
+                <Row label="Arriendo anual estimado" value={formatCLP(quote.arriendoAnualCLP)} />
+                <Row
+                  label="Rentabilidad bruta anual estimada"
+                  value={formatPct(quote.rentabilidadBrutaAnual, 2)}
                 />
                 {cashflow.mensual.etapa1.costosOperacionUF > 0 && (
                   <Row
@@ -459,6 +433,10 @@ export default function QuoteDocPage() {
                   />
                 )}
               </DL>
+              <p className="xs dim" style={{ marginTop: 8 }}>
+                Arriendo mensual estimado, no garantizado. No constituye promesa de renta ni de
+                rentabilidad.
+              </p>
             </Seccion>
           )}
 
@@ -512,6 +490,8 @@ export default function QuoteDocPage() {
                 un supuesto, no una rentabilidad asegurada. Montos en UF, ya descontada la inflación.
                 Supone la venta al final del período y no considera impuestos a la ganancia de
                 capital, comisiones de venta ni gastos de escrituración.
+                {cashflow.aporteEfectivoUF < 1 &&
+                  ' El retorno se expresa como múltiplo porque, con el pie cubierto por el bono y el crédito directo, el capital propio invertido es muy bajo.'}
               </p>
             </Seccion>
           )}

@@ -68,7 +68,12 @@ export function defaultSettings(): AppSettings {
     brand: {
       nombreEmpresa: 'Avance Inmobiliario',
       logoUrl: null,
-      colorAcento: '#14707E',
+      /*
+       * Naranjo de Avance Inmobiliario, oscurecido lo justo para que el texto
+       * blanco sobre los botones alcance contraste AA (4,7:1). El naranjo del
+       * logotipo (#F46324) queda en 3,2:1 y no sirve como fondo de texto.
+       */
+      colorAcento: '#C64E15',
       contactoNombre: '',
       contactoEmail: '',
       contactoTelefono: '',
