@@ -133,7 +133,9 @@ export default function UnitPicker({
                   {header('superficie', 'Sup. total', true)}
                   <th className="num">Precio lista</th>
                   <th className="num">Dcto.</th>
-                  {header('precio', 'Precio final', true)}
+                  {header('precio', 'Precio depto', true)}
+                  <th>Adicionales</th>
+                  <th className="num">Negocio final</th>
                   <th>Estado</th>
                   <th />
                 </tr>
@@ -165,6 +167,18 @@ export default function UnitPicker({
                       </td>
                       <td className="num" style={{ fontWeight: 600 }}>
                         {formatUF(p.precioConDescuentoUF)}
+                      </td>
+                      <td className="xs">
+                        {[
+                          u.estacionamiento && `Est. ${u.estacionamiento}`,
+                          u.estacionamiento2 && `Est. ${u.estacionamiento2}`,
+                          u.bodega && `Bod. ${u.bodega}`,
+                        ]
+                          .filter(Boolean)
+                          .join(' · ') || EMPTY}
+                      </td>
+                      <td className="num">
+                        {p.adicionalesUF > 0 ? formatUF(p.precioNegocioFinalUF) : EMPTY}
                       </td>
                       <td>
                         <StatusBadge estado={u.estado} title={u.estadoOriginal ?? undefined} />

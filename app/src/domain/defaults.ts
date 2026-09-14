@@ -15,6 +15,7 @@ export function defaultProjectConfig(): ProjectConfig {
     pieDirectoPct: 0.1,
     creditoDirecto: {
       enabled: true,
+      minPct: 0,
       maxPct: 0.1,
       defaultPct: 0.1,
       plazos: [12, 24, 36, 48, 60],

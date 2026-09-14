@@ -79,6 +79,30 @@ function UnitForm({
       <div className="divider" />
 
       <div className="grid grid-4">
+        <Field label="Estacionamiento">
+          <TextInput
+            value={unit.estacionamiento ?? ''}
+            onChange={(v) => set('estacionamiento', v || null)}
+          />
+        </Field>
+        <Field label="Estacionamiento 2">
+          <TextInput
+            value={unit.estacionamiento2 ?? ''}
+            onChange={(v) => set('estacionamiento2', v || null)}
+          />
+        </Field>
+        <Field label="Bodega">
+          <TextInput value={unit.bodega ?? ''} onChange={(v) => set('bodega', v || null)} />
+        </Field>
+        <Field label="Bodega bicicleta">
+          <TextInput
+            value={unit.bodegaBicicleta ?? ''}
+            onChange={(v) => set('bodegaBicicleta', v || null)}
+          />
+        </Field>
+      </div>
+
+      <div className="grid grid-4">
         <Field label="Precio lista (UF)">
           <NumberInput value={unit.precioListaUF} onChange={(v) => set('precioListaUF', v)} />
         </Field>
@@ -96,6 +120,33 @@ function UnitForm({
           <NumberInput
             value={unit.precioConDescuentoUF}
             onChange={(v) => set('precioConDescuentoUF', v)}
+          />
+        </Field>
+      </div>
+
+      <div className="grid grid-4">
+        <Field label="Precio adicionales (UF)" hint="Estacionamiento y bodega.">
+          <NumberInput
+            value={unit.precioAdicionalesUF}
+            onChange={(v) => set('precioAdicionalesUF', v)}
+          />
+        </Field>
+        <Field label="Precio negocio final (UF)" hint="Vacío = con descuento + adicionales.">
+          <NumberInput
+            value={unit.precioNegocioFinalUF}
+            onChange={(v) => set('precioNegocioFinalUF', v)}
+          />
+        </Field>
+        <Field label="Precio con aporte inmobiliario (UF)">
+          <NumberInput
+            value={unit.precioAporteInmobiliarioUF}
+            onChange={(v) => set('precioAporteInmobiliarioUF', v)}
+          />
+        </Field>
+        <Field label="Comentarios">
+          <TextInput
+            value={unit.comentarios ?? ''}
+            onChange={(v) => set('comentarios', v || null)}
           />
         </Field>
       </div>
@@ -157,13 +208,17 @@ export default function UnitsEditor({ project }: { project: Project }) {
     const cols = [
       'Departamento', 'Piso', 'Modelo', 'Tipología', 'Dormitorios', 'Baños', 'Orientación',
       'Superficie útil', 'Terraza', 'Superficie total', 'Precio lista UF', 'Descuento %',
-      'Descuento UF', 'Precio con descuento UF', 'Estado', 'Estado original',
+      'Descuento UF', 'Precio con descuento UF', 'Estacionamiento', 'Estacionamiento 2',
+      'Bodega', 'Bodega bicicleta', 'Precio adicionales UF', 'Precio negocio final UF',
+      'Precio aporte inmobiliario UF', 'Estado', 'Estado original', 'Comentarios',
     ];
     const filas = visibles.map((u) => [
       u.departamento, u.piso, u.modelo, u.tipologia, u.dormitorios, u.banos, u.orientacion,
       u.superficieUtil, u.superficieTerraza, u.superficieTotal, u.precioListaUF,
       u.descuentoPct != null ? u.descuentoPct * 100 : null, u.descuentoMontoUF,
-      u.precioConDescuentoUF, u.estado, u.estadoOriginal,
+      u.precioConDescuentoUF, u.estacionamiento, u.estacionamiento2, u.bodega,
+      u.bodegaBicicleta, u.precioAdicionalesUF, u.precioNegocioFinalUF,
+      u.precioAporteInmobiliarioUF, u.estado, u.estadoOriginal, u.comentarios,
     ]);
     const csv = [cols, ...filas]
       .map((f) => f.map((c) => (c == null ? '' : `"${String(c).replace(/"/g, '""')}"`)).join(';'))

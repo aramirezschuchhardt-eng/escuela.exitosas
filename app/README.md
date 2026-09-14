@@ -11,34 +11,77 @@ código.
 
 ---
 
-## Estado de los datos
+## Datos cargados
 
-> **Importante.** Los archivos fuente mencionados en el encargo — la planilla
-> Excel de stock y el brochure PDF del Edificio Vista Amunátegui — **no estaban
-> disponibles** al construir esta versión.
->
-> Siguiendo la regla de no inventar información, la semilla del proyecto contiene
-> únicamente los datos enunciados de forma explícita: nombre, dirección
-> (Santa Isabel 4897, Santiago), comuna, los hitos de conectividad nombrados
-> (Metro Santa Ana, Metro Cal y Canto, Plaza de Armas) y las tres tipologías
-> (Estudio, 1D+1B, 2D+2B).
->
-> **No hay stock, precios, descuentos, superficies, imágenes ni amenities
-> cargados.** La interfaz marca esos campos como «pendiente de carga» en lugar de
-> rellenarlos con supuestos. Se cargan por las dos vías previstas en el encargo:
-> la planilla Excel (stock) y el panel administrador (información comercial del
-> brochure).
+La aplicación viene con el **Edificio Vista Amunátegui (AJ Urbana)** completo:
 
-### Cómo cargar los datos reales
+| | |
+|---|---|
+| Stock | **119 unidades** (20 disponibles, 99 bloqueadas) |
+| Precios | Lista, descuento base, precio con descuento, estacionamiento/bodega, precio negocio final y precio con aporte inmobiliario |
+| Tipologías | **19 modelos** con superficies y planta, enlazados a cada unidad por su número de modelo |
+| Fotografías | 28 imágenes del brochure (proyecto, entorno, amenities, interiores) |
+| Contenido | Entorno, conectividad, características, amenities, terminaciones, beneficios, ficha técnica y condiciones comerciales |
+| Valor UF | 40.901,94 — el de la planilla general; se actualiza en el panel |
 
-1. Abrir **Administrar** (clave inicial: `admin`).
-2. **Configuración** → registrar el valor de la UF, el nombre de la empresa y el logo.
-3. **Importar stock** → subir la planilla Excel, revisar el mapeo de columnas y
-   confirmar la vista previa.
-4. **Proyectos → Editar** → cargar del brochure: imágenes, entorno, conectividad,
-   características, amenities, terminaciones, beneficios, tipologías y plantas.
-5. **Condiciones comerciales** → ajustar bono pie, financiamiento, crédito
-   directo, tasas, plazos, devolución de IVA y rango de arriendo.
+### Procedencia de cada dato
+
+Ningún valor fue inventado. Las fuentes son:
+
+- **Planilla general de stock de AJ Urbana**
+  - Hoja `Vista Amunategui (EI)` → las 119 unidades con todos sus precios y estados.
+  - Hoja `Info Com` → dirección, fecha de recepción, valor de la UF, aporte
+    inmobiliario, pie del cliente, cuotas y arriendo garantizado.
+  - Hoja `Manual de Procedimientos` → tope de bono pie (10%), rango del crédito
+    directo Fundit (5% a 10%), fondo de puesta en marcha y monto de reserva.
+- **Brochure «Vista Amunátegui» v. 28-01-2025** → descripción, entorno,
+  conectividad, características, amenities, terminaciones, beneficios, las 19
+  tipologías con sus superficies y las plantas.
+
+Lo único que **no** proviene de los documentos, porque no está en ellos, son los
+escenarios de simulación: las tres tasas hipotecarias (3,2% / 4,0% / 4,5%), los
+plazos del crédito, el rango de devolución de IVA (10% a 15%) y el rango de
+arriendo mensual estimado ($300.000 a $500.000). Todos se editan en el panel
+administrador.
+
+### Dos cosas para confirmar
+
+1. **La dirección.** La planilla general (`Info Com → Dirección`) dice
+   **Amunátegui 767**, el manual de procedimientos nombra la sociedad «Edificio
+   Amunátegui 745» con correo `amunategui767@gmail.com`, y el plano de ubicación
+   del brochure rotula «amunátegui · 745». Sin embargo, el pie de página del
+   brochure repite «santa isabel 4897, Santiago», que corresponde a otro
+   proyecto. Se cargó **Amunátegui 767, Santiago**, que es lo que indica la
+   planilla operativa. Es editable en el panel.
+2. **El arriendo garantizado.** La planilla documenta arriendo garantizado tipo
+   XL (2 años, hasta 4 en promociones), pero **no documenta el monto**. Por eso
+   el cotizador mantiene el campo como «arriendo mensual estimado», editable por
+   el broker, y el arriendo garantizado aparece sólo como condición comercial.
+
+### Actualizar el stock
+
+El stock cargado es el punto de partida, no la fuente permanente. Para
+actualizarlo: **Administrar → Importar stock**, subir la planilla, revisar el
+mapeo de columnas y confirmar la vista previa. Los datos comerciales que no
+vienen de la planilla se conservan.
+
+También se puede regenerar la semilla desde la planilla original:
+
+```bash
+node scripts/importar-amunategui.mjs <ruta-planilla.xlsx>
+```
+
+El script verifica las identidades de la planilla antes de escribir
+(`precio con descuento = lista × (1 − dcto)`,
+`negocio final = con descuento + adicionales`, `total = útil + terraza`) y avisa
+si alguna no calza. En la planilla entregada, las 119 filas las cumplen.
+
+### Cómo se prepararon las imágenes
+
+Las fotografías y plantas se extrajeron del brochure PDF, se redimensionaron y
+se guardaron en `public/proyectos/vista-amunategui/`. Para un proyecto nuevo, lo
+habitual es subirlas desde **Administrar → Proyectos → Editar**, que hace el
+redimensionado automáticamente.
 
 ---
 
@@ -48,7 +91,7 @@ código.
 cd app
 npm install
 npm run dev          # desarrollo en http://localhost:5173
-npm run test         # 71 pruebas del motor de cálculo y de la importación
+npm run test         # 86 pruebas del motor de cálculo y de la importación
 npm run build        # build de producción → /cotizador
 npm run preview      # sirve el build en http://localhost:4173
 ```
@@ -84,7 +127,7 @@ src/
 ├── domain/                  Núcleo de negocio. Sin React, sin almacenamiento.
 │   ├── types.ts             Modelo de datos
 │   ├── finance.ts           ★ Motor de cálculo (funciones puras)
-│   ├── finance.test.ts        36 pruebas del motor
+│   ├── finance.test.ts        50 pruebas del motor
 │   ├── units.ts             Normalización de estados, tipologías, superficies
 │   ├── filters.ts           Filtros de catálogo y estadísticas por proyecto
 │   ├── money.ts             Formateo — único lugar donde se redondea
@@ -93,12 +136,13 @@ src/
 ├── data/                    Persistencia e ingesta
 │   ├── repository.ts        ★ Puerto de persistencia (hoy localStorage)
 │   ├── seed.ts              Semilla del proyecto inicial
+│   ├── projects/            Datos de Vista Amunátegui (proyecto y 119 unidades)
 │   ├── store.tsx            Contexto de React sobre el repositorio
 │   └── excel/
 │       ├── parse.ts         Lectura de .xlsx/.csv y conversión de celdas
 │       ├── mapping.ts       Reconocimiento de encabezados
 │       ├── diff.ts          Vista previa y aplicación de la importación
-│       └── excel.test.ts      35 pruebas de la importación
+│       └── excel.test.ts      36 pruebas de la importación
 │
 ├── components/              Kit de interfaz y panel de filtros
 ├── features/                Pantallas: catálogo, ficha, cotizador, cotización, admin
@@ -133,10 +177,18 @@ precio final, se aplica **una sola vez** el monto (si existe) o el porcentaje.
 parte del aporte efectivo del cliente. Configurable por proyecto y por unidad; un
 proyecto puede no tenerlo.
 
+**Adicionales y base de cotización** — cuando la planilla asigna estacionamiento
+o bodega a una unidad, el cotizador muestra
+`precio del depto con descuento + adicionales = precio negocio final` y permite
+elegir sobre cuál de los precios de la planilla se cotiza: el del departamento,
+el negocio final (sugerido cuando hay adicionales) o el precio con aporte
+inmobiliario. La elección define el monto financiado, el pie y el dividendo.
+
 **Financiamiento** — `pie total = precio × (1 − LTV)`, `crédito = precio × LTV`.
 
 **Crédito directo inmobiliario** — acotado al menor entre el tope del proyecto y
-el pie total. Cuota por anualidad; con tasa 0% equivale a `monto ÷ cuotas`.
+el pie total, y con un mínimo configurable cuando se usa (5% en Vista
+Amunátegui). Cuota por anualidad; con tasa 0% equivale a `monto ÷ cuotas`.
 
 **Aporte efectivo** — `pie total − crédito directo − bono pie`, nunca negativo
 (si lo fuera, se avisa).
@@ -178,6 +230,11 @@ El archivo se procesa **en el navegador**; no se envía a ningún servidor.
 - Conserva las columnas no mapeadas junto a la unidad.
 - Preserva los datos comerciales que no vienen de la planilla (por ejemplo, el
   bono pie propio de una unidad).
+- Encuentra la fila de encabezados aunque la planilla traiga títulos, enlaces y
+  notas sueltas antes de la tabla: puntúa cada fila por cuántos encabezados
+  reconoce en ella.
+- Lee los .csv en UTF-8 (con respaldo a Windows-1252), de modo que las tildes no
+  se rompen en archivos exportados desde Google Sheets.
 - Muestra una **vista previa** con el detalle de nuevas / actualizadas / cambios
   de estado / sin cambios / no importables, y el destino de las unidades del
   stock que no aparecen en la planilla. Nada se modifica hasta confirmar.

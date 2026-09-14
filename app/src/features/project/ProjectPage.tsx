@@ -4,7 +4,7 @@ import { useStore } from '../../data/store';
 import { projectStats } from '../../domain/filters';
 import { formatM2, formatUF } from '../../domain/money';
 import type { ProjectMediaItem, TipologiaInfo } from '../../domain/types';
-import { Badge, Card, Empty, Note, Stat } from '../../components/ui';
+import { Badge, Card, DL, Empty, Note, Row, Stat } from '../../components/ui';
 
 const GRUPOS: { key: ProjectMediaItem['grupo']; label: string }[] = [
   { key: 'proyecto', label: 'El proyecto' },
@@ -66,6 +66,8 @@ function TipologiaCard({ t }: { t: TipologiaInfo }) {
             </Badge>
           )}
           {t.banos != null && <Badge tone="neutral">{t.banos} baño{t.banos === 1 ? '' : 's'}</Badge>}
+          {t.orientacion && <Badge tone="accent">{t.orientacion}</Badge>}
+          {t.pisos && <Badge tone="neutral">Pisos {t.pisos}</Badge>}
         </div>
         {sinSuperficies ? (
           <p className="xs dim">{t.nota ?? 'Superficies pendientes de carga.'}</p>
@@ -85,6 +87,7 @@ function TipologiaCard({ t }: { t: TipologiaInfo }) {
             </div>
           </dl>
         )}
+        {!sinSuperficies && t.nota && <p className="xs dim">{t.nota}</p>}
       </div>
     </div>
   );
@@ -203,6 +206,35 @@ export default function ProjectPage() {
             usando el brochure como fuente.
           </span>
         </Note>
+      )}
+
+      {(project.fichaTecnica.length > 0 || project.condicionesComerciales.length > 0) && (
+        <div className="grid grid-2">
+          {project.fichaTecnica.length > 0 && (
+            <Card title="Ficha técnica">
+              <DL>
+                {project.fichaTecnica.map((f) => (
+                  <Row key={f.label} label={f.label} value={f.value} />
+                ))}
+              </DL>
+            </Card>
+          )}
+          {project.condicionesComerciales.length > 0 && (
+            <Card
+              title="Condiciones comerciales"
+              desc="Vigentes según la planilla comercial. Sujetas a confirmación de la inmobiliaria."
+            >
+              <ul className="stack stack-xs small">
+                {project.condicionesComerciales.map((c) => (
+                  <li key={c} className="row" style={{ alignItems: 'flex-start', gap: 8, flexWrap: 'nowrap' }}>
+                    <span style={{ color: 'var(--accent)', lineHeight: 1.5 }}>—</span>
+                    <span>{c}</span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          )}
+        </div>
       )}
 
       <div className="grid grid-2">

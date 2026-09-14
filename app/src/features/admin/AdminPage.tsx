@@ -105,6 +105,8 @@ function ProjectList({
       amenities: [],
       terminaciones: [],
       beneficios: [],
+      condicionesComerciales: [],
+      fichaTecnica: [],
       tipologias: [],
       config: defaultProjectConfig(),
       publicado: false,

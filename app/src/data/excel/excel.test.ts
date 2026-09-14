@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { coerceNumber, coercePercent, coerceText, type SheetData } from './parse';
+import { readWorkbook } from './parse';
 import { autoMap, normalizeHeader } from './mapping';
 import { applyPreview, buildPreview } from './diff';
 import { normalizeStatus } from '../../domain/units';
@@ -107,8 +108,35 @@ describe('autoMap', () => {
   });
 
   it('deja en null lo que no reconoce, para mapeo manual', () => {
-    const m = autoMap(['Bodega asignada', 'Depto']);
-    expect(m['Bodega asignada']).toBeNull();
+    const m = autoMap(['Corredor asignado', 'Depto']);
+    expect(m['Corredor asignado']).toBeNull();
+  });
+
+  it('reconoce los encabezados reales de la planilla de AJ Urbana', () => {
+    const m = autoMap([
+      'Estado', 'Depto', 'Piso', 'Modelo', 'Tipología', 'Orientación',
+      'Sup\n útil\n interior', 'Sup\n terraza', 'Sup\n total',
+      'Precio \n depto (UF)', 'Descuento \nbase (%)', 'Precio depto\n con desc',
+      'Est. 1', 'Est. 2', 'Bodega', 'Bodega\n Bicicleta',
+      'Precio\nTotal\nAdicional', 'Precio\n negocio \nfinal',
+      'Precio \nAporte Inmobil', 'Comentarios',
+    ]);
+    expect(m['Estado']).toBe('estado');
+    expect(m['Depto']).toBe('departamento');
+    expect(m['Sup\n útil\n interior']).toBe('superficieUtil');
+    expect(m['Sup\n terraza']).toBe('superficieTerraza');
+    expect(m['Sup\n total']).toBe('superficieTotal');
+    expect(m['Precio \n depto (UF)']).toBe('precioListaUF');
+    expect(m['Descuento \nbase (%)']).toBe('descuentoPct');
+    expect(m['Precio depto\n con desc']).toBe('precioConDescuentoUF');
+    expect(m['Est. 1']).toBe('estacionamiento');
+    expect(m['Est. 2']).toBe('estacionamiento2');
+    expect(m['Bodega']).toBe('bodega');
+    expect(m['Bodega\n Bicicleta']).toBe('bodegaBicicleta');
+    expect(m['Precio\nTotal\nAdicional']).toBe('precioAdicionalesUF');
+    expect(m['Precio\n negocio \nfinal']).toBe('precioNegocioFinalUF');
+    expect(m['Precio \nAporte Inmobil']).toBe('precioAporteInmobiliarioUF');
+    expect(m['Comentarios']).toBe('comentarios');
   });
 });
 
@@ -116,7 +144,9 @@ describe('autoMap', () => {
 
 const sheet = (rows: Record<string, unknown>[]): SheetData => ({
   nombre: 'Stock',
-  headers: ['Depto', 'Piso', 'Precio Lista UF', 'Precio con Descuento', 'Estado', 'Bodega'],
+  headers: [
+    'Depto', 'Piso', 'Precio Lista UF', 'Precio con Descuento', 'Estado', 'Corredor',
+  ],
   rows,
 });
 
@@ -141,6 +171,15 @@ const unidadExistente = (over: Partial<Unit> = {}): Unit => ({
   precioConDescuentoUF: 2850,
   estado: 'DISPONIBLE',
   estadoOriginal: 'Disponible',
+  estacionamiento: null,
+  estacionamiento2: null,
+  bodega: null,
+  bodegaBicicleta: null,
+  precioAdicionalesUF: null,
+  precioNegocioFinalUF: null,
+  aporteInmobiliarioPct: null,
+  precioAporteInmobiliarioUF: null,
+  comentarios: null,
   bonoPiePct: 0.05,
   extra: {},
   source: 'excel',
@@ -206,13 +245,15 @@ describe('buildPreview', () => {
 
   it('preserva las columnas no mapeadas en `extra`', () => {
     const preview = buildPreview({
-      sheet: sheet([{ Depto: '301', 'Precio Lista UF': 3000, Bodega: 'B-12', Estado: 'Disponible' }]),
+      sheet: sheet([
+        { Depto: '301', 'Precio Lista UF': 3000, Corredor: 'B-12', Estado: 'Disponible' },
+      ]),
       mapping,
       projectId: 'p1',
       unidadesActuales: [],
     });
-    expect(preview.rows[0].resultante!.extra['Bodega']).toBe('B-12');
-    expect(preview.columnasNoMapeadas).toContain('Bodega');
+    expect(preview.rows[0].resultante!.extra['Corredor']).toBe('B-12');
+    expect(preview.columnasNoMapeadas).toContain('Corredor');
   });
 
   it('marca filas sin departamento como inválidas', () => {
@@ -325,5 +366,54 @@ describe('applyPreview', () => {
       accionAusentes: 'eliminar',
     });
     expect(units.find((u) => u.id === 'x')).toBeTruthy();
+  });
+});
+
+
+/* ──────────────────────────────────────────────────────────────────────────
+ * Detección de la fila de encabezados
+ * ────────────────────────────────────────────────────────────────────────── */
+
+describe('readWorkbook — fila de encabezados', () => {
+  /** Construye un .csv en memoria y lo pasa por el lector real. */
+  const leerCsv = async (lineas: string[]) => {
+    const blob = new Blob([lineas.join('\n')], { type: 'text/csv' });
+    const file = new File([blob], 'stock.csv', { type: 'text/csv' });
+    return readWorkbook(file);
+  };
+
+  it('ignora los títulos y notas sueltas sobre la tabla', async () => {
+    // Réplica de la planilla real: la fila 1 tiene tres textos que NO son
+    // encabezados, y los encabezados verdaderos están varias filas más abajo.
+    const wb = await leerCsv([
+      'Edificio Vista Amunátegui,,Tour 360°,AJ Urbana',
+      ',,,',
+      'Pisos,16,,',
+      'Est,95,,',
+      'Estado,Depto,Piso,Precio Lista UF',
+      'DISPONIBLE,207,2,4067.4',
+      'BLOQUEADO,209,2,3888',
+    ]);
+    const hoja = wb.sheets[0];
+    expect(hoja.headers.slice(0, 4)).toEqual(['Estado', 'Depto', 'Piso', 'Precio Lista UF']);
+    expect(hoja.rows).toHaveLength(2);
+    expect(hoja.rows[0]['Depto']).toBe(207);
+  });
+
+  it('normaliza los saltos de línea dentro de un encabezado', async () => {
+    const wb = await leerCsv([
+      'Depto,"Sup\n útil\n interior",Estado,Precio Lista UF',
+      '207,56.58,DISPONIBLE,4067.4',
+    ]);
+    expect(wb.sheets[0].headers).toContain('Sup útil interior');
+  });
+
+  it('lee un CSV en UTF-8 sin romper las tildes', async () => {
+    const wb = await leerCsv([
+      'Depto,Orientación,Estado,Precio Lista UF',
+      '207,Nororiente,DISPONIBLE,4067.4',
+    ]);
+    expect(wb.sheets[0].headers).toContain('Orientación');
+    expect(autoMap(wb.sheets[0].headers)['Orientación']).toBe('orientacion');
   });
 });

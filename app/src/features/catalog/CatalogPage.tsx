@@ -184,7 +184,7 @@ export default function CatalogPage() {
         </p>
       </header>
 
-      <FilterPanel filter={filter} onChange={setFilter} options={options} />
+      <FilterPanel filter={filter} onChange={setFilter} options={options} compacto />
 
       {units.length === 0 && (
         <Note tone="info">

@@ -1,91 +1,56 @@
-import { defaultProjectConfig, defaultSettings } from '../domain/defaults';
-import type { Database, Project } from '../domain/types';
+import { defaultSettings } from '../domain/defaults';
+import type { Database, Unit } from '../domain/types';
+import { VISTA_AMUNATEGUI_ID, vistaAmunateguiProject } from './projects/vista-amunategui';
+import { VISTA_AMUNATEGUI_UNITS } from './projects/vista-amunategui-units';
 
 /**
  * ────────────────────────────────────────────────────────────────────────────
  * DATOS SEMILLA
  * ────────────────────────────────────────────────────────────────────────────
- * Regla del encargo: NO inventar información que no esté en los documentos.
+ * Todo lo que hay aquí proviene de los documentos entregados: el brochure del
+ * Edificio Vista Amunátegui y la planilla general de stock de AJ Urbana.
  *
- * Esta semilla contiene EXCLUSIVAMENTE los datos que fueron enunciados de forma
- * explícita en el encargo: nombre del proyecto, dirección, comuna, los tres
- * hitos de conectividad nombrados y las tres tipologías nombradas.
- *
- * Todo lo demás (inmobiliaria, imágenes, brochure, amenities, terminaciones,
- * características, beneficios, superficies, plantas y, sobre todo, el stock con
- * sus precios y descuentos) queda VACÍO a propósito. Se carga desde el panel
- * administrador y desde la importación de la planilla Excel. La interfaz marca
- * estos campos como "pendiente de carga" en lugar de rellenarlos con supuestos.
+ * El stock se puede reemplazar en cualquier momento desde el panel
+ * administrador importando una planilla actualizada; esta semilla es el punto
+ * de partida, no la fuente permanente.
  */
 
-const NOW = '2026-01-01T00:00:00.000Z';
+/**
+ * Valor de la UF con el que trabaja la planilla general (celda «Valor UF» de la
+ * hoja «Info Com»). El administrador debe mantenerlo actualizado.
+ */
+export const UF_PLANILLA = 40901.94;
+export const UF_PLANILLA_FECHA = '2025-09-01T00:00:00.000Z';
 
-export const VISTA_AMUNATEGUI_ID = 'vista-amunategui';
+/** Id determinista por unidad, para que reimportar no duplique el stock. */
+function unitId(departamento: string): string {
+  return `${VISTA_AMUNATEGUI_ID}-${departamento.trim().toUpperCase()}`;
+}
 
-export function seedProject(): Project {
-  const config = defaultProjectConfig();
-  return {
-    id: VISTA_AMUNATEGUI_ID,
-    nombre: 'Edificio Vista Amunátegui',
-    // Sin dato en el encargo → configurable en el panel administrador.
-    inmobiliaria: null,
-    comuna: 'Santiago',
-    direccion: 'Santa Isabel 4897, Santiago',
-    descripcion: null,
-    imagenPrincipal: null,
-    galeria: [],
-    brochureUrl: null,
-    entorno: [],
-    // Hitos de conectividad nombrados explícitamente en el encargo.
-    conectividad: ['Metro Santa Ana', 'Metro Cal y Canto', 'Plaza de Armas'],
-    caracteristicas: [],
-    amenities: [],
-    terminaciones: [],
-    beneficios: [],
-    tipologias: [
-      {
-        nombre: 'Estudio',
-        dormitorios: 0,
-        banos: 1,
-        superficieUtil: null,
-        superficieTerraza: null,
-        superficieTotal: null,
-        plantaUrl: null,
-        nota: 'Superficies y planta pendientes de carga desde el brochure.',
-      },
-      {
-        nombre: '1 dormitorio + 1 baño',
-        dormitorios: 1,
-        banos: 1,
-        superficieUtil: null,
-        superficieTerraza: null,
-        superficieTotal: null,
-        plantaUrl: null,
-        nota: 'Superficies y planta pendientes de carga desde el brochure.',
-      },
-      {
-        nombre: '2 dormitorios + 2 baños',
-        dormitorios: 2,
-        banos: 2,
-        superficieUtil: null,
-        superficieTerraza: null,
-        superficieTotal: null,
-        plantaUrl: null,
-        nota: 'Superficies y planta pendientes de carga desde el brochure.',
-      },
-    ],
-    config,
-    publicado: true,
-    updatedAt: NOW,
-  };
+export function seedUnits(): Unit[] {
+  return VISTA_AMUNATEGUI_UNITS.map((u) => ({
+    ...u,
+    id: unitId(u.departamento),
+    projectId: VISTA_AMUNATEGUI_ID,
+    bonoPiePct: null,
+    extra: {},
+    source: 'excel' as const,
+    updatedAt: UF_PLANILLA_FECHA,
+  }));
 }
 
 export function seedDatabase(): Database {
+  const settings = defaultSettings();
   return {
-    version: 1,
-    projects: [seedProject()],
-    // Sin stock: las unidades se cargan desde la planilla Excel.
-    units: [],
-    settings: defaultSettings(),
+    version: 2,
+    projects: [vistaAmunateguiProject()],
+    units: seedUnits(),
+    settings: {
+      ...settings,
+      ufValue: UF_PLANILLA,
+      ufActualizadaEl: UF_PLANILLA_FECHA,
+    },
   };
 }
+
+export { VISTA_AMUNATEGUI_ID };

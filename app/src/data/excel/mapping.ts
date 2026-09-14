@@ -23,6 +23,14 @@ export type CanonicalField =
   | 'descuentoMontoUF'
   | 'precioConDescuentoUF'
   | 'estado'
+  | 'estacionamiento'
+  | 'estacionamiento2'
+  | 'bodega'
+  | 'bodegaBicicleta'
+  | 'precioAdicionalesUF'
+  | 'precioNegocioFinalUF'
+  | 'precioAporteInmobiliarioUF'
+  | 'comentarios'
   | 'proyecto';
 
 export interface FieldSpec {
@@ -117,6 +125,8 @@ export const FIELD_SPECS: FieldSpec[] = [
       'superficie interior',
       'sup interior',
       'sup util m2',
+      'sup util interior',
+      'superficie util interior',
     ],
   },
   {
@@ -154,13 +164,23 @@ export const FIELD_SPECS: FieldSpec[] = [
       'precio venta uf',
       'valor departamento',
       'precio total uf',
+      'precio depto uf',
+      'precio depto',
     ],
   },
   {
     field: 'descuentoPct',
     label: 'Descuento (%)',
     type: 'percent',
-    aliases: ['descuento', 'descuento porcentaje', 'dcto', 'dcto', '% descuento', 'descuento %'],
+    aliases: [
+      'descuento',
+      'descuento base',
+      'descuento base %',
+      'descuento porcentaje',
+      'dcto',
+      '% descuento',
+      'descuento %',
+    ],
     ayuda: 'Se acepta 5 o 0,05: ambos se interpretan como 5%.',
   },
   {
@@ -183,6 +203,8 @@ export const FIELD_SPECS: FieldSpec[] = [
       'precio oferta',
       'uf con descuento',
       'precio descuento uf',
+      'precio depto con desc',
+      'precio depto con descuento',
     ],
     ayuda: 'Si esta columna existe, su valor manda por sobre cualquier cálculo.',
   },
@@ -191,6 +213,62 @@ export const FIELD_SPECS: FieldSpec[] = [
     label: 'Estado',
     type: 'status',
     aliases: ['estado', 'status', 'disponibilidad', 'situacion', 'estado unidad', 'condicion'],
+  },
+  {
+    field: 'estacionamiento',
+    label: 'Estacionamiento',
+    type: 'text',
+    aliases: ['est 1', 'estacionamiento', 'estacionamiento 1', 'est'],
+  },
+  {
+    field: 'estacionamiento2',
+    label: 'Estacionamiento 2',
+    type: 'text',
+    aliases: ['est 2', 'estacionamiento 2'],
+  },
+  { field: 'bodega', label: 'Bodega', type: 'text', aliases: ['bodega'] },
+  {
+    field: 'bodegaBicicleta',
+    label: 'Bodega bicicleta',
+    type: 'text',
+    aliases: ['bodega bicicleta', 'bodega bici'],
+  },
+  {
+    field: 'precioAdicionalesUF',
+    label: 'Precio adicionales (UF)',
+    type: 'number',
+    aliases: [
+      'precio total adicional',
+      'precio adicional',
+      'total adicional',
+      'adicionales',
+      'precio adicionales',
+    ],
+    ayuda: 'Estacionamiento y bodega asociados a la unidad.',
+  },
+  {
+    field: 'precioNegocioFinalUF',
+    label: 'Precio negocio final (UF)',
+    type: 'number',
+    aliases: ['precio negocio final', 'negocio final', 'precio de negocio'],
+    ayuda: 'Precio con descuento más adicionales. Si viene, su valor manda.',
+  },
+  {
+    field: 'precioAporteInmobiliarioUF',
+    label: 'Precio con aporte inmobiliario (UF)',
+    type: 'number',
+    aliases: [
+      'precio aporte inmobil',
+      'precio aporte inmobiliario',
+      'precio aporte',
+      'aporte inmobiliario',
+    ],
+  },
+  {
+    field: 'comentarios',
+    label: 'Comentarios',
+    type: 'text',
+    aliases: ['comentarios', 'comentario', 'observaciones', 'nota', 'notas'],
   },
 ];
 

@@ -48,6 +48,24 @@ export interface Unit {
   estado: UnitStatus;
   /** Texto de estado tal como venía en la planilla, para trazabilidad. */
   estadoOriginal: string | null;
+  /* ── Adicionales de la planilla (estacionamiento y bodega) ────────────── */
+  estacionamiento: string | null;
+  estacionamiento2: string | null;
+  bodega: string | null;
+  bodegaBicicleta: string | null;
+  /** Precio de los adicionales asociados a la unidad, en UF. */
+  precioAdicionalesUF: number | null;
+  /** Precio con descuento + adicionales, tal como lo trae la planilla. */
+  precioNegocioFinalUF: number | null;
+
+  /* ── Aporte inmobiliario ──────────────────────────────────────────────── */
+  /** Fracción de aporte de la inmobiliaria implícita en la planilla. */
+  aporteInmobiliarioPct: number | null;
+  /** Precio de la unidad bajo la modalidad de aporte inmobiliario, en UF. */
+  precioAporteInmobiliarioUF: number | null;
+
+  comentarios: string | null;
+
   /** Override de bono pie a nivel de unidad. `null` = usa la config del proyecto. */
   bonoPiePct: number | null;
   /** Columnas adicionales de la planilla que no mapean a un campo conocido. */
@@ -59,6 +77,14 @@ export interface Unit {
 /** Convención de conversión de tasa anual a tasa mensual. */
 export type RateConvention = 'efectivaAnual' | 'nominalAnual';
 
+/**
+ * Qué precio de la planilla se usa como base de la cotización.
+ *  - `departamento`: precio del depto con descuento, sin adicionales.
+ *  - `negocio`: precio con descuento + estacionamiento/bodega ("precio negocio final").
+ *  - `aporte`: precio bajo la modalidad de aporte inmobiliario.
+ */
+export type BaseCotizacion = 'departamento' | 'negocio' | 'aporte';
+
 export interface BonoPieConfig {
   enabled: boolean;
   minPct: number;
@@ -68,6 +94,8 @@ export interface BonoPieConfig {
 
 export interface CreditoDirectoConfig {
   enabled: boolean;
+  /** Piso del crédito directo cuando se usa (ej: 0.05). 0% siempre significa no usarlo. */
+  minPct: number;
   /** Tope del crédito directo como fracción del precio (ej: 0.10). */
   maxPct: number;
   defaultPct: number;
@@ -129,6 +157,11 @@ export interface ProjectMediaItem {
 
 export interface TipologiaInfo {
   nombre: string;
+  /** Número de modelo de la planilla, cuando el proyecto trabaja por modelo. */
+  modelo: number | null;
+  /** Pisos en que se repite el modelo, según el brochure. */
+  pisos: string | null;
+  orientacion: string | null;
   dormitorios: number | null;
   banos: number | null;
   /** Superficies declaradas del brochure. `null` mientras no se carguen. */
@@ -156,6 +189,10 @@ export interface Project {
   amenities: string[];
   terminaciones: string[];
   beneficios: string[];
+  /** Condiciones comerciales y operativas documentadas del proyecto. */
+  condicionesComerciales: string[];
+  /** Pares dato/valor de la ficha técnica (pisos, estacionamientos, recepción…). */
+  fichaTecnica: { label: string; value: string }[];
   tipologias: TipologiaInfo[];
   config: ProjectConfig;
   publicado: boolean;
@@ -191,6 +228,7 @@ export interface Database {
 export interface QuoteParams {
   projectId: string;
   unitId: string;
+  base: BaseCotizacion;
   bonoPiePct: number;
   ltv: number;
   creditoDirectoPct: number;

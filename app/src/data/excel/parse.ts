@@ -1,5 +1,5 @@
 import * as XLSX from 'xlsx';
-import type { CanonicalField } from './mapping';
+import { autoMap, type CanonicalField } from './mapping';
 
 export interface SheetData {
   nombre: string;
@@ -23,7 +23,9 @@ const CLAVES_PROHIBIDAS = new Set(['__proto__', 'constructor', 'prototype']);
  */
 export async function readWorkbook(file: File): Promise<WorkbookData> {
   const buffer = await file.arrayBuffer();
-  const wb = XLSX.read(buffer, { type: 'array', cellDates: true });
+  const wb = esTextoPlano(file)
+    ? XLSX.read(decodificarTexto(buffer), { type: 'string', cellDates: true })
+    : XLSX.read(buffer, { type: 'array', cellDates: true });
 
   const sheets: SheetData[] = wb.SheetNames.map((nombre) => {
     const sheet = wb.Sheets[nombre];
@@ -38,29 +40,76 @@ export async function readWorkbook(file: File): Promise<WorkbookData> {
   return { fileName: file.name, sheets };
 }
 
+function esTextoPlano(file: File): boolean {
+  return /\.(csv|tsv|txt)$/i.test(file.name) || file.type.startsWith('text/');
+}
+
 /**
- * Encuentra la fila de encabezados. Muchas planillas comerciales traen un título
- * o un logo en las primeras filas, así que se busca la primera fila que tenga al
- * menos dos celdas de texto no vacías.
+ * Decodifica un CSV/TSV como texto.
+ *
+ * Los .xlsx guardan sus cadenas en UTF-8 dentro del XML, pero un .csv es bytes
+ * sin declaración de codificación, y la librería los interpreta en latin1: un
+ * archivo UTF-8 exportado desde Google Sheets o Excel llegaría con las tildes
+ * rotas ("OrientaciÃ³n"). Se decodifica primero como UTF-8 y, si aparecen
+ * caracteres de reemplazo, se reintenta como Windows-1252.
  */
-function buildSheet(nombre: string, matrix: unknown[][]): SheetData {
-  let headerIndex = -1;
-  for (let i = 0; i < Math.min(matrix.length, 30); i++) {
-    const fila = matrix[i] ?? [];
-    const textos = fila.filter((c) => typeof c === 'string' && c.trim().length > 0);
-    if (textos.length >= 2) {
-      headerIndex = i;
-      break;
+function decodificarTexto(buffer: ArrayBuffer): string {
+  const utf8 = new TextDecoder('utf-8').decode(buffer);
+  if (!utf8.includes('\ufffd')) return utf8;
+  try {
+    return new TextDecoder('windows-1252').decode(buffer);
+  } catch {
+    return utf8;
+  }
+}
+
+/**
+ * Encuentra la fila de encabezados.
+ *
+ * Las planillas comerciales suelen traer arriba un título, enlaces y notas
+ * sueltas, así que buscar "la primera fila con dos textos" se equivoca. En su
+ * lugar se puntúa cada una de las primeras filas por cuántos de sus textos son
+ * encabezados reconocibles, y gana la de mayor puntaje. Si ninguna se reconoce,
+ * se cae a la heurística simple.
+ */
+function encontrarFilaEncabezados(matrix: unknown[][]): number {
+  const limite = Math.min(matrix.length, 40);
+  let mejor = -1;
+  let mejorPuntaje = 0;
+
+  for (let i = 0; i < limite; i++) {
+    const fila = (matrix[i] ?? []).map((c) =>
+      typeof c === 'string' ? c.trim() : c == null ? '' : String(c),
+    );
+    const textos = fila.filter((c) => c.length > 0);
+    if (textos.length < 2) continue;
+    const mapeo = autoMap(textos);
+    const reconocidos = Object.values(mapeo).filter(Boolean).length;
+    // Se exige que buena parte de la fila sean encabezados, no sólo uno suelto.
+    if (reconocidos >= 3 && reconocidos > mejorPuntaje) {
+      mejorPuntaje = reconocidos;
+      mejor = i;
     }
   }
+  if (mejor !== -1) return mejor;
+
+  for (let i = 0; i < limite; i++) {
+    const fila = matrix[i] ?? [];
+    if (fila.filter((c) => typeof c === 'string' && c.trim().length > 0).length >= 2) return i;
+  }
+  return -1;
+}
+
+function buildSheet(nombre: string, matrix: unknown[][]): SheetData {
+  const headerIndex = encontrarFilaEncabezados(matrix);
   if (headerIndex === -1) return { nombre, headers: [], rows: [] };
 
   const crudos = matrix[headerIndex] ?? [];
   const headers: string[] = [];
   const vistos = new Map<string, number>();
   crudos.forEach((celda, idx) => {
-    const base =
-      celda == null || String(celda).trim() === '' ? `Columna ${idx + 1}` : String(celda).trim();
+    const texto = celda == null ? '' : String(celda).replace(/\s+/g, ' ').trim();
+    const base = texto === '' ? `Columna ${idx + 1}` : texto;
     const n = vistos.get(base) ?? 0;
     vistos.set(base, n + 1);
     headers.push(n === 0 ? base : `${base} (${n + 1})`);

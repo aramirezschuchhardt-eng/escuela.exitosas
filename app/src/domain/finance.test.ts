@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import {
   annuityPayment,
+  baseSugerida,
+  basesDisponibles,
   computeEscenarios,
   computeQuote,
   monthlyRate,
@@ -16,6 +18,7 @@ const config: ProjectConfig = {
   pieDirectoPct: 0.1,
   creditoDirecto: {
     enabled: true,
+    minPct: 0,
     maxPct: 0.1,
     defaultPct: 0.1,
     plazos: [12, 24, 36, 48, 60],
@@ -366,5 +369,142 @@ describe('computeEscenarios', () => {
     ]);
     expect(escenarios[0].dividendo!.tasaAnual).toBe(0.06);
     expect(escenarios[0].dividendo!.dividendoCLP).toBeGreaterThan(0);
+  });
+});
+
+
+/* ──────────────────────────────────────────────────────────────────────────
+ * Adicionales (estacionamiento/bodega) y bases alternativas de cotización
+ * ────────────────────────────────────────────────────────────────────────── */
+
+describe('resolvePricing — adicionales y bases de cotización', () => {
+  /** Caso real de la planilla: depto 209, 2D+2B con estacionamiento. */
+  const unidad209 = () =>
+    resolvePricing({
+      precioListaUF: 3888,
+      descuentoPct: 0.1,
+      descuentoMontoUF: null,
+      precioConDescuentoUF: 3499.2,
+      precioAdicionalesUF: 350,
+      precioNegocioFinalUF: 3849.2,
+      aporteInmobiliarioPct: 0.15,
+      precioAporteInmobiliarioUF: 4528.47,
+    });
+
+  it('reproduce el precio negocio final de la planilla', () => {
+    const p = unidad209();
+    expect(p.precioConDescuentoUF).toBe(3499.2);
+    expect(p.adicionalesUF).toBe(350);
+    expect(p.precioNegocioFinalUF).toBe(3849.2);
+    expect(p.warnings).toHaveLength(0);
+  });
+
+  it('calcula el precio negocio final cuando la planilla no lo trae', () => {
+    const p = resolvePricing({
+      precioListaUF: 3888,
+      descuentoPct: 0.1,
+      descuentoMontoUF: null,
+      precioConDescuentoUF: 3499.2,
+      precioAdicionalesUF: 350,
+      precioNegocioFinalUF: null,
+    });
+    expect(p.precioNegocioFinalUF).toBeCloseTo(3849.2, 6);
+  });
+
+  it('advierte si el precio negocio final de la planilla no calza', () => {
+    const p = resolvePricing({
+      precioListaUF: 3888,
+      descuentoPct: 0.1,
+      descuentoMontoUF: null,
+      precioConDescuentoUF: 3499.2,
+      precioAdicionalesUF: 350,
+      precioNegocioFinalUF: 4000,
+    });
+    expect(p.precioNegocioFinalUF).toBe(4000); // manda la planilla
+    expect(p.warnings.join(' ')).toMatch(/negocio final/);
+  });
+
+  it('deriva la tasa de aporte inmobiliario cuando no viene declarada', () => {
+    const p = resolvePricing({
+      precioListaUF: 3888,
+      descuentoPct: 0.1,
+      descuentoMontoUF: null,
+      precioConDescuentoUF: 3499.2,
+      precioAdicionalesUF: 350,
+      precioNegocioFinalUF: 3849.2,
+      aporteInmobiliarioPct: null,
+      precioAporteInmobiliarioUF: 4528.47,
+    });
+    expect(p.aporteInmobiliarioPct).toBeCloseTo(0.15, 4);
+  });
+
+  it('lista sólo las bases realmente disponibles', () => {
+    expect(basesDisponibles(unidad209())).toEqual(['departamento', 'negocio', 'aporte']);
+    const sinAdicionales = resolvePricing({
+      precioListaUF: 3000,
+      descuentoPct: 0.05,
+      descuentoMontoUF: null,
+      precioConDescuentoUF: 2850,
+    });
+    expect(basesDisponibles(sinAdicionales)).toEqual(['departamento']);
+  });
+
+  it('sugiere el precio negocio final sólo si hay adicionales', () => {
+    expect(baseSugerida(unidad209())).toBe('negocio');
+    const sinAdicionales = resolvePricing({
+      precioListaUF: 3000,
+      descuentoPct: null,
+      descuentoMontoUF: null,
+      precioConDescuentoUF: null,
+    });
+    expect(baseSugerida(sinAdicionales)).toBe('departamento');
+  });
+});
+
+describe('computeQuote — base de cotización', () => {
+  const pricing = resolvePricing({
+    precioListaUF: 3888,
+    descuentoPct: 0.1,
+    descuentoMontoUF: null,
+    precioConDescuentoUF: 3499.2,
+    precioAdicionalesUF: 350,
+    precioNegocioFinalUF: 3849.2,
+    aporteInmobiliarioPct: 0.15,
+    precioAporteInmobiliarioUF: 4528.47,
+  });
+
+  it('financia sólo el departamento con la base "departamento"', () => {
+    const r = computeQuote(baseInput({ pricing, base: 'departamento', ltv: 0.9 }));
+    expect(r.precioBaseUF).toBe(3499.2);
+    expect(r.creditoHipotecarioUF).toBeCloseTo(3499.2 * 0.9, 6);
+  });
+
+  it('incluye el estacionamiento con la base "negocio"', () => {
+    const r = computeQuote(baseInput({ pricing, base: 'negocio', ltv: 0.9 }));
+    expect(r.precioBaseUF).toBe(3849.2);
+    expect(r.creditoHipotecarioUF).toBeCloseTo(3849.2 * 0.9, 6);
+  });
+
+  it('usa el precio de aporte inmobiliario con la base "aporte"', () => {
+    const r = computeQuote(baseInput({ pricing, base: 'aporte', ltv: 0.9 }));
+    expect(r.precioBaseUF).toBe(4528.47);
+  });
+
+  it('cae a la base del departamento y avisa si la base pedida no existe', () => {
+    const simple = resolvePricing({
+      precioListaUF: 3000,
+      descuentoPct: null,
+      descuentoMontoUF: null,
+      precioConDescuentoUF: null,
+    });
+    const r = computeQuote(baseInput({ pricing: simple, base: 'aporte' }));
+    expect(r.base).toBe('departamento');
+    expect(r.precioBaseUF).toBe(3000);
+    expect(r.warnings.join(' ')).toMatch(/no trae/);
+  });
+
+  it('la devolución de IVA se calcula sobre la base elegida', () => {
+    const r = computeQuote(baseInput({ pricing, base: 'negocio', ivaPct: 0.1 }));
+    expect(r.valorEfectivoPostIvaUF).toBeCloseTo(3849.2 - r.ivaMontoUF, 6);
   });
 });

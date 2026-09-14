@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useStore } from '../../data/store';
-import { computeQuote, pricingFromUnit } from '../../domain/finance';
+import { ETIQUETA_BASE, computeQuote, pricingFromUnit } from '../../domain/finance';
 import { superficieTotal, tipologiaLabel } from '../../domain/units';
 import {
   EMPTY,
@@ -39,6 +39,7 @@ export default function QuoteDocPage() {
     return computeQuote({
       pricing: pricingFromUnit(unit),
       config: project.config,
+      base: params.base,
       ufValue: settings?.ufValue ?? 0,
       bonoPiePct: params.bonoPiePct,
       ltv: params.ltv,
@@ -72,10 +73,17 @@ export default function QuoteDocPage() {
   const dividendo = quote.dividendos[Math.min(tasaIdx, quote.dividendos.length - 1)];
   const hayCd = quote.creditoDirectoUF > 0;
   const url = quoteUrl(params);
+  /*
+   * La planta se resuelve por el número de modelo de la planilla, que es el que
+   * enlaza cada unidad con su plano en el brochure. Si el proyecto no trabaja
+   * por modelo, se cae al nombre de la tipología.
+   */
+  const tipologia =
+    project.tipologias.find(
+      (t) => t.modelo != null && unit.modelo != null && String(t.modelo) === String(unit.modelo),
+    ) ?? project.tipologias.find((t) => t.nombre === tipologiaLabel(unit));
   const planta =
-    project.tipologias.find((t) => t.nombre === tipologiaLabel(unit))?.plantaUrl ??
-    project.galeria.find((g) => g.grupo === 'planta')?.url ??
-    null;
+    tipologia?.plantaUrl ?? project.galeria.find((g) => g.grupo === 'planta')?.url ?? null;
 
   const resumenTexto = [
     `${project.nombre} — Depto. ${unit.departamento}`,
@@ -222,8 +230,25 @@ export default function QuoteDocPage() {
                 muted
               />
               <Row
-                label="Precio con descuento"
+                label="Precio departamento con descuento"
                 value={formatUF(quote.pricing.precioConDescuentoUF)}
+              />
+              {quote.pricing.adicionalesUF > 0 && (
+                <Row
+                  label="Estacionamiento y bodega"
+                  value={formatUF(quote.pricing.adicionalesUF)}
+                  hint={[
+                    unit.estacionamiento && `Est. ${unit.estacionamiento}`,
+                    unit.estacionamiento2 && `Est. ${unit.estacionamiento2}`,
+                    unit.bodega && `Bodega ${unit.bodega}`,
+                  ]
+                    .filter(Boolean)
+                    .join(' · ')}
+                />
+              )}
+              <Row
+                label={ETIQUETA_BASE[quote.base]}
+                value={formatUF(quote.precioBaseUF)}
                 hint={settings?.ufValue ? formatCLP(quote.precioConsideradoCLP) : undefined}
                 total
               />

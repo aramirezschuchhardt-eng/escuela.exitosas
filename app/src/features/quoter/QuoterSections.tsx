@@ -1,6 +1,12 @@
 import { Link } from 'react-router-dom';
-import type { DividendoEscenario, PricingBreakdown, QuoteResult } from '../../domain/finance';
-import type { Project, Unit } from '../../domain/types';
+import {
+  ETIQUETA_BASE,
+  basesDisponibles,
+  precioSegunBase,
+  type DividendoEscenario,
+  type QuoteResult,
+} from '../../domain/finance';
+import type { BaseCotizacion, Project, Unit } from '../../domain/types';
 import {
   EMPTY,
   formatCLP,
@@ -63,6 +69,26 @@ export function UnidadSeleccionada({
           <Row label="Superficie total" value={formatM2(superficieTotal(unit))} total />
         </DL>
       </div>
+
+      {(unit.estacionamiento || unit.estacionamiento2 || unit.bodega || unit.bodegaBicicleta) && (
+        <div style={{ marginTop: 14 }}>
+          <p className="eyebrow" style={{ marginBottom: 6 }}>
+            Adicionales asignados
+          </p>
+          <div className="row" style={{ gap: 6 }}>
+            {unit.estacionamiento && <Badge tone="accent">Estacionamiento {unit.estacionamiento}</Badge>}
+            {unit.estacionamiento2 && <Badge tone="accent">Estacionamiento {unit.estacionamiento2}</Badge>}
+            {unit.bodega && <Badge tone="accent">Bodega {unit.bodega}</Badge>}
+            {unit.bodegaBicicleta && <Badge tone="neutral">Bodega bicicleta {unit.bodegaBicicleta}</Badge>}
+          </div>
+        </div>
+      )}
+
+      {unit.comentarios && (
+        <div style={{ marginTop: 12 }}>
+          <Note tone="info">{unit.comentarios}</Note>
+        </div>
+      )}
       {Object.keys(unit.extra).length > 0 && (
         <details style={{ marginTop: 14 }}>
           <summary className="small muted" style={{ cursor: 'pointer' }}>
@@ -80,33 +106,99 @@ export function UnidadSeleccionada({
 }
 
 /* ── 7. Precio y descuento ───────────────────────────────────────────────── */
-export function PrecioYDescuento({ pricing }: { pricing: PricingBreakdown }) {
+export function PrecioYDescuento({
+  quote,
+  base,
+  onBase,
+}: {
+  quote: QuoteResult;
+  base: BaseCotizacion;
+  onBase: (b: BaseCotizacion) => void;
+}) {
+  const pricing = quote.pricing;
   const hayDescuento = pricing.descuentoMontoUF > 0.001;
+  const hayAdicionales = pricing.adicionalesUF > 0.001;
+  const bases = basesDisponibles(pricing);
+
   return (
     <Card title="Precio y descuento">
-      <div className="grid grid-3">
-        <Stat label="Precio lista" value={formatUF(pricing.precioListaUF)} />
+      <div className="stack stack-md">
+        <div className="grid grid-3">
+          <Stat label="Precio lista" value={formatUF(pricing.precioListaUF)} />
+          <Stat
+            label="Descuento"
+            value={hayDescuento ? `− ${formatUF(pricing.descuentoMontoUF)}` : formatUF(0)}
+            sub={hayDescuento ? formatPct(pricing.descuentoPct) : 'sin descuento'}
+          />
+          <Stat
+            label="Precio con descuento"
+            value={formatUF(pricing.precioConDescuentoUF)}
+            tone={hayAdicionales ? 'default' : 'dark'}
+            size={hayAdicionales ? 'md' : 'lg'}
+          />
+        </div>
+
+        <div className="row">
+          <Badge tone={pricing.fuente === 'planilla' ? 'accent' : 'neutral'}>
+            {pricing.fuente === 'planilla'
+              ? 'Precio final según planilla'
+              : pricing.fuente === 'calculado'
+                ? 'Precio final calculado'
+                : 'Sin descuento'}
+          </Badge>
+          <span className="small muted">{pricing.detalleDescuento}</span>
+        </div>
+
+        {hayAdicionales && (
+          <>
+            <div className="divider" />
+            <DL>
+              <Row label="Precio departamento con descuento" value={formatUF(pricing.precioConDescuentoUF)} />
+              <Row
+                label="+ Estacionamiento y bodega"
+                value={formatUF(pricing.adicionalesUF)}
+                hint="Según la planilla de stock"
+              />
+              <Row label="Precio negocio final" value={formatUF(pricing.precioNegocioFinalUF)} total />
+            </DL>
+          </>
+        )}
+
+        {bases.length > 1 && (
+          <>
+            <div className="divider" />
+            <Field
+              label="¿Sobre qué precio se cotiza?"
+              hint="Define el monto que se financia, el pie y el dividendo."
+            >
+              <Segmented
+                label="Base de cotización"
+                value={base}
+                onChange={onBase}
+                options={bases.map((b) => ({
+                  value: b,
+                  label: ETIQUETA_BASE[b],
+                  sub: formatUF(precioSegunBase(pricing, b)),
+                }))}
+              />
+            </Field>
+            {base === 'aporte' && pricing.aporteInmobiliarioPct != null && (
+              <Note tone="info">
+                Precio bajo la modalidad de <strong>aporte inmobiliario</strong> de{' '}
+                {formatPct(pricing.aporteInmobiliarioPct)}, según la planilla. Sujeto a acuerdo firmado
+                con la inmobiliaria.
+              </Note>
+            )}
+          </>
+        )}
+
         <Stat
-          label="Descuento"
-          value={hayDescuento ? `− ${formatUF(pricing.descuentoMontoUF)}` : formatUF(0)}
-          sub={hayDescuento ? formatPct(pricing.descuentoPct) : 'sin descuento'}
-        />
-        <Stat
-          label="Precio con descuento"
-          value={formatUF(pricing.precioConDescuentoUF)}
+          label={`Precio a cotizar · ${ETIQUETA_BASE[quote.base]}`}
+          value={formatUF(quote.precioBaseUF)}
+          sub={quote.ufValue > 0 ? formatCLP(quote.precioBaseUF * quote.ufValue) : undefined}
           tone="dark"
           size="lg"
         />
-      </div>
-      <div className="row" style={{ marginTop: 12 }}>
-        <Badge tone={pricing.fuente === 'planilla' ? 'accent' : 'neutral'}>
-          {pricing.fuente === 'planilla'
-            ? 'Precio final según planilla'
-            : pricing.fuente === 'calculado'
-              ? 'Precio final calculado'
-              : 'Sin descuento'}
-        </Badge>
-        <span className="small muted">{pricing.detalleDescuento}</span>
       </div>
     </Card>
   );
@@ -298,16 +390,27 @@ export function CreditoDirecto({
   }
 
   const topeEfectivo = Math.min(cfg.maxPct, quote.pieTotalPct);
-  const pasos: number[] = [];
-  for (let p = 0; p <= topeEfectivo + 1e-9; p += 0.01) pasos.push(Math.round(p * 100) / 100);
+  /*
+   * 0% siempre está disponible y significa "no usar crédito directo". Los demás
+   * porcentajes arrancan en el mínimo que el proyecto exige cuando sí se usa
+   * (por ejemplo, 5%), para no ofrecer tramos que la inmobiliaria no acepta.
+   */
+  const pasos: number[] = [0];
+  const desde = Math.max(cfg.minPct, 0.01);
+  for (let p = desde; p <= topeEfectivo + 1e-9; p += 0.01) pasos.push(Math.round(p * 100) / 100);
+
+  const rango =
+    cfg.minPct > 0
+      ? `Del ${formatPct(cfg.minPct, 0)} al ${formatPct(cfg.maxPct, 0)}`
+      : `Hasta ${formatPct(cfg.maxPct, 0)}`;
 
   return (
     <Card
       title="Crédito directo inmobiliario"
       desc={
         cfg.tasaAnual === 0
-          ? `Hasta ${formatPct(cfg.maxPct, 0)} del valor de la propiedad, sin interés.`
-          : `Hasta ${formatPct(cfg.maxPct, 0)} del valor de la propiedad, tasa ${formatPct(cfg.tasaAnual)} anual.`
+          ? `${rango} del valor de la propiedad, sin interés.`
+          : `${rango} del valor de la propiedad, tasa ${formatPct(cfg.tasaAnual)} anual.`
       }
       aside={cfg.tasaAnual === 0 ? <Badge tone="ok">0% interés</Badge> : null}
     >

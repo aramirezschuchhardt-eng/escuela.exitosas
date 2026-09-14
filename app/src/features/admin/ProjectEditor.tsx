@@ -76,6 +76,51 @@ function ListaEditor({
   );
 }
 
+/** Editor de la ficha técnica: pares dato/valor libres. */
+function FichaTecnicaEditor({
+  items,
+  onChange,
+}: {
+  items: { label: string; value: string }[];
+  onChange: (items: { label: string; value: string }[]) => void;
+}) {
+  return (
+    <div className="stack stack-xs">
+      {items.map((it, i) => (
+        <div key={i} className="row" style={{ flexWrap: 'nowrap', gap: 6 }}>
+          <div style={{ flex: '0 0 40%' }}>
+            <TextInput
+              value={it.label}
+              onChange={(v) => onChange(items.map((x, j) => (j === i ? { ...x, label: v } : x)))}
+              placeholder="Dato"
+            />
+          </div>
+          <div className="grow">
+            <TextInput
+              value={it.value}
+              onChange={(v) => onChange(items.map((x, j) => (j === i ? { ...x, value: v } : x)))}
+              placeholder="Valor"
+            />
+          </div>
+          <button
+            className="btn btn-ghost btn-sm"
+            onClick={() => onChange(items.filter((_, j) => j !== i))}
+            aria-label="Quitar"
+          >
+            ✕
+          </button>
+        </div>
+      ))}
+      <button
+        className="btn btn-outline btn-sm"
+        onClick={() => onChange([...items, { label: '', value: '' }])}
+      >
+        Agregar dato
+      </button>
+    </div>
+  );
+}
+
 function ImagenField({
   label,
   hint,
@@ -245,6 +290,18 @@ function TipologiasEditor({
             </button>
           </div>
           <div className="grid grid-4">
+            <Field label="N° de modelo" hint="Enlaza con la columna Modelo de la planilla.">
+              <NumberInput value={t.modelo} onChange={(v) => set(i, { modelo: v })} />
+            </Field>
+            <Field label="Pisos">
+              <TextInput value={t.pisos ?? ''} onChange={(v) => set(i, { pisos: v || null })} />
+            </Field>
+            <Field label="Orientación">
+              <TextInput
+                value={t.orientacion ?? ''}
+                onChange={(v) => set(i, { orientacion: v || null })}
+              />
+            </Field>
             <Field label="Dormitorios">
               <NumberInput value={t.dormitorios} onChange={(v) => set(i, { dormitorios: v })} />
             </Field>
@@ -280,6 +337,9 @@ function TipologiasEditor({
             ...tipologias,
             {
               nombre: 'Nueva tipología',
+              modelo: null,
+              pisos: null,
+              orientacion: null,
               dormitorios: null,
               banos: null,
               superficieUtil: null,
@@ -410,6 +470,27 @@ export default function ProjectEditor({
             label="Beneficios para inversionistas"
             items={draft.beneficios}
             onChange={(v) => set('beneficios', v)}
+          />
+        </div>
+      </Card>
+
+      <Card
+        title="Ficha técnica y condiciones comerciales"
+        desc="Datos operativos del proyecto que se muestran en su ficha."
+      >
+        <div className="stack stack-md">
+          <Field label="Ficha técnica">
+            <FichaTecnicaEditor
+              items={draft.fichaTecnica}
+              onChange={(v) => set('fichaTecnica', v)}
+            />
+          </Field>
+          <div className="divider" />
+          <ListaEditor
+            label="Condiciones comerciales"
+            hint="Bono pie, crédito directo, arriendo garantizado, reserva, etc."
+            items={draft.condicionesComerciales}
+            onChange={(v) => set('condicionesComerciales', v)}
           />
         </div>
       </Card>

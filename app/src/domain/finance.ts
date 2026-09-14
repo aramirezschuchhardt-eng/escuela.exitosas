@@ -11,7 +11,7 @@
  * No se redondea internamente: el redondeo ocurre sólo al formatear.
  */
 
-import type { ProjectConfig, RateConvention, Unit } from './types';
+import type { BaseCotizacion, ProjectConfig, RateConvention, Unit } from './types';
 
 export const TOLERANCIA_UF = 0.02;
 
@@ -26,6 +26,16 @@ export interface PricingBreakdown {
   descuentoMontoUF: number;
   descuentoPct: number;
   precioConDescuentoUF: number | null;
+
+  /** Estacionamiento y bodega asociados, en UF. */
+  adicionalesUF: number;
+  /** Precio con descuento + adicionales. `null` si no hay precio. */
+  precioNegocioFinalUF: number | null;
+  /** Fracción de aporte inmobiliario de la planilla, si la unidad la trae. */
+  aporteInmobiliarioPct: number | null;
+  /** Precio bajo modalidad de aporte inmobiliario, si la planilla lo trae. */
+  precioAporteInmobiliarioUF: number | null;
+
   /** De dónde salió el precio con descuento. */
   fuente: FuentePrecio;
   /** Descripción legible del descuento aplicado. */
@@ -38,6 +48,49 @@ export interface PricingInput {
   descuentoPct: number | null;
   descuentoMontoUF: number | null;
   precioConDescuentoUF: number | null;
+  /** Estacionamiento/bodega asociados a la unidad, en UF. */
+  precioAdicionalesUF?: number | null;
+  /** Precio negocio final declarado por la planilla, si viene. */
+  precioNegocioFinalUF?: number | null;
+  aporteInmobiliarioPct?: number | null;
+  precioAporteInmobiliarioUF?: number | null;
+}
+
+/**
+ * Devuelve el precio correspondiente a la base de cotización elegida, o `null`
+ * si esa base no está disponible para la unidad.
+ */
+export function precioSegunBase(
+  pricing: PricingBreakdown,
+  base: BaseCotizacion,
+): number | null {
+  switch (base) {
+    case 'aporte':
+      return pricing.precioAporteInmobiliarioUF;
+    case 'negocio':
+      return pricing.precioNegocioFinalUF;
+    default:
+      return pricing.precioConDescuentoUF;
+  }
+}
+
+export const ETIQUETA_BASE: Record<BaseCotizacion, string> = {
+  departamento: 'Precio departamento',
+  negocio: 'Precio negocio final',
+  aporte: 'Precio con aporte inmobiliario',
+};
+
+/** Bases realmente disponibles para una unidad, en orden de presentación. */
+export function basesDisponibles(pricing: PricingBreakdown): BaseCotizacion[] {
+  const bases: BaseCotizacion[] = ['departamento'];
+  if (pricing.adicionalesUF > TOLERANCIA_UF) bases.push('negocio');
+  if (pricing.precioAporteInmobiliarioUF != null) bases.push('aporte');
+  return bases;
+}
+
+/** Base sugerida: si la unidad trae adicionales, el precio negocio final. */
+export function baseSugerida(pricing: PricingBreakdown): BaseCotizacion {
+  return pricing.adicionalesUF > TOLERANCIA_UF ? 'negocio' : 'departamento';
 }
 
 /**
@@ -50,7 +103,16 @@ export interface PricingInput {
  *     porcentaje de descuento (si existe) — nunca ambos.
  *  3. Si no hay descuento, precio con descuento = precio lista.
  */
-export function resolvePricing(input: PricingInput): PricingBreakdown {
+/**
+ * Núcleo: resuelve precio lista / descuento / precio con descuento.
+ * `resolvePricing` lo envuelve para agregar adicionales y bases alternativas.
+ */
+type PricingCore = Omit<
+  PricingBreakdown,
+  'adicionalesUF' | 'precioNegocioFinalUF' | 'aporteInmobiliarioPct' | 'precioAporteInmobiliarioUF'
+>;
+
+function resolvePricingCore(input: PricingInput): PricingCore {
   const { precioListaUF, descuentoPct, descuentoMontoUF, precioConDescuentoUF } = input;
   const warnings: string[] = [];
 
@@ -151,12 +213,65 @@ export function resolvePricing(input: PricingInput): PricingBreakdown {
   };
 }
 
+/**
+ * Resuelve el precio completo de una unidad: descuento, adicionales
+ * (estacionamiento/bodega) y las bases alternativas que traiga la planilla.
+ *
+ * Valida las identidades que la planilla debe cumplir y avisa si no calzan, en
+ * lugar de corregirlas por su cuenta.
+ */
+export function resolvePricing(input: PricingInput): PricingBreakdown {
+  const core = resolvePricingCore(input);
+  const warnings = [...core.warnings];
+
+  const adicionalesUF = input.precioAdicionalesUF ?? 0;
+
+  // Precio negocio final: manda el de la planilla; si no viene, se calcula.
+  let precioNegocioFinalUF: number | null = null;
+  if (core.precioConDescuentoUF != null) {
+    const calculado = core.precioConDescuentoUF + adicionalesUF;
+    if (input.precioNegocioFinalUF != null) {
+      precioNegocioFinalUF = input.precioNegocioFinalUF;
+      if (Math.abs(calculado - input.precioNegocioFinalUF) > TOLERANCIA_UF) {
+        warnings.push(
+          `Inconsistencia en la planilla: el precio negocio final (${input.precioNegocioFinalUF.toFixed(2)} UF) ` +
+            `no coincide con precio con descuento + adicionales (${calculado.toFixed(2)} UF). ` +
+            'Se usa el valor de la planilla.',
+        );
+      }
+    } else {
+      precioNegocioFinalUF = calculado;
+    }
+  }
+
+  // Aporte inmobiliario: sólo se expone si la planilla trae el precio.
+  const precioAporteInmobiliarioUF = input.precioAporteInmobiliarioUF ?? null;
+  let aporteInmobiliarioPct = input.aporteInmobiliarioPct ?? null;
+  if (aporteInmobiliarioPct == null && precioAporteInmobiliarioUF != null && precioNegocioFinalUF) {
+    // Tasa implícita: precio aporte = negocio final / (1 − tasa).
+    aporteInmobiliarioPct = 1 - precioNegocioFinalUF / precioAporteInmobiliarioUF;
+  }
+
+  return {
+    ...core,
+    adicionalesUF,
+    precioNegocioFinalUF,
+    aporteInmobiliarioPct,
+    precioAporteInmobiliarioUF,
+    warnings,
+  };
+}
+
 export function pricingFromUnit(unit: Unit): PricingBreakdown {
   return resolvePricing({
     precioListaUF: unit.precioListaUF,
     descuentoPct: unit.descuentoPct,
     descuentoMontoUF: unit.descuentoMontoUF,
     precioConDescuentoUF: unit.precioConDescuentoUF,
+    precioAdicionalesUF: unit.precioAdicionalesUF,
+    precioNegocioFinalUF: unit.precioNegocioFinalUF,
+    aporteInmobiliarioPct: unit.aporteInmobiliarioPct,
+    precioAporteInmobiliarioUF: unit.precioAporteInmobiliarioUF,
   });
 }
 
@@ -194,6 +309,8 @@ export function annuityPayment(principal: number, tasaMensual: number, nCuotas: 
 
 export interface QuoteInput {
   pricing: PricingBreakdown;
+  /** Qué precio de la planilla se cotiza. Por defecto, el del departamento. */
+  base?: BaseCotizacion;
   config: ProjectConfig;
   ufValue: number;
   bonoPiePct: number;
@@ -223,6 +340,10 @@ export interface DividendoEscenario {
 
 export interface QuoteResult {
   pricing: PricingBreakdown;
+  /** Base de precio efectivamente usada. */
+  base: BaseCotizacion;
+  /** Precio de la base elegida, antes de la devolución de IVA. */
+  precioBaseUF: number;
   /** Valor de UF usado en esta cotización, para convertir cualquier monto a pesos. */
   ufValue: number;
   precioConsideradoUF: number;
@@ -282,7 +403,21 @@ export function computeQuote(input: QuoteInput): QuoteResult {
   } = input;
   const warnings = [...pricing.warnings];
 
-  const precioBaseUF = pricing.precioConDescuentoUF ?? 0;
+  /*
+   * La base de cotización decide qué precio de la planilla se financia. Si la
+   * base pedida no existe para esta unidad, se cae a la del departamento y se
+   * avisa, en lugar de cotizar sobre un precio que la planilla no trae.
+   */
+  const basePedida = input.base ?? 'departamento';
+  const precioPedido = precioSegunBase(pricing, basePedida);
+  const base: BaseCotizacion = precioPedido != null ? basePedida : 'departamento';
+  if (precioPedido == null && basePedida !== 'departamento') {
+    warnings.push(
+      `La planilla no trae "${ETIQUETA_BASE[basePedida]}" para esta unidad. ` +
+        'Se cotiza sobre el precio del departamento con descuento.',
+    );
+  }
+  const precioBaseUF = precioSegunBase(pricing, base) ?? 0;
 
   // ── Devolución de IVA ────────────────────────────────────────────────────
   const ivaAplica = config.iva.enabled;
@@ -379,6 +514,8 @@ export function computeQuote(input: QuoteInput): QuoteResult {
 
   return {
     pricing,
+    base,
+    precioBaseUF,
     ufValue,
     precioConsideradoUF,
     precioConsideradoCLP,

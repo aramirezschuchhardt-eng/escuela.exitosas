@@ -10,6 +10,8 @@ import type { QuoteParams } from '../domain/types';
 interface Compact {
   p: string;
   u: string;
+  /** Base de cotización: d = departamento, n = negocio final, a = aporte inmobiliario. */
+  s: 'd' | 'n' | 'a';
   b: number;
   l: number;
   c: number;
@@ -23,6 +25,7 @@ export function encodeQuote(params: QuoteParams): string {
   const compact: Compact = {
     p: params.projectId,
     u: params.unitId,
+    s: params.base === 'negocio' ? 'n' : params.base === 'aporte' ? 'a' : 'd',
     b: round(params.bonoPiePct, 4),
     l: round(params.ltv, 4),
     c: round(params.creditoDirectoPct, 4),
@@ -42,6 +45,7 @@ export function decodeQuote(token: string): QuoteParams | null {
     return {
       projectId: c.p,
       unitId: c.u,
+      base: c.s === 'n' ? 'negocio' : c.s === 'a' ? 'aporte' : 'departamento',
       bonoPiePct: num(c.b, 0),
       ltv: num(c.l, 0.9),
       creditoDirectoPct: num(c.c, 0),

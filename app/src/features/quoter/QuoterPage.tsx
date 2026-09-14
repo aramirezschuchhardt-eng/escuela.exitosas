@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useStore } from '../../data/store';
 import {
+  baseSugerida,
   computeEscenarios,
   computeQuote,
   pricingFromUnit,
@@ -46,6 +47,8 @@ function initialParams(project: Project, unit: Unit | null): QuoteParams {
   return {
     projectId: project.id,
     unitId: unit?.id ?? '',
+    // Si la unidad trae estacionamiento o bodega, se cotiza el precio negocio final.
+    base: unit ? baseSugerida(pricingFromUnit(unit)) : 'departamento',
     bonoPiePct: c.bonoPie.enabled ? (unit?.bonoPiePct ?? c.bonoPie.defaultPct) : 0,
     ltv: c.financiamientoDefault,
     creditoDirectoPct: c.creditoDirecto.enabled ? c.creditoDirecto.defaultPct : 0,
@@ -96,6 +99,7 @@ export default function QuoterPage() {
     if (!project || !unit || !params) return null;
     return {
       pricing: pricingFromUnit(unit),
+      base: params.base,
       config: project.config,
       ufValue,
       bonoPiePct: params.bonoPiePct,
@@ -152,7 +156,16 @@ export default function QuoterPage() {
     setParams((p) => (p ? { ...p, [key]: value } : p));
 
   const seleccionar = (u: Unit) => {
-    setParams((p) => (p ? { ...p, unitId: u.id, bonoPiePct: u.bonoPiePct ?? p.bonoPiePct } : p));
+    setParams((p) =>
+      p
+        ? {
+            ...p,
+            unitId: u.id,
+            base: baseSugerida(pricingFromUnit(u)),
+            bonoPiePct: u.bonoPiePct ?? p.bonoPiePct,
+          }
+        : p,
+    );
     setEligiendo(false);
     navigate(`/cotizar/${project.id}/${u.id}`, { replace: true });
   };
@@ -203,7 +216,11 @@ export default function QuoterPage() {
             <Warnings items={quote.warnings} />
 
             <UnidadSeleccionada project={project} unit={unit} onCambiar={() => setEligiendo(true)} />
-            <PrecioYDescuento pricing={quote.pricing} />
+            <PrecioYDescuento
+              quote={quote}
+              base={params.base}
+              onBase={(b) => set('base', b)}
+            />
             <BonoPie
               project={project}
               quote={quote}

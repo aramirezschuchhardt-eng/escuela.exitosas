@@ -51,6 +51,11 @@ const CAMPOS_COMPARABLES: CanonicalField[] = [
   'descuentoPct',
   'descuentoMontoUF',
   'precioConDescuentoUF',
+  'precioAdicionalesUF',
+  'precioNegocioFinalUF',
+  'precioAporteInmobiliarioUF',
+  'estacionamiento',
+  'bodega',
 ];
 
 const SPEC_BY_FIELD = new Map(FIELD_SPECS.map((s) => [s.field, s]));
@@ -166,6 +171,19 @@ export function buildPreview(params: {
       ),
       estado: valores.estado != null ? estado.estado : (existente?.estado ?? 'DESCONOCIDO'),
       estadoOriginal: valores.estado != null ? estado.original : (existente?.estadoOriginal ?? null),
+      estacionamiento: strOrKeep(valores.estacionamiento, existente?.estacionamiento),
+      estacionamiento2: strOrKeep(valores.estacionamiento2, existente?.estacionamiento2),
+      bodega: strOrKeep(valores.bodega, existente?.bodega),
+      bodegaBicicleta: strOrKeep(valores.bodegaBicicleta, existente?.bodegaBicicleta),
+      precioAdicionalesUF: numOrKeep(valores.precioAdicionalesUF, existente?.precioAdicionalesUF),
+      precioNegocioFinalUF: numOrKeep(valores.precioNegocioFinalUF, existente?.precioNegocioFinalUF),
+      // La tasa de aporte se deriva del precio; no viene como columna propia.
+      aporteInmobiliarioPct: existente?.aporteInmobiliarioPct ?? null,
+      precioAporteInmobiliarioUF: numOrKeep(
+        valores.precioAporteInmobiliarioUF,
+        existente?.precioAporteInmobiliarioUF,
+      ),
+      comentarios: strOrKeep(valores.comentarios, existente?.comentarios),
       // Los datos comerciales que no vienen de la planilla se conservan.
       bonoPiePct: existente?.bonoPiePct ?? null,
       extra: buildExtra(raw, mapping, existente?.extra),
