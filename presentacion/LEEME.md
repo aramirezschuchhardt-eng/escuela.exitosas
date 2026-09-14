@@ -55,6 +55,20 @@ No hay que tocar ninguna otra cosa: la lámina que use esa clave se actualiza so
 Si alguna imagen remota no carga, la lámina no se rompe: en su lugar aparece
 un degradado con los colores de la marca y el texto se sigue leyendo igual.
 
+## Un solo archivo para enviar
+
+Para mandarla por correo o abrirla sin servidor:
+
+```sh
+python3 empaquetar.py
+```
+
+Genera `escuela-de-brokers.html`, un archivo único (~3 MB) con el CSS, el
+JavaScript y todas las fotografías locales adentro. Se abre con doble clic.
+
+Las fotos de escena remotas siguen siendo remotas: sin conexión, esas láminas
+muestran el degradado de marca y el texto se lee igual.
+
 ## Archivos
 
 ```
@@ -64,6 +78,7 @@ imagenes.js    El listado de fotografías ← aquí se cambian las imágenes
 piezas.js      Piezas reutilizables: iconos, tarjetas, checklists, pies
 guion.js       El contenido de las 32 láminas, una entrada por lámina
 deck.js        Navegación, escalado, vista general y respaldo de imágenes
+empaquetar.py  Genera la versión de un solo archivo, lista para enviar
 img/proyecto/  Renders reales de Edificio Vista Amunátegui
 img/marca/     Logotipo de Avance Inmobiliario
 ```

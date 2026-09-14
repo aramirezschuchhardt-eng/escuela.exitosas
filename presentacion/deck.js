@@ -31,13 +31,17 @@ LAMINAS.forEach((l, i) => {
 });
 
 /* Red de seguridad: una fotografía que no carga se reemplaza por un
-   degradado de marca, en vez de dejar un icono roto en medio de la lámina. */
-escenario.querySelectorAll('img').forEach(img => {
-  img.addEventListener('error', () => {
-    img.classList.add('sin-foto');
-    const caja = img.closest('.foto, .media-foto, .pc-foto, .tf-img, .celda') || img.parentElement;
-    caja?.classList.add('sin-foto-fondo');
-  }, { once: true });
+   degradado de marca, en vez de dejar un icono roto en medio de la lámina.
+   Cubre también las miniaturas de la vista general. */
+function respaldar(img) {
+  img.classList.add('sin-foto');
+  const caja = img.closest('.foto, .media-foto, .pc-foto, .tf-img, .celda, .mini') || img.parentElement;
+  caja?.classList.add('sin-foto-fondo');
+}
+document.querySelectorAll('#escenario img, #panorama img').forEach(img => {
+  img.addEventListener('error', () => respaldar(img), { once: true });
+  // Por si ya había fallado antes de que alcanzáramos a escucharla
+  if (img.complete && img.naturalWidth === 0) respaldar(img);
 });
 
 const laminas = [...escenario.querySelectorAll('.lamina')];
