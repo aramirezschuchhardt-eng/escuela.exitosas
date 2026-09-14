@@ -1,0 +1,118 @@
+import type { QuoteParams } from '../domain/types';
+
+/**
+ * Codifica los parámetros de una cotización en la URL, para poder compartirla
+ * por link / WhatsApp / correo sin necesidad de backend.
+ *
+ * Se usa una forma compacta (claves de 2 letras) porque el link viaja por
+ * WhatsApp y conviene que sea corto.
+ */
+interface Compact {
+  p: string;
+  u: string;
+  /** Base de cotización: d = departamento, n = negocio final, a = aporte inmobiliario. */
+  s: 'd' | 'n' | 'a';
+  b: number;
+  l: number;
+  c: number;
+  n: number;
+  y: number;
+  a: number | null;
+  i: number;
+  /** Supuestos del cash flow, en el orden en que se listan abajo. */
+  f: number[];
+}
+
+export function encodeQuote(params: QuoteParams): string {
+  const compact: Compact = {
+    p: params.projectId,
+    u: params.unitId,
+    s: params.base === 'negocio' ? 'n' : params.base === 'aporte' ? 'a' : 'd',
+    b: round(params.bonoPiePct, 4),
+    l: round(params.ltv, 4),
+    c: round(params.creditoDirectoPct, 4),
+    n: params.creditoDirectoCuotas,
+    y: params.plazoAnios,
+    a: params.arriendoCLP,
+    i: round(params.ivaPct, 4),
+    f: [
+      round(params.cashflow.plusvaliaAnual, 4),
+      round(params.cashflow.vacanciaPct, 4),
+      params.cashflow.gastosComunesCLP,
+      params.cashflow.contribucionesCLPAnual,
+      round(params.cashflow.administracionPct, 4),
+      params.cashflow.segurosCLPMensual,
+      round(params.cashflow.otrosGastosCompraUF, 2),
+    ],
+  };
+  return toBase64Url(JSON.stringify(compact));
+}
+
+export function decodeQuote(token: string): QuoteParams | null {
+  try {
+    const raw = fromBase64Url(token);
+    const c = JSON.parse(raw) as Compact;
+    if (typeof c.p !== 'string' || typeof c.u !== 'string') return null;
+    return {
+      projectId: c.p,
+      unitId: c.u,
+      base: c.s === 'n' ? 'negocio' : c.s === 'a' ? 'aporte' : 'departamento',
+      bonoPiePct: num(c.b, 0),
+      ltv: num(c.l, 0.9),
+      creditoDirectoPct: num(c.c, 0),
+      creditoDirectoCuotas: num(c.n, 60),
+      plazoAnios: num(c.y, 30),
+      arriendoCLP: typeof c.a === 'number' ? c.a : null,
+      ivaPct: num(c.i, 0.1),
+      cashflow: {
+        plusvaliaAnual: num(c.f?.[0], 0.045),
+        vacanciaPct: num(c.f?.[1], 0),
+        gastosComunesCLP: num(c.f?.[2], 0),
+        contribucionesCLPAnual: num(c.f?.[3], 0),
+        administracionPct: num(c.f?.[4], 0),
+        segurosCLPMensual: num(c.f?.[5], 0),
+        otrosGastosCompraUF: num(c.f?.[6], 0),
+      },
+    };
+  } catch {
+    return null;
+  }
+}
+
+function num(value: unknown, fallback: number): number {
+  return typeof value === 'number' && Number.isFinite(value) ? value : fallback;
+}
+
+function round(value: number, decimals: number): number {
+  const f = Math.pow(10, decimals);
+  return Math.round(value * f) / f;
+}
+
+function toBase64Url(input: string): string {
+  const bytes = new TextEncoder().encode(input);
+  let binary = '';
+  bytes.forEach((b) => {
+    binary += String.fromCharCode(b);
+  });
+  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+function fromBase64Url(input: string): string {
+  const padded = input.replace(/-/g, '+').replace(/_/g, '/');
+  const binary = atob(padded + '='.repeat((4 - (padded.length % 4)) % 4));
+  const bytes = Uint8Array.from(binary, (ch) => ch.charCodeAt(0));
+  return new TextDecoder().decode(bytes);
+}
+
+export function quoteUrl(params: QuoteParams): string {
+  const base = `${window.location.origin}${window.location.pathname}`;
+  return `${base}#/cotizacion/${encodeQuote(params)}`;
+}
+
+export function whatsappUrl(texto: string): string {
+  return `https://wa.me/?text=${encodeURIComponent(texto)}`;
+}
+
+export function mailtoUrl(asunto: string, cuerpo: string): string {
+  return `mailto:?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
+}
