@@ -444,6 +444,19 @@ img.sin-foto { visibility: hidden }
 
 /* Aviso cuando el navegador no ejecuta JavaScript: sin esto la página
    quedaría completamente en negro, porque las láminas las monta el script. */
+.arranque {
+  position: fixed; inset: 0; z-index: 40;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  gap: 12px; padding: 48px; text-align: center;
+  background: var(--lienzo); color: var(--tinta);
+}
+.arranque h1 { font-size: 32px; color: var(--naranja) }
+.arranque p { font-size: 16px; color: var(--gris); max-width: 52ch }
+.arranque .pista {
+  font-size: 14px; color: var(--danger); font-family: ui-monospace, monospace;
+  background: var(--danger-soft, #FBE9EC); padding: 12px 16px; border-radius: 10px; margin-top: 8px;
+}
+
 .sin-js {
   position: fixed; inset: 0; z-index: 90;
   display: flex; flex-direction: column; justify-content: center;

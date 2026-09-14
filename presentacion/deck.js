@@ -149,3 +149,6 @@ addEventListener('hashchange', () => {
 addEventListener('resize', escalar);
 escalar();
 ir(Math.max(0, (parseInt(location.hash.slice(1), 10) || 1) - 1));
+
+/* Todo salió bien: se retira el panel de arranque y aparecen las láminas. */
+document.getElementById('arranque')?.remove();

@@ -13,9 +13,26 @@
 </head>
 <body>
 
+<!-- Va primero y aparte: si el script principal falla, este ya está escuchando
+     y explica el problema en pantalla en vez de dejarla en negro. -->
+<script>
+addEventListener('error', function (e) {
+  var aviso = document.getElementById('arranque-error');
+  if (!aviso) return;
+  aviso.hidden = false;
+  aviso.textContent = 'No se pudo iniciar: ' + (e.message || 'error desconocido');
+});
+</script>
+
 <div id="progreso"></div>
 
-<main id="escenario" aria-live="polite"></main>
+<main id="escenario" aria-live="polite">
+  <div class="arranque" id="arranque">
+    <h1>Escuela de Brokers</h1>
+    <p>Cargando la presentación…</p>
+    <p class="pista" id="arranque-error" hidden></p>
+  </div>
+</main>
 
 <noscript>
   <div class="sin-js">
