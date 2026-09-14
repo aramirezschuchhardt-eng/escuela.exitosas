@@ -55,7 +55,7 @@ const check = (texto) => `
 const tarjeta = (icono, titulo, texto, clase = '') => `
   <div class="tarjeta ${clase}">
     ${icono ? ico(icono) : ''}
-    <div>
+    <div class="t-cuerpo">
       <div class="t-titulo">${titulo}</div>
       <div class="t-texto">${texto}</div>
     </div>

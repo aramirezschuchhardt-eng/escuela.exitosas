@@ -197,7 +197,7 @@ img.sin-foto { visibility: hidden }
 .tarjeta.tinta .t-texto { color: rgba(255,255,255,.72) }
 .tarjeta.destacada { border-color: var(--naranja); box-shadow: 0 8px 26px rgba(244,99,36,.16) }
 
-.tarjeta > div { display: flex; flex-direction: column; gap: 7px; min-height: 0 }
+.tarjeta > .t-cuerpo { display: flex; flex-direction: column; gap: 7px; min-height: 0 }
 .t-titulo { font-family: var(--display); font-weight: 800; font-size: 19px; letter-spacing: -.015em; line-height: 1.2 }
 .t-texto  { font-size: 14.5px; line-height: 1.55; color: var(--gris) }
 .t-num {
@@ -228,7 +228,7 @@ img.sin-foto { visibility: hidden }
 
 /* Tarjeta en fila: icono al lado del texto, mucho más baja */
 .tarjeta.en-fila { flex-direction: row; align-items: flex-start; gap: 15px; }
-.tarjeta.en-fila > div { display: flex; flex-direction: column; gap: 4px; }
+.tarjeta.en-fila > .t-cuerpo { display: flex; flex-direction: column; gap: 4px; }
 
 /* ═══ ICONOS ═══ */
 .icono {

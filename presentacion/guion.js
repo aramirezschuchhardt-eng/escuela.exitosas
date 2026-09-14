@@ -97,87 +97,163 @@ export const LAMINAS = [
     ${pie('03 · El oficio')}`
 },
 
-/* ── 05 · TU INGRESO ──────────────────────────────────────── */
+/* ── 05 · LOS DOS MODELOS DE COMISIÓN ────────────────────── */
 {
-  titulo: 'Cómo se gana', mini: IMG.reunionClientes,
+  titulo: 'Cómo te pagan', mini: IMG.reunionClientes,
   html: `
-    <div class="cuerpo">
+    <div class="cuerpo denso">
       <div class="encabezado" data-anima="1">
         <span class="rotulo">Tu ingreso</span>
-        <h2 class="titular">Cobras por resultado</h2>
-        <p class="bajada">Tu comisión es un porcentaje del valor de la propiedad que vendes. En Chile todo se conversa en UF, así que aquí también.</p>
+        <h2 class="titular">Te pagan de dos maneras distintas</h2>
+        <p class="bajada">Según si la propiedad es nueva o usada. Son estructuras diferentes, y conviene que las tengas claras desde hoy.</p>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:26px;margin-bottom:34px" data-anima="2">
-        <div>
-          <div class="cifra naranja">1,5<span class="unidad">%</span> – 3<span class="unidad">%</span></div>
-          <div class="cifra-pie">Rango habitual de comisión sobre el valor de la propiedad.</div>
+      <div class="dos-columnas" style="gap:26px">
+        <div class="tarjeta destacada" data-anima="2" style="justify-content:center;gap:14px">
+          <span class="t-num">Propiedad nueva · Vista Amunátegui</span>
+          <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
+            <span class="cifra naranja" style="font-size:58px">1,6<span class="unidad">%</span></span>
+            <span style="font-family:var(--display);font-weight:800;font-size:22px;color:var(--gris)">+ $1.000.000</span>
+          </div>
+          <div class="t-texto" style="font-size:15px">
+            Un <strong>1,6 % del valor de venta</strong>, más un <strong>bono fijo de un millón de pesos</strong> por cada operación cerrada.
+          </div>
         </div>
-        <div>
-          <div class="cifra">UF 60</div>
-          <div class="cifra-pie">Lo que deja una venta de UF 3.000 con un 2 % de comisión.</div>
-        </div>
-        <div>
-          <div class="cifra">0</div>
-          <div class="cifra-pie">Lo que necesitas invertir en stock: el producto no es tuyo.</div>
-        </div>
-      </div>
-      <div class="tarjeta lienzo" style="flex-direction:row;align-items:center;gap:26px;padding:22px 26px" data-anima="3">
-        ${ico('calculadora', 'solido')}
-        <div style="flex:1">
-          <div class="t-titulo" style="margin-bottom:4px">Hazlo siempre en UF, nunca “más o menos”</div>
-          <div class="t-texto">Un cliente confía en la broker que le dice el número exacto: precio, pie, comisión y gastos. Para eso tienes el cotizador.</div>
+        <div class="tarjeta" data-anima="3" style="justify-content:center;gap:14px">
+          <span class="t-num">Propiedad usada</span>
+          <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
+            <span class="cifra" style="font-size:58px">30<span class="unidad">%</span></span>
+            <span style="font-family:var(--display);font-weight:800;font-size:22px;color:var(--gris)">del 4 %</span>
+          </div>
+          <div class="t-texto" style="font-size:15px">
+            El negocio completo cobra un <strong>4 % del valor</strong>. De ese 4 %, a ti te toca un <strong>30 % por vender</strong>
+            — y <strong>otro 30 % si además tú captaste</strong> la propiedad.
+          </div>
         </div>
       </div>
     </div>
     ${pie('03 · El oficio')}`
 },
 
-/* ── 06 · PROYECCIÓN ──────────────────────────────────────── */
+/* ── 06 · EL DETALLE DEL NUEVO ───────────────────────────── */
 {
-  titulo: 'A dónde puede llegar', mini: IMG.exito,
+  titulo: 'Lo que deja una nueva', mini: IMG.fachada,
   html: `
-    <div class="cuerpo">
+    <div class="cuerpo denso">
       <div class="encabezado" data-anima="1">
-        <span class="rotulo">Proyección de ejemplo</span>
-        <h2 class="titular">Tu año depende del ritmo</h2>
-        <p class="bajada">Ejercicio con una propiedad promedio de UF 3.000 y 2 % de comisión. No es una promesa: es aritmética para que veas el efecto de sostener el ritmo.</p>
+        <span class="rotulo">Propiedad nueva · con precios reales del edificio</span>
+        <h2 class="titular">Lo que deja cada tipo de departamento</h2>
+        <p class="bajada">Precios medianos reales de Vista Amunátegui. La comisión es 1,6 % del valor, más el bono fijo en cada caso.</p>
       </div>
-      <div class="dos-columnas" style="gap:52px">
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:20px;min-height:0">
+      <div class="rejilla r3" data-anima="2" style="flex:none;gap:16px">
+        <div class="tarjeta lienzo" style="gap:8px">
+          <span class="t-num">Estudio · UF 2.496</span>
+          <div class="cifra chica" style="font-size:42px">UF 40</div>
+          <div class="t-texto" style="font-size:14px">+ $1.000.000 de bono</div>
+        </div>
+        <div class="tarjeta lienzo" style="gap:8px">
+          <span class="t-num">1D + 1B · UF 3.219</span>
+          <div class="cifra chica" style="font-size:42px">UF 51</div>
+          <div class="t-texto" style="font-size:14px">+ $1.000.000 de bono</div>
+        </div>
+        <div class="tarjeta lienzo" style="gap:8px">
+          <span class="t-num">2D + 2B · UF 3.945</span>
+          <div class="cifra chica" style="font-size:42px">UF 63</div>
+          <div class="t-texto" style="font-size:14px">+ $1.000.000 de bono</div>
+        </div>
+      </div>
+      <div class="tarjeta naranja-suave en-fila" data-anima="3" style="align-items:center">
+        ${ico('chispa')}
+        <div class="t-cuerpo">
+          <div class="t-titulo" style="font-size:17px">El bono es fijo, y eso cambia la cuenta</div>
+          <div class="t-texto" style="font-size:14px">
+            Un millón de pesos pesa mucho más sobre un estudio que sobre un 2D. Vender unidades chicas no es vender menos:
+            para ti rinden proporcionalmente más, y además se venden más rápido.
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    ${pie('03 · El oficio')}`
+},
+
+/* ── 07 · EL DETALLE DEL USADO ───────────────────────────── */
+{
+  titulo: 'Lo que deja una usada', mini: IMG.casaUsada,
+  html: `
+    <div class="cuerpo denso">
+      <div class="encabezado" data-anima="1">
+        <span class="rotulo">Propiedad usada · ejemplo con una de UF 4.000</span>
+        <h2 class="titular">Captar y vender es cobrar dos veces</h2>
+      </div>
+      <div class="dos-columnas" style="gap:34px">
+        <div style="display:flex;flex-direction:column;justify-content:center;gap:11px" data-anima="2">
+          <div class="embudo-nivel" style="width:100%;background:var(--tinta);height:54px">
+            <span>El negocio cobra 4 %</span><span class="en-cifra">UF 160</span>
+          </div>
+          <div class="embudo-nivel" style="width:78%;background:var(--naranja-hondo);height:54px">
+            <span>Tú, por vender (30 %)</span><span class="en-cifra">UF 48</span>
+          </div>
+          <div class="embudo-nivel" style="width:78%;background:var(--naranja-hondo);height:54px">
+            <span>Tú, por captar (30 %)</span><span class="en-cifra">UF 48</span>
+          </div>
+          <div class="embudo-nivel" style="width:100%;background:var(--naranja);height:64px;box-shadow:0 8px 22px rgba(244,99,36,.32)">
+            <span style="font-size:17px">Si hiciste las dos</span><span class="en-cifra" style="font-size:30px">UF 96</span>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;justify-content:center;gap:16px" data-anima="3">
+          ${tarjeta('llave', 'La captación te duplica el ingreso', 'Misma propiedad, mismo cierre, el doble de comisión. Por eso una broker con cartera propia gana distinto que una que sólo muestra lo que le pasan.', 'destacada')}
+          ${tarjeta('lupa', 'Una usada propia rinde como dos ventas', 'UF 96 en una operación captada y vendida por ti. Cuesta más trabajo y toma más tiempo, pero el número lo justifica.', 'lienzo')}
+        </div>
+      </div>
+    </div>
+    ${pie('03 · El oficio')}`
+},
+
+/* ── 08 · PROYECCIÓN REALISTA ────────────────────────────── */
+{
+  titulo: 'Tu año, con números reales', mini: IMG.exito,
+  html: `
+    <div class="cuerpo denso">
+      <div class="encabezado" data-anima="1">
+        <span class="rotulo">Proyección con las comisiones reales</span>
+        <h2 class="titular">Tres años posibles</h2>
+        <p class="bajada">Nuevas al valor mediano del edificio (UF 3.202) y usadas propias de UF 4.000. No es una promesa: es la cuenta exacta de cada escenario.</p>
+      </div>
+      <div class="dos-columnas" style="gap:44px">
         <div style="height:100%;padding-bottom:8px" data-anima="2">
           <div class="barras">
             <div class="barra-col">
-              <div class="barra-valor">UF 240</div>
-              <div class="barra" style="height:22%;--retraso:.15s"></div>
-              <div class="barra-etiqueta">4 ventas</div>
+              <div class="barra-valor">UF 307</div>
+              <div class="barra" style="height:31%;--retraso:.15s"></div>
+              <div class="barra-etiqueta">Arranque<br>6 nuevas</div>
             </div>
             <div class="barra-col">
-              <div class="barra-valor">UF 480</div>
-              <div class="barra" style="height:44%;--retraso:.28s"></div>
-              <div class="barra-etiqueta">8 ventas</div>
+              <div class="barra-valor">UF 614</div>
+              <div class="barra" style="height:62%;--retraso:.3s"></div>
+              <div class="barra-etiqueta">En ritmo<br>12 nuevas</div>
             </div>
             <div class="barra-col">
-              <div class="barra-valor">UF 720</div>
-              <div class="barra" style="height:67%;--retraso:.41s"></div>
-              <div class="barra-etiqueta">12 ventas</div>
-            </div>
-            <div class="barra-col">
-              <div class="barra-valor" style="color:var(--naranja)">UF 1.080</div>
-              <div class="barra" style="height:100%;--retraso:.54s"></div>
-              <div class="barra-etiqueta"><strong>18 ventas</strong></div>
+              <div class="barra-valor" style="color:var(--naranja)">UF 998</div>
+              <div class="barra" style="height:100%;--retraso:.45s"></div>
+              <div class="barra-etiqueta"><strong>Con cartera</strong><br>12 nuevas + 4 usadas</div>
             </div>
           </div>
         </div>
-        <div style="display:flex;flex-direction:column;justify-content:center;gap:18px" data-anima="3">
-          ${tarjeta('reloj',  'Una venta y media al mes', 'Ese es el ritmo de la última barra. Suena lejos el primer mes y deja de sonar lejos al sexto.', 'lienzo')}
-          ${tarjeta('chispa', 'La cartera se acumula',    'La clienta que no compró hoy compra en seis meses, y te recomienda antes de eso.', 'naranja-suave')}
+        <div style="display:flex;flex-direction:column;justify-content:center;gap:14px" data-anima="3">
+          <div class="tarjeta lienzo" style="gap:6px;padding:16px 20px">
+            <span class="t-num">Y además, en pesos</span>
+            <div class="t-texto" style="font-size:14.5px">El bono de $1.000.000 va aparte de la UF: <strong>$6.000.000 en el año de arranque y $12.000.000 en ritmo</strong>, sólo en bonos.</div>
+          </div>
+          ${tarjeta('reloj', 'Una venta al mes', 'Ese es el escenario del medio. Suena lejos el primer mes y deja de sonar lejos al sexto.', 'lienzo')}
+          ${tarjeta('chispa', 'La diferencia está en captar', 'Cuatro usadas propias en el año agregan UF 384. Es el salto entre la segunda barra y la tercera.', 'naranja-suave')}
         </div>
       </div>
     </div>
     ${pie('03 · El oficio')}`
 },
 
-
-/* ── 07 · DIVISOR: NUEVO VS USADO ─────────────────────────── */
+/* ── 09 · DIVISOR: NUEVO VS USADO ─────────────────────────── */
 {
   titulo: 'Nuevo vs. Usado', mini: IMG.construccion, oscura: true,
   html: `
@@ -207,7 +283,7 @@ export const LAMINAS = [
     </div>`
 },
 
-/* ── 08 · COMPARACIÓN CARA A CARA ─────────────────────────── */
+/* ── 10 · COMPARACIÓN CARA A CARA ─────────────────────────── */
 {
   titulo: 'Cara a cara', mini: IMG.fachada, oscura: true,
   html: `
@@ -242,7 +318,7 @@ export const LAMINAS = [
     <div class="versus">VS</div>`
 },
 
-/* ── 09 · TABLA COMPARATIVA ───────────────────────────────── */
+/* ── 11 · TABLA COMPARATIVA ───────────────────────────────── */
 {
   titulo: 'El cuadro comparativo', mini: IMG.edificio,
   html: `
@@ -270,7 +346,7 @@ export const LAMINAS = [
     ${pie('04 · Nuevo vs. usado')}`
 },
 
-/* ── 10 · PROPIEDAD NUEVA ─────────────────────────────────── */
+/* ── 12 · PROPIEDAD NUEVA ─────────────────────────────────── */
 {
   titulo: 'Por qué una propiedad nueva', mini: IMG.fachada, oscura: true,
   html: `
@@ -304,7 +380,7 @@ export const LAMINAS = [
     ${pie('05 · Propiedades nuevas')}`
 },
 
-/* ── 11 · VENTA EN VERDE ──────────────────────────────────── */
+/* ── 13 · VENTA EN VERDE ──────────────────────────────────── */
 {
   titulo: 'Verde, blanco y entrega', mini: IMG.construccion,
   html: `
@@ -346,7 +422,7 @@ export const LAMINAS = [
     ${pie('05 · Propiedades nuevas')}`
 },
 
-/* ── 12 · EL PRODUCTO POR DENTRO ──────────────────────────── */
+/* ── 14 · EL PRODUCTO POR DENTRO ──────────────────────────── */
 {
   titulo: 'El producto por dentro', mini: IMG.cocina,
   html: `
@@ -368,7 +444,7 @@ export const LAMINAS = [
     ${pie('05 · Propiedades nuevas')}`
 },
 
-/* ── 13 · AMENITIES ───────────────────────────────────────── */
+/* ── 15 · AMENITIES ───────────────────────────────────────── */
 {
   titulo: 'Los espacios comunes', mini: IMG.piscina,
   html: `
@@ -389,7 +465,7 @@ export const LAMINAS = [
     ${pie('05 · Propiedades nuevas')}`
 },
 
-/* ── 14 · UBICACIÓN ───────────────────────────────────────── */
+/* ── 16 · UBICACIÓN ───────────────────────────────────────── */
 {
   titulo: 'La ubicación', mini: IMG.barrioNoche, oscura: true,
   html: `
@@ -420,7 +496,7 @@ export const LAMINAS = [
 },
 
 
-/* ── 15 · PROPIEDAD USADA ─────────────────────────────────── */
+/* ── 17 · PROPIEDAD USADA ─────────────────────────────────── */
 {
   titulo: 'Por qué una propiedad usada', mini: IMG.casaUsada, oscura: true,
   html: `
@@ -454,7 +530,7 @@ export const LAMINAS = [
     ${pie('06 · Propiedades usadas')}`
 },
 
-/* ── 16 · LA VISITA A UNA USADA ───────────────────────────── */
+/* ── 18 · LA VISITA A UNA USADA ───────────────────────────── */
 {
   titulo: 'Qué mirar en una usada', mini: IMG.visitaUsada,
   html: `
@@ -475,7 +551,7 @@ export const LAMINAS = [
     ${pie('06 · Propiedades usadas')}`
 },
 
-/* ── 17 · A QUIÉN LE SIRVE CADA UNA ───────────────────────── */
+/* ── 19 · A QUIÉN LE SIRVE CADA UNA ───────────────────────── */
 {
   titulo: 'Tres clientes, tres respuestas', mini: IMG.primeraVivienda,
   html: `
@@ -500,7 +576,7 @@ export const LAMINAS = [
     ${pie('06 · Propiedades usadas')}`
 },
 
-/* ── 18 · DIVISOR CAPTACIÓN ───────────────────────────────── */
+/* ── 20 · DIVISOR CAPTACIÓN ───────────────────────────────── */
 {
   titulo: 'Captación', mini: IMG.captacionDueno, oscura: true,
   html: `
@@ -515,7 +591,7 @@ export const LAMINAS = [
     </div>`
 },
 
-/* ── 19 · EMBUDO ──────────────────────────────────────────── */
+/* ── 21 · EMBUDO ──────────────────────────────────────────── */
 {
   titulo: 'El embudo', mini: IMG.reunionClientes,
   html: `
@@ -552,7 +628,7 @@ export const LAMINAS = [
     ${pie('07 · Captación')}`
 },
 
-/* ── 20 · CANALES ─────────────────────────────────────────── */
+/* ── 22 · CANALES ─────────────────────────────────────────── */
 {
   titulo: 'Dónde están tus clientes', mini: IMG.captacionDigital,
   html: `
@@ -576,7 +652,7 @@ export const LAMINAS = [
     ${pie('07 · Captación')}`
 },
 
-/* ── 21 · EL PRIMER CONTACTO ──────────────────────────────── */
+/* ── 23 · EL PRIMER CONTACTO ──────────────────────────────── */
 {
   titulo: 'El primer contacto', mini: IMG.captacionDueno,
   html: `
@@ -608,7 +684,7 @@ export const LAMINAS = [
 },
 
 
-/* ── 22 · EL PROCESO COMERCIAL ────────────────────────────── */
+/* ── 24 · EL PROCESO COMERCIAL ────────────────────────────── */
 {
   titulo: 'El proceso comercial', mini: IMG.reunionClientes,
   html: `
@@ -648,7 +724,7 @@ export const LAMINAS = [
     ${pie('08 · Proceso comercial')}`
 },
 
-/* ── 23 · LA VISITA ───────────────────────────────────────── */
+/* ── 25 · LA VISITA ───────────────────────────────────────── */
 {
   titulo: 'Cómo se conduce una visita', mini: IMG.mostrandoDepto,
   html: `
@@ -669,7 +745,7 @@ export const LAMINAS = [
     ${pie('08 · Proceso comercial')}`
 },
 
-/* ── 24 · HERRAMIENTAS ────────────────────────────────────── */
+/* ── 26 · HERRAMIENTAS ────────────────────────────────────── */
 {
   titulo: 'Tus herramientas', mini: IMG.tecnologia,
   html: `
@@ -693,7 +769,7 @@ export const LAMINAS = [
     ${pie('08 · Proceso comercial')}`
 },
 
-/* ── 25 · OBJECIONES ──────────────────────────────────────── */
+/* ── 27 · OBJECIONES ──────────────────────────────────────── */
 {
   titulo: 'Las cuatro objeciones', mini: IMG.clienteDuda,
   html: `
@@ -733,7 +809,7 @@ export const LAMINAS = [
     ${pie('08 · Proceso comercial')}`
 },
 
-/* ── 26 · DIVISOR ROLEPLAY ────────────────────────────────── */
+/* ── 28 · DIVISOR ROLEPLAY ────────────────────────────────── */
 {
   titulo: 'Roleplay', mini: IMG.roleplay, oscura: true,
   html: `
@@ -747,7 +823,7 @@ export const LAMINAS = [
     </div>`
 },
 
-/* ── 27 · CÓMO FUNCIONA EL ROLEPLAY ───────────────────────── */
+/* ── 29 · CÓMO FUNCIONA EL ROLEPLAY ───────────────────────── */
 {
   titulo: 'Cómo funciona', mini: IMG.clienteDuda,
   html: `
@@ -785,7 +861,7 @@ export const LAMINAS = [
     ${pie('09 · Roleplay')}`
 },
 
-/* ── 28 · LOS CASOS ───────────────────────────────────────── */
+/* ── 30 · LOS CASOS ───────────────────────────────────────── */
 {
   titulo: 'Los tres casos', mini: IMG.primeraVivienda,
   html: `
@@ -827,7 +903,7 @@ export const LAMINAS = [
     ${pie('09 · Roleplay')}`
 },
 
-/* ── 29 · EL CIERRE ───────────────────────────────────────── */
+/* ── 31 · EL CIERRE ───────────────────────────────────────── */
 {
   titulo: 'El cierre', mini: IMG.firma,
   html: `
@@ -847,7 +923,7 @@ export const LAMINAS = [
     ${pie('10 · El cierre')}`
 },
 
-/* ── 30 · DESPUÉS DE LA FIRMA ─────────────────────────────── */
+/* ── 32 · DESPUÉS DE LA FIRMA ─────────────────────────────── */
 {
   titulo: 'Después de la firma', mini: IMG.llaves, oscura: true,
   html: `
@@ -880,7 +956,7 @@ export const LAMINAS = [
     </div>`
 },
 
-/* ── 31 · CHECKLIST FINAL ─────────────────────────────────── */
+/* ── 33 · CHECKLIST FINAL ─────────────────────────────────── */
 {
   titulo: 'Tu primera semana', mini: IMG.equipo,
   html: `
@@ -900,7 +976,7 @@ export const LAMINAS = [
     ${pie('10 · El cierre')}`
 },
 
-/* ── 32 · CIERRE ASPIRACIONAL ─────────────────────────────── */
+/* ── 34 · CIERRE ASPIRACIONAL ─────────────────────────────── */
 {
   titulo: 'Cierre', mini: IMG.exito, oscura: true,
   html: `
