@@ -19,6 +19,8 @@ interface Compact {
   y: number;
   a: number | null;
   i: number;
+  /** Supuestos del cash flow, en el orden en que se listan abajo. */
+  f: number[];
 }
 
 export function encodeQuote(params: QuoteParams): string {
@@ -33,6 +35,15 @@ export function encodeQuote(params: QuoteParams): string {
     y: params.plazoAnios,
     a: params.arriendoCLP,
     i: round(params.ivaPct, 4),
+    f: [
+      round(params.cashflow.plusvaliaAnual, 4),
+      round(params.cashflow.vacanciaPct, 4),
+      params.cashflow.gastosComunesCLP,
+      params.cashflow.contribucionesCLPAnual,
+      round(params.cashflow.administracionPct, 4),
+      params.cashflow.segurosCLPMensual,
+      round(params.cashflow.otrosGastosCompraUF, 2),
+    ],
   };
   return toBase64Url(JSON.stringify(compact));
 }
@@ -53,6 +64,15 @@ export function decodeQuote(token: string): QuoteParams | null {
       plazoAnios: num(c.y, 30),
       arriendoCLP: typeof c.a === 'number' ? c.a : null,
       ivaPct: num(c.i, 0.1),
+      cashflow: {
+        plusvaliaAnual: num(c.f?.[0], 0.045),
+        vacanciaPct: num(c.f?.[1], 0),
+        gastosComunesCLP: num(c.f?.[2], 0),
+        contribucionesCLPAnual: num(c.f?.[3], 0),
+        administracionPct: num(c.f?.[4], 0),
+        segurosCLPMensual: num(c.f?.[5], 0),
+        otrosGastosCompraUF: num(c.f?.[6], 0),
+      },
     };
   } catch {
     return null;

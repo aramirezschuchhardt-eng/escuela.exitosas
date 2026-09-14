@@ -86,6 +86,8 @@ export default function ConditionsEditor({ project }: { project: Project }) {
       errores.push('El arriendo mínimo no puede superar al máximo.');
     if (cfg.creditoDirecto.enabled && cfg.creditoDirecto.plazos.length === 0)
       errores.push('Debe definir al menos un plazo de crédito directo.');
+    if (cfg.cashflow.horizontes.length === 0)
+      errores.push('Debe definir al menos un año a proyectar en el cash flow.');
     if (errores.length > 0) {
       toast(errores[0], 'error');
       return;
@@ -99,6 +101,10 @@ export default function ConditionsEditor({ project }: { project: Project }) {
       creditoDirecto: {
         ...cfg.creditoDirecto,
         plazos: [...new Set(cfg.creditoDirecto.plazos)].sort((a, b) => a - b),
+      },
+      cashflow: {
+        ...cfg.cashflow,
+        horizontes: [...new Set(cfg.cashflow.horizontes)].sort((a, b) => a - b),
       },
     };
     // Los valores por defecto deben existir dentro de las opciones.
@@ -380,6 +386,85 @@ export default function ConditionsEditor({ project }: { project: Project }) {
               suffix="$"
             />
           </Field>
+        </div>
+      </Card>
+
+      <Card
+        title="Cash flow y plusvalía"
+        desc="Valores con que arranca cada cotización. El broker puede ajustarlos caso a caso."
+      >
+        <div className="stack stack-md">
+          <div className="grid grid-4">
+            <Field label="Plusvalía anual">
+              <NumberInput
+                value={cfg.cashflow.plusvaliaAnual * 100}
+                onChange={(v) => set('cashflow', { ...cfg.cashflow, plusvaliaAnual: (v ?? 0) / 100 })}
+                suffix="%"
+              />
+            </Field>
+            <Field label="Vacancia">
+              <NumberInput
+                value={cfg.cashflow.vacanciaPct * 100}
+                onChange={(v) => set('cashflow', { ...cfg.cashflow, vacanciaPct: (v ?? 0) / 100 })}
+                suffix="%"
+              />
+            </Field>
+            <Field label="Administración" hint="Sobre el arriendo.">
+              <NumberInput
+                value={cfg.cashflow.administracionPct * 100}
+                onChange={(v) =>
+                  set('cashflow', { ...cfg.cashflow, administracionPct: (v ?? 0) / 100 })
+                }
+                suffix="%"
+              />
+            </Field>
+            <Field label="Gastos comunes" hint="Mensuales.">
+              <NumberInput
+                value={cfg.cashflow.gastosComunesCLP || null}
+                onChange={(v) => set('cashflow', { ...cfg.cashflow, gastosComunesCLP: v ?? 0 })}
+                suffix="$"
+              />
+            </Field>
+            <Field label="Contribuciones" hint="Anuales.">
+              <NumberInput
+                value={cfg.cashflow.contribucionesCLPAnual || null}
+                onChange={(v) =>
+                  set('cashflow', { ...cfg.cashflow, contribucionesCLPAnual: v ?? 0 })
+                }
+                suffix="$"
+              />
+            </Field>
+            <Field label="Seguros" hint="Mensuales.">
+              <NumberInput
+                value={cfg.cashflow.segurosCLPMensual || null}
+                onChange={(v) => set('cashflow', { ...cfg.cashflow, segurosCLPMensual: v ?? 0 })}
+                suffix="$"
+              />
+            </Field>
+            <Field label="Fondo puesta en marcha" hint="Por departamento.">
+              <NumberInput
+                value={cfg.cashflow.fondoPuestaEnMarchaUF || null}
+                onChange={(v) => set('cashflow', { ...cfg.cashflow, fondoPuestaEnMarchaUF: v ?? 0 })}
+                suffix="UF"
+              />
+            </Field>
+            <Field label="Fondo por estacionamiento">
+              <NumberInput
+                value={cfg.cashflow.fondoPorEstacionamientoUF || null}
+                onChange={(v) =>
+                  set('cashflow', { ...cfg.cashflow, fondoPorEstacionamientoUF: v ?? 0 })
+                }
+                suffix="UF"
+              />
+            </Field>
+          </div>
+          <ListaNumeros
+            label="Años a proyectar"
+            hint="Horizontes que se muestran en la proyección."
+            items={cfg.cashflow.horizontes}
+            onChange={(v) => set('cashflow', { ...cfg.cashflow, horizontes: v })}
+            sufijo="años"
+          />
         </div>
       </Card>
 

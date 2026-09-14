@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useStore } from '../../data/store';
 import { ETIQUETA_BASE, computeQuote, pricingFromUnit } from '../../domain/finance';
+import { computeCashflow, mergeCashflowConfig } from '../../domain/cashflow';
 import { superficieTotal, tipologiaLabel } from '../../domain/units';
 import {
   EMPTY,
@@ -9,6 +10,7 @@ import {
   formatCLPSigned,
   formatDate,
   formatM2,
+  formatNumber,
   formatPct,
   formatUF,
 } from '../../domain/money';
@@ -50,6 +52,17 @@ export default function QuoteDocPage() {
       ivaPct: params.ivaPct,
     });
   }, [project, unit, params, settings?.ufValue]);
+
+  const tasaDestacada = quote?.dividendos[Math.min(tasaIdx, quote.dividendos.length - 1)]?.tasaAnual;
+  const cashflow = useMemo(() => {
+    if (!quote || !project || !params || tasaDestacada == null) return null;
+    return computeCashflow({
+      quote,
+      config: mergeCashflowConfig(project.config.cashflow, params.cashflow),
+      tasaAnual: tasaDestacada,
+      estacionamientos: [unit?.estacionamiento, unit?.estacionamiento2].filter(Boolean).length,
+    });
+  }, [quote, project, params, tasaDestacada, unit]);
 
   if (!params || !project || !unit || !quote) {
     return (
@@ -391,6 +404,114 @@ export default function QuoteDocPage() {
               <p className="xs dim" style={{ marginTop: 8 }}>
                 Arriendo mensual estimado, no garantizado. No constituye promesa de renta ni de
                 rentabilidad.
+              </p>
+            </Seccion>
+          )}
+
+          {cashflow && (
+            <Seccion titulo="Cash flow mensual">
+              <DL>
+                <Row
+                  label="Arriendo mensual estimado"
+                  value={formatCLP(cashflow.mensual.etapa1.arriendoBrutoUF * cashflow.ufValue)}
+                />
+                {cashflow.mensual.etapa1.costosOperacionUF > 0 && (
+                  <Row
+                    label="Costos de operación"
+                    value={`− ${formatCLP(cashflow.mensual.etapa1.costosOperacionUF * cashflow.ufValue)}`}
+                    hint="Vacancia, administración, gastos comunes, contribuciones y seguros"
+                    muted
+                  />
+                )}
+                <Row
+                  label="Dividendo hipotecario"
+                  value={`− ${formatCLP(cashflow.mensual.etapa1.dividendoUF * cashflow.ufValue)}`}
+                  muted
+                />
+                {cashflow.mesesEtapa1 > 0 && (
+                  <Row
+                    label="Cuota crédito directo"
+                    value={`− ${formatCLP(cashflow.mensual.etapa1.cuotaCreditoDirectoUF * cashflow.ufValue)}`}
+                    muted
+                  />
+                )}
+                <Row
+                  label={
+                    cashflow.mesesEtapa1 > 0
+                      ? `Flujo mensual, primeros ${cashflow.mesesEtapa1} meses`
+                      : 'Flujo mensual'
+                  }
+                  value={
+                    <span className={cashflow.mensual.etapa1.flujoNetoUF >= 0 ? 'pos' : 'neg'}>
+                      {formatCLPSigned(cashflow.mensual.etapa1.flujoNetoUF * cashflow.ufValue)}
+                    </span>
+                  }
+                  total
+                />
+                {cashflow.mesesEtapa1 > 0 && (
+                  <Row
+                    label={`Flujo mensual desde el mes ${cashflow.mesesEtapa1 + 1}`}
+                    value={
+                      <span className={cashflow.mensual.etapa2.flujoNetoUF >= 0 ? 'pos' : 'neg'}>
+                        {formatCLPSigned(cashflow.mensual.etapa2.flujoNetoUF * cashflow.ufValue)}
+                      </span>
+                    }
+                  />
+                )}
+              </DL>
+            </Seccion>
+          )}
+
+          {cashflow && cashflow.proyeccion.length > 0 && (
+            <Seccion titulo={`Proyección con plusvalía de ${formatPct(cashflow.plusvaliaAnual)} anual`}>
+              <DL>
+                <Row
+                  label="Inversión inicial"
+                  value={formatUF(cashflow.inversionInicialUF)}
+                  hint={`Pie ${formatUF(cashflow.aporteEfectivoUF)} + puesta en marcha ${formatUF(cashflow.fondoPuestaEnMarchaUF)}`}
+                />
+              </DL>
+              <div className="table-wrap" style={{ marginTop: 10 }}>
+                <table className="data" style={{ minWidth: 420 }}>
+                  <thead>
+                    <tr>
+                      <th>Si vende al…</th>
+                      <th className="num">Valor propiedad</th>
+                      <th className="num">Deuda</th>
+                      <th className="num">Ganancia estimada</th>
+                      <th className="num">Retorno</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {cashflow.proyeccion.map((a) => (
+                      <tr key={a.anio}>
+                        <td style={{ fontWeight: 600 }}>Año {a.anio}</td>
+                        <td className="num">{formatUF(a.valorPropiedadUF)}</td>
+                        <td className="num">
+                          {formatUF(a.saldoHipotecarioUF + a.saldoCreditoDirectoUF)}
+                        </td>
+                        <td className="num" style={{ fontWeight: 600 }}>
+                          <span className={a.gananciaTotalUF >= 0 ? 'pos' : 'neg'}>
+                            {formatCLPSigned(a.gananciaTotalUF * cashflow.ufValue)}
+                          </span>
+                        </td>
+                        <td className="num">
+                          {a.retornoSobreInversion == null
+                            ? EMPTY
+                            : Math.abs(a.retornoSobreInversion) >= 10
+                              ? `${formatNumber(a.retornoSobreInversion)}×`
+                              : formatPct(a.retornoSobreInversion, 0)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="xs dim" style={{ marginTop: 8 }}>
+                Proyección referencial. La plusvalía de {formatPct(cashflow.plusvaliaAnual)} anual es
+                un supuesto, no una rentabilidad asegurada. Montos en UF, ya descontada la inflación.
+                Supone la venta al final del período y no considera impuestos a la ganancia de
+                capital, comisiones de venta ni gastos de escrituración.
               </p>
             </Seccion>
           )}

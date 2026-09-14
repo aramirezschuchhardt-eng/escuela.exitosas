@@ -263,6 +263,23 @@ export function vistaAmunateguiProject(): Project {
       },
       // Sin monto de arriendo documentado: el broker lo ingresa en cada cotización.
       arriendo: { minCLP: 300_000, maxCLP: 500_000, stepCLP: 10_000, defaultCLP: null },
+      cashflow: {
+        // Supuesto de la herramienta, editable: no está en los documentos.
+        plusvaliaAnual: 0.045,
+        // Costos de operación: la planilla y el brochure no los declaran, así que
+        // arrancan en cero y los carga el broker.
+        vacanciaPct: 0,
+        gastosComunesCLP: 0,
+        contribucionesCLPAnual: 0,
+        administracionPct: 0,
+        segurosCLPMensual: 0,
+        // Manual de procedimientos AJ Urbana: fondo de puesta en marcha de
+        // 10 UF por departamento y 1,5 UF por estacionamiento.
+        fondoPuestaEnMarchaUF: 10,
+        fondoPorEstacionamientoUF: 1.5,
+        otrosGastosCompraUF: 0,
+        horizontes: [3, 5, 10],
+      },
     },
 
     publicado: true,

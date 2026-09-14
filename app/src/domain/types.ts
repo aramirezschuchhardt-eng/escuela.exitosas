@@ -119,6 +119,38 @@ export interface IvaConfig {
   aplicarAlFinanciamiento: boolean;
 }
 
+/**
+ * Supuestos de la proyección de cash flow y plusvalía.
+ *
+ * Salvo el fondo de puesta en marcha —que sí está documentado por la
+ * inmobiliaria— ninguno de estos valores proviene de la planilla ni del
+ * brochure: son supuestos que el broker ajusta. Por eso arrancan en cero y la
+ * interfaz los muestra como editables, en lugar de dar por ciertos costos que
+ * nadie declaró.
+ */
+export interface CashflowConfig {
+  /** Plusvalía anual estimada de la propiedad, en términos reales. */
+  plusvaliaAnual: number;
+  /** Fracción del año sin arriendo. */
+  vacanciaPct: number;
+  /** Gasto común mensual, en pesos. */
+  gastosComunesCLP: number;
+  /** Contribuciones anuales, en pesos. */
+  contribucionesCLPAnual: number;
+  /** Comisión de administración, como fracción del arriendo. */
+  administracionPct: number;
+  /** Seguros mensuales, en pesos. */
+  segurosCLPMensual: number;
+  /** Fondo de puesta en marcha por departamento, en UF. */
+  fondoPuestaEnMarchaUF: number;
+  /** Fondo de puesta en marcha por estacionamiento, en UF. */
+  fondoPorEstacionamientoUF: number;
+  /** Otros gastos de cierre de la compra, en UF. */
+  otrosGastosCompraUF: number;
+  /** Años a proyectar. */
+  horizontes: number[];
+}
+
 export interface ArriendoConfig {
   minCLP: number;
   maxCLP: number;
@@ -146,6 +178,7 @@ export interface ProjectConfig {
   convencionTasa: RateConvention;
   iva: IvaConfig;
   arriendo: ArriendoConfig;
+  cashflow: CashflowConfig;
 }
 
 export interface ProjectMediaItem {
@@ -224,6 +257,21 @@ export interface Database {
   settings: AppSettings;
 }
 
+/**
+ * Supuestos del cash flow que el broker ajusta en cada cotización. Viajan con
+ * la cotización (y en su link) para que el cliente vea exactamente los mismos
+ * números que se le mostraron.
+ */
+export interface CashflowParams {
+  plusvaliaAnual: number;
+  vacanciaPct: number;
+  gastosComunesCLP: number;
+  contribucionesCLPAnual: number;
+  administracionPct: number;
+  segurosCLPMensual: number;
+  otrosGastosCompraUF: number;
+}
+
 /** Parámetros que el broker manipula en el cotizador. */
 export interface QuoteParams {
   projectId: string;
@@ -236,4 +284,5 @@ export interface QuoteParams {
   plazoAnios: number;
   arriendoCLP: number | null;
   ivaPct: number;
+  cashflow: CashflowParams;
 }

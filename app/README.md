@@ -91,7 +91,7 @@ redimensionado automáticamente.
 cd app
 npm install
 npm run dev          # desarrollo en http://localhost:5173
-npm run test         # 86 pruebas del motor de cálculo y de la importación
+npm run test         # 119 pruebas del motor de cálculo y de la importación
 npm run build        # build de producción → /cotizador
 npm run preview      # sirve el build en http://localhost:4173
 ```
@@ -128,6 +128,8 @@ src/
 │   ├── types.ts             Modelo de datos
 │   ├── finance.ts           ★ Motor de cálculo (funciones puras)
 │   ├── finance.test.ts        50 pruebas del motor
+│   ├── cashflow.ts          ★ Cash flow, plusvalía, TIR y saldos insolutos
+│   ├── cashflow.test.ts       33 pruebas del cash flow
 │   ├── units.ts             Normalización de estados, tipologías, superficies
 │   ├── filters.ts           Filtros de catálogo y estadísticas por proyecto
 │   ├── money.ts             Formateo — único lugar donde se redondea
@@ -210,6 +212,28 @@ directo` durante la vigencia del crédito directo, y sólo `dividendo` después.
 **Arriendo y flujo** — el arriendo es siempre editable por el broker y nunca
 proviene de la planilla. Rentabilidad bruta anual = `arriendo anual / precio con
 descuento`. Flujo = `arriendo − desembolso`, en ambas etapas.
+
+**Cash flow y plusvalía** — la proyección trabaja en UF, es decir en términos
+reales, porque la propiedad, el crédito y el dividendo están en UF.
+
+- *Inversión inicial* = aporte efectivo + fondo de puesta en marcha (10 UF por
+  departamento y 1,5 UF por estacionamiento en Vista Amunátegui, según el manual
+  de la inmobiliaria) + otros gastos de cierre.
+- *Flujo mensual* = arriendo − vacancia − administración − gastos comunes −
+  contribuciones − seguros − dividendo − cuota de crédito directo, en las dos
+  etapas del crédito directo.
+- *Valor proyectado* = precio × (1 + plusvalía)^años.
+- *Patrimonio* = valor proyectado − saldo insoluto del crédito hipotecario y del
+  crédito directo, por la fórmula estándar de amortización.
+- *Ganancia* = patrimonio + flujo acumulado − inversión inicial. Se descompone en
+  plusvalía, deuda amortizada, flujo acumulado y bono pie, menos gastos de
+  compra; el bono pie se despeja como residuo, de modo que si el crédito directo
+  ya cubría todo el pie el bono no se cuenta como ganancia.
+- *TIR* sobre los flujos mensuales más la venta al cierre del período, resuelta
+  por bisección.
+
+Salvo el fondo de puesta en marcha, ninguno de los costos está documentado: todos
+arrancan en cero y los ajusta el broker en el propio cotizador.
 
 **Devolución de IVA** — se presenta como beneficio estimado aparte. **No** se
 descuenta del precio ni del monto financiado, salvo que el proyecto esté

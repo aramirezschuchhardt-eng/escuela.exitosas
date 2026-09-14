@@ -8,8 +8,9 @@ import {
   pricingFromUnit,
   type QuoteInput,
 } from '../../domain/finance';
+import { cashflowParamsFrom, computeCashflow, mergeCashflowConfig } from '../../domain/cashflow';
 import { isCotizable } from '../../domain/units';
-import { formatCLP, formatPct, formatUF } from '../../domain/money';
+import { formatCLP, formatCLPSigned, formatPct, formatUF } from '../../domain/money';
 import type { Project, QuoteParams, Unit } from '../../domain/types';
 import { Card, Empty, Note, Stat, Warnings } from '../../components/ui';
 import { quoteUrl } from '../../lib/share';
@@ -18,6 +19,9 @@ import {
   ArriendoYFlujo,
   AvisoUF,
   BonoPie,
+  CashflowMensual,
+  ProyeccionPlusvalia,
+  SupuestosCashflow,
   ComparadorEscenarios,
   CostoMensualTotal,
   CreditoDirecto,
@@ -56,6 +60,7 @@ function initialParams(project: Project, unit: Unit | null): QuoteParams {
     plazoAnios: c.plazoDefaultAnios,
     arriendoCLP: c.arriendo.defaultCLP,
     ivaPct: c.iva.enabled ? c.iva.defaultPct : 0,
+    cashflow: cashflowParamsFrom(c.cashflow),
   };
 }
 
@@ -113,6 +118,16 @@ export default function QuoterPage() {
   }, [project, unit, params, ufValue]);
 
   const quote = useMemo(() => (quoteInput ? computeQuote(quoteInput) : null), [quoteInput]);
+
+  const cashflow = useMemo(() => {
+    if (!quote || !project || !params) return null;
+    return computeCashflow({
+      quote,
+      config: mergeCashflowConfig(project.config.cashflow, params.cashflow),
+      tasaAnual: tasaSeleccionada ?? project.config.tasas[0] ?? 0,
+      estacionamientos: [unit?.estacionamiento, unit?.estacionamiento2].filter(Boolean).length,
+    });
+  }, [quote, project, params, tasaSeleccionada, unit]);
 
   const escenarios = useMemo(() => {
     if (!quoteInput || !project) return [];
@@ -267,6 +282,22 @@ export default function QuoterPage() {
               pct={params.ivaPct}
               onPct={(v) => set('ivaPct', v)}
             />
+
+            {cashflow && (
+              <>
+                <Card
+                  title="Supuestos del cash flow"
+                  desc="Ajuste los costos y la plusvalía según el caso del cliente."
+                >
+                  <SupuestosCashflow
+                    params={params.cashflow}
+                    onChange={(v) => set('cashflow', v)}
+                  />
+                </Card>
+                <CashflowMensual cashflow={cashflow} tasaAnual={tasaActiva} />
+                <ProyeccionPlusvalia cashflow={cashflow} tasaAnual={tasaActiva} />
+              </>
+            )}
             <ResumenInversion
               project={project}
               unit={unit}
@@ -315,6 +346,26 @@ export default function QuoterPage() {
                     value={formatCLP(quote.arriendoCLP)}
                     sub={`Rentabilidad bruta ${formatPct(quote.rentabilidadBrutaAnual, 2)}`}
                     tone="accent"
+                  />
+                )}
+                {cashflow && cashflow.proyeccion.length > 0 && (
+                  <Stat
+                    label={`Ganancia estimada al año ${cashflow.proyeccion[cashflow.proyeccion.length - 1].anio}`}
+                    value={
+                      <span
+                        className={
+                          cashflow.proyeccion[cashflow.proyeccion.length - 1].gananciaTotalUF >= 0
+                            ? 'pos'
+                            : 'neg'
+                        }
+                      >
+                        {formatCLPSigned(
+                          cashflow.proyeccion[cashflow.proyeccion.length - 1].gananciaTotalUF *
+                            cashflow.ufValue,
+                        )}
+                      </span>
+                    }
+                    sub={`Plusvalía ${formatPct(cashflow.plusvaliaAnual)} anual · invertido ${formatUF(cashflow.inversionInicialUF)}`}
                   />
                 )}
                 <Link

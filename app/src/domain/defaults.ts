@@ -35,6 +35,20 @@ export function defaultProjectConfig(): ProjectConfig {
       aplicarAlFinanciamiento: false,
     },
     arriendo: { minCLP: 300_000, maxCLP: 500_000, stepCLP: 10_000, defaultCLP: null },
+    cashflow: {
+      plusvaliaAnual: 0.045,
+      // Costos de operación: en cero mientras no estén documentados o el broker
+      // los cargue. Se editan en el propio cotizador y en el panel.
+      vacanciaPct: 0,
+      gastosComunesCLP: 0,
+      contribucionesCLPAnual: 0,
+      administracionPct: 0,
+      segurosCLPMensual: 0,
+      fondoPuestaEnMarchaUF: 0,
+      fondoPorEstacionamientoUF: 0,
+      otrosGastosCompraUF: 0,
+      horizontes: [3, 5, 10],
+    },
   };
 }
 
@@ -52,7 +66,7 @@ export function defaultSettings(): AppSettings {
     ufValue: 0,
     ufActualizadaEl: null,
     brand: {
-      nombreEmpresa: '',
+      nombreEmpresa: 'Avance Inmobiliario',
       logoUrl: null,
       colorAcento: '#14707E',
       contactoNombre: '',

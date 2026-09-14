@@ -13,23 +13,43 @@ import QuoteDocPage from './features/quote/QuoteDocPage';
  */
 const AdminPage = lazy(() => import('./features/admin/AdminPage'));
 
+/**
+ * Marca provisional mientras no se cargue un logo. Se usa un glifo y no las
+ * iniciales del nombre porque las iniciales de una empresa cualquiera pueden
+ * resultar desafortunadas, y este símbolo sirve para todas.
+ */
+function MarcaPorDefecto() {
+  return (
+    <svg viewBox="0 0 32 32" width="18" height="18" aria-hidden focusable="false">
+      <path
+        d="M6 22V12l10-6 10 6v10"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M11 22v-6h10v6"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 function Topbar() {
   const { settings } = useStore();
   const brand = settings?.brand;
   const nombre = brand?.nombreEmpresa?.trim() || 'Cotizador Inmobiliario';
-  const iniciales = nombre
-    .split(/\s+/)
-    .slice(0, 2)
-    .map((p) => p[0])
-    .join('')
-    .toUpperCase();
 
   return (
     <header className="topbar no-print">
       <div className="container topbar-inner">
         <NavLink to="/" className="brand">
           <span className="brand-mark">
-            {brand?.logoUrl ? <img src={brand.logoUrl} alt="" /> : iniciales}
+            {brand?.logoUrl ? <img src={brand.logoUrl} alt={nombre} /> : <MarcaPorDefecto />}
           </span>
           <span style={{ minWidth: 0 }}>
             <span className="brand-name">{nombre}</span>

@@ -1,4 +1,6 @@
+import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import type { CashflowResult, DetalleMensual } from '../../domain/cashflow';
 import {
   ETIQUETA_BASE,
   basesDisponibles,
@@ -6,12 +8,13 @@ import {
   type DividendoEscenario,
   type QuoteResult,
 } from '../../domain/finance';
-import type { BaseCotizacion, Project, Unit } from '../../domain/types';
+import type { BaseCotizacion, CashflowParams, Project, Unit } from '../../domain/types';
 import {
   EMPTY,
   formatCLP,
   formatCLPSigned,
   formatM2,
+  formatNumber,
   formatPct,
   formatUF,
   roundToStep,
@@ -29,6 +32,7 @@ import {
   Slider,
   Stat,
   StatusBadge,
+  Warnings,
 } from '../../components/ui';
 
 /* ── 6. Unidad seleccionada ──────────────────────────────────────────────── */
@@ -1130,5 +1134,413 @@ export function AvisoUF({ ufValue }: { ufValue: number }) {
         . Los montos en UF sí son correctos.
       </span>
     </Note>
+  );
+}
+
+/* ── 14b. Cash flow, costos y plusvalía ──────────────────────────────────── */
+
+/**
+ * Supuestos del cash flow. Se editan aquí y no en el panel porque cambian de un
+ * cliente a otro, y viajan con la cotización para que el link muestre lo mismo
+ * que vio el broker.
+ */
+export function SupuestosCashflow({
+  params,
+  onChange,
+}: {
+  params: CashflowParams;
+  onChange: (p: CashflowParams) => void;
+}) {
+  const set = <K extends keyof CashflowParams>(key: K, value: CashflowParams[K]) =>
+    onChange({ ...params, [key]: value });
+
+  return (
+    <div className="stack stack-md">
+      <div className="grid grid-4">
+        <Field label="Plusvalía anual" hint="Estimación, en términos reales.">
+          <NumberInput
+            value={Math.round(params.plusvaliaAnual * 1000) / 10}
+            onChange={(v) => set('plusvaliaAnual', (v ?? 0) / 100)}
+            suffix="%"
+          />
+        </Field>
+        <Field label="Vacancia" hint="Porción del año sin arriendo.">
+          <NumberInput
+            value={Math.round(params.vacanciaPct * 1000) / 10}
+            onChange={(v) => set('vacanciaPct', (v ?? 0) / 100)}
+            suffix="%"
+          />
+        </Field>
+        <Field label="Administración" hint="Comisión sobre el arriendo.">
+          <NumberInput
+            value={Math.round(params.administracionPct * 1000) / 10}
+            onChange={(v) => set('administracionPct', (v ?? 0) / 100)}
+            suffix="%"
+          />
+        </Field>
+        <Field label="Gastos comunes" hint="Mensuales.">
+          <NumberInput
+            value={params.gastosComunesCLP || null}
+            onChange={(v) => set('gastosComunesCLP', v ?? 0)}
+            suffix="$"
+          />
+        </Field>
+        <Field label="Contribuciones" hint="Anuales.">
+          <NumberInput
+            value={params.contribucionesCLPAnual || null}
+            onChange={(v) => set('contribucionesCLPAnual', v ?? 0)}
+            suffix="$"
+          />
+        </Field>
+        <Field label="Seguros" hint="Mensuales.">
+          <NumberInput
+            value={params.segurosCLPMensual || null}
+            onChange={(v) => set('segurosCLPMensual', v ?? 0)}
+            suffix="$"
+          />
+        </Field>
+        <Field label="Otros gastos de compra" hint="En UF, al momento de comprar.">
+          <NumberInput
+            value={params.otrosGastosCompraUF || null}
+            onChange={(v) => set('otrosGastosCompraUF', v ?? 0)}
+            suffix="UF"
+          />
+        </Field>
+      </div>
+      <Note tone="muted">
+        Salvo el fondo de puesta en marcha, estos costos <strong>no están en la planilla ni en el
+        brochure</strong>: son supuestos suyos. Arrancan en cero para no dar por ciertos valores
+        que nadie declaró; cárguelos según el caso del cliente.
+      </Note>
+    </div>
+  );
+}
+
+/** Fila de un detalle de flujo, con signo explícito. */
+function FilaFlujo({
+  label,
+  uf,
+  ufValue,
+  signo = 'auto',
+  total,
+}: {
+  label: ReactNode;
+  uf: number;
+  ufValue: number;
+  /**
+   * `resta` lo muestra restando; `flujo` colorea según sea entrada o salida;
+   * `auto` es un monto neutro, sin signo ni color.
+   */
+  signo?: 'auto' | 'resta' | 'flujo';
+  total?: boolean;
+}) {
+  const clp = uf * ufValue;
+  const texto =
+    signo === 'resta'
+      ? uf === 0
+        ? EMPTY
+        : `− ${formatCLP(Math.abs(clp))}`
+      : signo === 'flujo'
+        ? formatCLPSigned(clp)
+        : formatCLP(clp);
+  return (
+    <Row
+      label={label}
+      value={
+        signo === 'flujo' ? <span className={clp >= 0 ? 'pos' : 'neg'}>{texto}</span> : texto
+      }
+      hint={uf !== 0 ? formatUF(Math.abs(uf)) : undefined}
+      total={total}
+      muted={signo === 'resta'}
+    />
+  );
+}
+
+/**
+ * El retorno sobre lo invertido se dispara cuando el cliente casi no pone
+ * capital propio (bono pie y crédito directo cubriendo todo el pie). Pasado
+ * cierto punto el porcentaje deja de leerse, así que se muestra como múltiplo.
+ */
+function formatRetorno(retorno: number | null): string {
+  if (retorno == null || !Number.isFinite(retorno)) return EMPTY;
+  if (Math.abs(retorno) >= 10) return `${formatNumber(retorno)}×`;
+  return formatPct(retorno, 0);
+}
+
+export function CashflowMensual({
+  cashflow,
+  tasaAnual,
+}: {
+  cashflow: CashflowResult;
+  tasaAnual: number;
+}) {
+  const uf = cashflow.ufValue;
+  const hayEtapas = cashflow.mesesEtapa1 > 0;
+
+  const detalle = (m: DetalleMensual, titulo: string, segunda = false) => (
+    <div className={`stage${segunda ? ' stage-2' : ''} stack stack-sm`}>
+      <p className="eyebrow">{titulo}</p>
+      <DL>
+        <FilaFlujo label="Arriendo estimado" uf={m.arriendoBrutoUF} ufValue={uf} />
+        {m.vacanciaUF > 0 && (
+          <FilaFlujo label="Vacancia" uf={m.vacanciaUF} ufValue={uf} signo="resta" />
+        )}
+        {m.administracionUF > 0 && (
+          <FilaFlujo label="Administración" uf={m.administracionUF} ufValue={uf} signo="resta" />
+        )}
+        {m.gastosComunesUF > 0 && (
+          <FilaFlujo label="Gastos comunes" uf={m.gastosComunesUF} ufValue={uf} signo="resta" />
+        )}
+        {m.contribucionesUF > 0 && (
+          <FilaFlujo label="Contribuciones" uf={m.contribucionesUF} ufValue={uf} signo="resta" />
+        )}
+        {m.segurosUF > 0 && (
+          <FilaFlujo label="Seguros" uf={m.segurosUF} ufValue={uf} signo="resta" />
+        )}
+        {m.costosOperacionUF > 0 && (
+          <FilaFlujo label="Arriendo neto" uf={m.arriendoNetoUF} ufValue={uf} />
+        )}
+        <FilaFlujo label="Dividendo hipotecario" uf={m.dividendoUF} ufValue={uf} signo="resta" />
+        {m.cuotaCreditoDirectoUF > 0 && (
+          <FilaFlujo
+            label="Cuota crédito directo"
+            uf={m.cuotaCreditoDirectoUF}
+            ufValue={uf}
+            signo="resta"
+          />
+        )}
+        <FilaFlujo label="Flujo mensual" uf={m.flujoNetoUF} ufValue={uf} signo="flujo" total />
+      </DL>
+    </div>
+  );
+
+  return (
+    <Card
+      title="Cash flow mensual"
+      desc={`Lo que entra menos todo lo que sale, con tasa ${formatPct(tasaAnual)}.`}
+    >
+      <div className={hayEtapas ? 'grid grid-2' : ''}>
+        {detalle(
+          cashflow.mensual.etapa1,
+          hayEtapas ? `Primeros ${cashflow.mesesEtapa1} meses` : 'Cada mes',
+        )}
+        {hayEtapas && detalle(cashflow.mensual.etapa2, `Desde el mes ${cashflow.mesesEtapa1 + 1}`, true)}
+      </div>
+    </Card>
+  );
+}
+
+export function ProyeccionPlusvalia({
+  cashflow,
+  tasaAnual,
+}: {
+  cashflow: CashflowResult;
+  tasaAnual: number;
+}) {
+  const uf = cashflow.ufValue;
+  const p = cashflow.proyeccion;
+  if (p.length === 0) return null;
+
+  const celda = (valor: number, opciones: { signo?: boolean; fuerte?: boolean } = {}) => (
+    <>
+      <span
+        className={opciones.signo ? (valor >= 0 ? 'pos' : 'neg') : undefined}
+        style={opciones.fuerte ? { fontWeight: 600 } : undefined}
+      >
+        {opciones.signo ? formatCLPSigned(valor * uf) : formatCLP(valor * uf)}
+      </span>
+      {/* El signo ya lo lleva la cifra en pesos; en UF sería redundante. */}
+      <div className="xs dim">{formatUF(Math.abs(valor))}</div>
+    </>
+  );
+
+  return (
+    <Card
+      title="Proyección y plusvalía"
+      desc={`Con una plusvalía anual estimada de ${formatPct(cashflow.plusvaliaAnual)} y tasa ${formatPct(tasaAnual)}.`}
+    >
+      <div className="stack stack-md">
+        <div>
+          <p className="eyebrow" style={{ marginBottom: 8 }}>
+            Inversión inicial
+          </p>
+          <DL>
+            <FilaFlujo label="Aporte efectivo (pie)" uf={cashflow.aporteEfectivoUF} ufValue={uf} />
+            <FilaFlujo
+              label="Fondo de puesta en marcha"
+              uf={cashflow.fondoPuestaEnMarchaUF}
+              ufValue={uf}
+            />
+            {cashflow.otrosGastosCompraUF > 0 && (
+              <FilaFlujo
+                label="Otros gastos de compra"
+                uf={cashflow.otrosGastosCompraUF}
+                ufValue={uf}
+              />
+            )}
+            <FilaFlujo label="Total invertido" uf={cashflow.inversionInicialUF} ufValue={uf} total />
+            {cashflow.aporteEfectivoUF < 1 && (
+              <Note tone="info">
+                <span>
+                  Con esta estructura el cliente <strong>casi no pone capital propio</strong>: el
+                  bono pie y el crédito directo cubren el pie. El retorno porcentual pierde sentido
+                  cuando la base es tan pequeña, así que mire la ganancia en pesos.
+                </span>
+              </Note>
+            )}
+          </DL>
+        </div>
+
+        <div className="divider" />
+
+        <div>
+          <p className="eyebrow" style={{ marginBottom: 8 }}>
+            Ganancia estimada si vende al año…
+          </p>
+          <div className="grid grid-3">
+            {p.map((a) => (
+              <Stat
+                key={a.anio}
+                label={`Año ${a.anio}`}
+                value={
+                  <span className={a.gananciaTotalUF >= 0 ? 'pos' : 'neg'}>
+                    {formatCLPSigned(a.gananciaTotalUF * uf)}
+                  </span>
+                }
+                sub={`${formatUF(Math.abs(a.gananciaTotalUF))} · retorno ${formatRetorno(a.retornoSobreInversion)}${
+                  a.tirAnual != null ? ` · TIR ${formatPct(a.tirAnual)}` : ''
+                }`}
+                tone={a === p[p.length - 1] ? 'accent' : 'default'}
+                size="lg"
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="table-wrap">
+          <table className="data">
+            <thead>
+              <tr>
+                <th>Concepto</th>
+                {p.map((a) => (
+                  <th key={a.anio} className="num">
+                    Año {a.anio}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Valor de la propiedad</td>
+                {p.map((a) => (
+                  <td key={a.anio} className="num">
+                    {celda(a.valorPropiedadUF)}
+                  </td>
+                ))}
+              </tr>
+              <tr>
+                <td>Deuda pendiente</td>
+                {p.map((a) => (
+                  <td key={a.anio} className="num">
+                    {celda(-(a.saldoHipotecarioUF + a.saldoCreditoDirectoUF), { signo: true })}
+                  </td>
+                ))}
+              </tr>
+              <tr>
+                <td>Patrimonio</td>
+                {p.map((a) => (
+                  <td key={a.anio} className="num">
+                    {celda(a.patrimonioUF, { fuerte: true })}
+                  </td>
+                ))}
+              </tr>
+              <tr>
+                <td colSpan={p.length + 1} style={{ paddingTop: 14 }}>
+                  <span className="eyebrow">De dónde viene la ganancia</span>
+                </td>
+              </tr>
+              <tr>
+                <td>Plusvalía acumulada</td>
+                {p.map((a) => (
+                  <td key={a.anio} className="num">
+                    {celda(a.plusvaliaUF, { signo: true })}
+                  </td>
+                ))}
+              </tr>
+              <tr>
+                <td>Deuda amortizada</td>
+                {p.map((a) => (
+                  <td key={a.anio} className="num">
+                    {celda(a.amortizacionUF, { signo: true })}
+                  </td>
+                ))}
+              </tr>
+              <tr>
+                <td>Flujo acumulado</td>
+                {p.map((a) => (
+                  <td key={a.anio} className="num">
+                    {celda(a.flujoAcumuladoUF, { signo: true })}
+                  </td>
+                ))}
+              </tr>
+              {p.some((a) => Math.abs(a.bonoPieAplicadoUF) > 0.01) && (
+                <tr>
+                  <td>Bono pie</td>
+                  {p.map((a) => (
+                    <td key={a.anio} className="num">
+                      {celda(a.bonoPieAplicadoUF, { signo: true })}
+                    </td>
+                  ))}
+                </tr>
+              )}
+              <tr>
+                <td>Gastos de compra</td>
+                {p.map((a) => (
+                  <td key={a.anio} className="num">
+                    {celda(-a.gastosCompraUF, { signo: true })}
+                  </td>
+                ))}
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 600 }}>Ganancia total</td>
+                {p.map((a) => (
+                  <td key={a.anio} className="num">
+                    {celda(a.gananciaTotalUF, { signo: true, fuerte: true })}
+                  </td>
+                ))}
+              </tr>
+              <tr>
+                <td>Retorno sobre lo invertido</td>
+                {p.map((a) => (
+                  <td key={a.anio} className="num">
+                    {formatRetorno(a.retornoSobreInversion)}
+                  </td>
+                ))}
+              </tr>
+              <tr>
+                <td>TIR anual</td>
+                {p.map((a) => (
+                  <td key={a.anio} className="num">
+                    {a.tirAnual != null ? formatPct(a.tirAnual) : EMPTY}
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <Warnings items={cashflow.warnings} />
+
+        <Note tone="warn">
+          <span>
+            <strong>Proyección referencial.</strong> La plusvalía de {formatPct(cashflow.plusvaliaAnual)}{' '}
+            anual es un supuesto, no una rentabilidad asegurada: el valor de una propiedad puede
+            subir o bajar. Los montos están en UF, o sea ya descontada la inflación. La ganancia
+            supone la venta al final del período y <strong>no considera</strong> impuestos a la
+            ganancia de capital, comisiones de venta ni gastos de escrituración.
+          </span>
+        </Note>
+      </div>
+    </Card>
   );
 }

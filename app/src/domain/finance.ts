@@ -362,6 +362,8 @@ export interface QuoteResult {
   creditoDirectoPct: number;
   creditoDirectoUF: number;
   creditoDirectoCuotas: number;
+  /** Tasa mensual del crédito directo, para proyectar su saldo insoluto. */
+  creditoDirectoTasaMensual: number;
   cuotaCreditoDirectoUF: number;
   cuotaCreditoDirectoCLP: number;
 
@@ -465,9 +467,13 @@ export function computeQuote(input: QuoteInput): QuoteResult {
     );
   }
   const creditoDirectoUF = precioConsideradoUF * creditoDirectoPct;
+  const creditoDirectoTasaMensual = monthlyRate(
+    config.creditoDirecto.tasaAnual,
+    config.convencionTasa,
+  );
   const cuotaCreditoDirectoUF = annuityPayment(
     creditoDirectoUF,
-    monthlyRate(config.creditoDirecto.tasaAnual, config.convencionTasa),
+    creditoDirectoTasaMensual,
     creditoDirectoCuotas,
   );
 
@@ -530,6 +536,7 @@ export function computeQuote(input: QuoteInput): QuoteResult {
     creditoDirectoPct,
     creditoDirectoUF,
     creditoDirectoCuotas,
+    creditoDirectoTasaMensual,
     cuotaCreditoDirectoUF,
     cuotaCreditoDirectoCLP: cuotaCreditoDirectoUF * ufValue,
     aporteEfectivoUF,

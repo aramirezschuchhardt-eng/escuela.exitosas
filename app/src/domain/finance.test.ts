@@ -38,6 +38,18 @@ const config: ProjectConfig = {
     aplicarAlFinanciamiento: false,
   },
   arriendo: { minCLP: 300_000, maxCLP: 500_000, stepCLP: 10_000, defaultCLP: null },
+  cashflow: {
+    plusvaliaAnual: 0.045,
+    vacanciaPct: 0,
+    gastosComunesCLP: 0,
+    contribucionesCLPAnual: 0,
+    administracionPct: 0,
+    segurosCLPMensual: 0,
+    fondoPuestaEnMarchaUF: 0,
+    fondoPorEstacionamientoUF: 0,
+    otrosGastosCompraUF: 0,
+    horizontes: [3, 5, 10],
+  },
 };
 
 /** UF ficticia = 1 para poder razonar el ejemplo del encargo directamente en pesos. */
