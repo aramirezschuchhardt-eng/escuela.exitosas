@@ -1012,7 +1012,7 @@ table.compare tbody tr:last-child th, table.compare tbody tr:last-child td { bor
         </p>
 
         <div class="price-block">
-          <p class="price-was"><small>Precio normal</small><s>$1.500.000</s></p>
+          <p class="price-was"><small>Precio normal</small><s>$1.499.000</s></p>
           <p class="price-now"><span class="hoy">Hoy</span><span class="amt">$990.000</span></p>
           <p class="price-note">Precio especial de incorporación.</p>
         </div>
@@ -1041,8 +1041,7 @@ table.compare tbody tr:last-child th, table.compare tbody tr:last-child td { bor
         </ul>
 
         <div class="plan-foot">
-          <!-- EDITABLE · Reemplazar href por el link real de pago o de agenda -->
-          <a href="#contacto" class="btn btn-primary btn-block btn-lg">Quiero construir mi patrimonio <span class="arw">→</span></a>
+          <a href="#contacto" data-pago="patrimonio-360" class="btn btn-primary btn-block btn-lg">Quiero construir mi patrimonio <span class="arw">→</span></a>
           <p class="plan-limit">
             Cupos limitados. Este programa requiere acompañamiento personalizado
             y tiene un número limitado de clientes activos.
@@ -1062,8 +1061,8 @@ table.compare tbody tr:last-child th, table.compare tbody tr:last-child td { bor
         </p>
 
         <div class="price-block">
-          <p class="price-was"><small>Precio normal</small><s>$799.000</s></p>
-          <p class="price-now"><span class="hoy">Hoy</span><span class="amt">$499.000</span></p>
+          <p class="price-was"><small>Precio normal</small><s>$790.000</s></p>
+          <p class="price-now"><span class="hoy">Hoy</span><span class="amt">$490.000</span></p>
           <p class="price-note">Precio especial de incorporación.</p>
         </div>
 
@@ -1085,8 +1084,7 @@ table.compare tbody tr:last-child th, table.compare tbody tr:last-child td { bor
         </ul>
 
         <div class="plan-foot">
-          <!-- EDITABLE · Link real de pago o agenda -->
-          <a href="#contacto" class="btn btn-dark btn-block">Quiero mi mejor inversión</a>
+          <a href="#contacto" data-pago="tu-mejor-inversion" class="btn btn-dark btn-block">Quiero mi mejor inversión</a>
         </div>
       </article>
 
@@ -1118,8 +1116,7 @@ table.compare tbody tr:last-child th, table.compare tbody tr:last-child td { bor
         </ul>
 
         <div class="plan-foot">
-          <!-- EDITABLE · Link real de pago o agenda -->
-          <a href="#contacto" class="btn btn-ghost btn-block">Quiero mi diagnóstico</a>
+          <a href="#contacto" data-pago="diagnostico" class="btn btn-ghost btn-block">Quiero mi diagnóstico</a>
           <p class="plan-bridge">
             Si después de esta sesión quieres avanzar a uno de los programas de acompañamiento,
             podremos evaluar cuál tiene más sentido para ti.
@@ -1164,12 +1161,12 @@ table.compare tbody tr:last-child th, table.compare tbody tr:last-child td { bor
             </th>
             <th>
               <span class="pname">Tu Mejor Inversión</span>
-              <span class="pprice">$799.000 → <b style="color:var(--ink)">$499.000</b></span>
+              <span class="pprice">$790.000 → <b style="color:var(--ink)">$490.000</b></span>
             </th>
             <th class="col-hero">
               <span class="col-hero-mark">Recomendado</span>
               <span class="pname">Patrimonio 360</span>
-              <span class="pprice">$1.500.000 → <b style="color:var(--rose-deep)">$990.000</b></span>
+              <span class="pprice">$1.499.000 → <b style="color:var(--rose-deep)">$990.000</b></span>
             </th>
           </tr>
         </thead>
@@ -1496,11 +1493,10 @@ table.compare tbody tr:last-child th, table.compare tbody tr:last-child td { bor
       inmobiliaria que tenga sentido para ti.
     </p>
 
-    <!-- EDITABLE · Reemplazar los href por los links reales de pago, formulario o agenda -->
     <div class="final-actions rise d3">
-      <a href="#" class="btn btn-primary btn-lg">Quiero Patrimonio 360 <span class="arw">→</span></a>
-      <a href="#" class="btn btn-outline-light btn-lg">Quiero Tu Mejor Inversión</a>
-      <a href="#" class="btn btn-outline-light btn-lg">Quiero mi diagnóstico</a>
+      <a href="#planes" data-pago="patrimonio-360" class="btn btn-primary btn-lg">Quiero Patrimonio 360 <span class="arw">→</span></a>
+      <a href="#planes" data-pago="tu-mejor-inversion" class="btn btn-outline-light btn-lg">Quiero Tu Mejor Inversión</a>
+      <a href="#planes" data-pago="diagnostico" class="btn btn-outline-light btn-lg">Quiero mi diagnóstico</a>
     </div>
 
     <p class="small rise d4" style="margin-top:28px; color:rgba(255,255,255,.5);">
@@ -1545,7 +1541,7 @@ table.compare tbody tr:last-child th, table.compare tbody tr:last-child td { bor
 <div class="sticky-cta">
   <div class="txt">
     <b>Patrimonio 360</b>
-    <span><s style="color:#B4B0AC">$1.500.000</s> &nbsp;Hoy $990.000</span>
+    <span><s style="color:#B4B0AC">$1.499.000</s> &nbsp;Hoy $990.000</span>
   </div>
   <a href="#planes" class="btn btn-primary">Quiero comenzar</a>
 </div>
@@ -1553,6 +1549,29 @@ table.compare tbody tr:last-child th, table.compare tbody tr:last-child td { bor
 <script>
 (function () {
   'use strict';
+
+  /* ══════════════════════════════════════════════════════════
+     LINKS DE PAGO · ÚNICO LUGAR PARA EDITAR
+     Pega entre comillas el link de pago (o de agenda) de cada
+     programa cuando estén definidos. Ejemplo:
+       'patrimonio-360': 'https://…',
+     Mientras queden vacíos, los botones llevan a la sección de
+     programas y la página funciona con normalidad.
+     ══════════════════════════════════════════════════════════ */
+  var LINKS_DE_PAGO = {
+    'patrimonio-360':     '',   // $990.000
+    'tu-mejor-inversion': '',   // $490.000
+    'diagnostico':        ''    // $49.900
+  };
+
+  document.querySelectorAll('[data-pago]').forEach(function (el) {
+    var url = LINKS_DE_PAGO[el.getAttribute('data-pago')];
+    if (url) {
+      el.setAttribute('href', url);
+      el.setAttribute('target', '_blank');
+      el.setAttribute('rel', 'noopener');
+    }
+  });
 
   /* ── Nav: fondo sólido al hacer scroll ── */
   var nav = document.getElementById('nav');

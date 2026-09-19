@@ -11,7 +11,7 @@ Hero → autoridad → problema → transformación → Método Patrimonio 360°
 escalera de productos → tabla comparativa → posicionamiento → entregables → testimonios → sobre Alison →
 FAQ → CTA final.
 
-Jerarquía de conversión: **Patrimonio 360 ($990.000)** › Tu Mejor Inversión ($499.000) › Sesión Diagnóstico ($49.900).
+Jerarquía de conversión: **Patrimonio 360 ($1.499.000 → $990.000)** › Tu Mejor Inversión ($790.000 → $490.000) › Sesión Diagnóstico ($49.900, sin descuento).
 
 ## Campos editables
 
@@ -23,8 +23,25 @@ Todos los puntos pendientes están marcados en el HTML con el comentario `EDITAB
 | Logos de medios | `.logo-slot` en la barra de medios |
 | Cifras de trayectoria | `.stat` en la sección de autoridad — **sólo cifras reales** |
 | Testimonios | `.tst` en la sección de testimonios — **sólo testimonios reales y autorizados** |
-| Links de pago / agenda / WhatsApp | `href` de los CTA de cada programa, del CTA final y del footer |
+| Links de pago / agenda | objeto `LINKS_DE_PAGO` al inicio del `<script>` — un solo lugar para los tres programas |
+| WhatsApp y correo | enlaces del footer |
 | Redes sociales | enlaces del footer |
+
+## Links de pago
+
+Los seis botones de compra (los tres de las tarjetas y los tres del CTA final) leen un único objeto
+al inicio del `<script>`:
+
+```js
+var LINKS_DE_PAGO = {
+  'patrimonio-360':     '',   // $990.000
+  'tu-mejor-inversion': '',   // $490.000
+  'diagnostico':        ''    // $49.900
+};
+```
+
+Basta pegar cada link entre las comillas. Mientras estén vacíos, los botones llevan a la sección de
+programas, así que la página nunca queda con un botón muerto.
 
 ## Urgencia
 
