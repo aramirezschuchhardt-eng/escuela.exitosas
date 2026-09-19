@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Alison Ramírez · Estrategia inmobiliaria para personas que quieren construir patrimonio. Diseña una estrategia personalizada, toma mejores decisiones de inversión y construye una cartera con dirección.">
+<meta name="theme-color" content="#FBF9F7">
+<meta property="og:title" content="Alison Ramírez · De comprar propiedades a construir patrimonio">
+<meta property="og:description" content="Estrategia inmobiliaria personalizada para tomar mejores decisiones de inversión y construir una cartera que tenga sentido para tus objetivos.">
+<meta property="og:type" content="website">
+<title>Alison Ramírez · Estrategia Inmobiliaria y Patrimonio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..500&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..500&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════════════
+   ALISON RAMÍREZ — Landing de marca personal
+   Paleta: blanco · rosado sofisticado · verde salvia · carbón
+   ════════════════════════════════════════════════ */
+
+:root {
+  --white:      #FFFFFF;
+  --bone:       #FBF9F7;
+  --sand:       #F5F1EC;
+
+  --rose:       #C4697F;
+  --rose-deep:  #A44E64;
+  --rose-soft:  #FBEDF1;
+  --rose-line:  #EFD3DB;
+
+  --sage:       #7A8A6B;
+  --sage-deep:  #4F5C45;
+  --sage-soft:  #EEF1EA;
+  --sage-line:  #D6DDCD;
+
+  --ink:        #16181A;
+  --graphite:   #3C4044;
+  --muted:      #7A7F84;
+  --line:       #E8E4DF;
+
+  --serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --sans:  'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --r-sm: 12px;
+  --r-md: 18px;
+  --r-lg: 26px;
+  --r-xl: 34px;
+
+  --shadow-soft: 0 2px 6px rgba(22,24,26,.03), 0 12px 32px rgba(22,24,26,.05);
+  --shadow-lift: 0 4px 10px rgba(22,24,26,.04), 0 24px 60px rgba(22,24,26,.09);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 90px; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--sans);
+  background: var(--white);
+  color: var(--ink);
+  font-size: 17px;
+  line-height: 1.65;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+/* ── LAYOUT ── */
+.wrap { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+.wrap-narrow { width: 100%; max-width: 860px; margin: 0 auto; padding: 0 24px; }
+section { padding: clamp(76px, 9vw, 132px) 0; position: relative; }
+.bg-bone { background: var(--bone); }
+.bg-sand { background: var(--sand); }
+.bg-ink  { background: var(--ink); color: var(--white); }
+.bg-sage { background: var(--sage-soft); }
+.bg-rose { background: var(--rose-soft); }
+
+/* ── TIPOGRAFÍA ── */
+.eyebrow {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 22px;
+  display: flex; align-items: center; gap: 12px;
+}
+.eyebrow::before {
+  content: ''; width: 34px; height: 1px; background: var(--rose-line); flex-shrink: 0;
+}
+.eyebrow.center { justify-content: center; }
+.eyebrow.sage { color: var(--sage-deep); }
+.eyebrow.sage::before { background: var(--sage-line); }
+.eyebrow.light { color: var(--rose-line); }
+.eyebrow.light::before { background: rgba(255,255,255,.28); }
+
+h1, h2, h3, h4 { font-family: var(--serif); font-weight: 400; line-height: 1.08; letter-spacing: -.015em; }
+
+h1 { font-size: clamp(36px, 4.7vw, 62px); }
+h2 { font-size: clamp(30px, 3.9vw, 50px); line-height: 1.14; }
+h3 { font-size: clamp(23px, 2.4vw, 31px); line-height: 1.2; }
+
+.display-caps {
+  font-family: var(--serif);
+  text-transform: uppercase;
+  letter-spacing: -.005em;
+}
+.italic { font-style: italic; }
+.tone-rose { color: var(--rose); }
+.tone-sage { color: var(--sage-deep); }
+.lede { font-size: clamp(17px, 1.5vw, 20px); color: var(--graphite); line-height: 1.7; max-width: 62ch; }
+.lede.center { margin-left: auto; margin-right: auto; text-align: center; }
+.small { font-size: 14px; color: var(--muted); line-height: 1.6; }
+.center { text-align: center; }
+
+.sec-head { margin-bottom: clamp(44px, 5vw, 68px); }
+.sec-head.center { text-align: center; }
+.sec-head.center .eyebrow { justify-content: center; }
+.sec-head h2 + .lede { margin-top: 22px; }
+
+/* ── BOTONES ── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  font-family: var(--sans);
+  font-size: 14px; font-weight: 600;
+  letter-spacing: .09em; text-transform: uppercase;
+  padding: 19px 34px;
+  border-radius: 100px;
+  transition: transform .35s cubic-bezier(.2,.7,.3,1), box-shadow .35s, background .3s, color .3s, border-color .3s;
+  text-align: center; line-height: 1.2;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-primary { background: var(--rose); color: var(--white); box-shadow: 0 10px 26px rgba(196,105,127,.26); }
+.btn-primary:hover { background: var(--rose-deep); box-shadow: 0 16px 38px rgba(196,105,127,.34); }
+.btn-dark { background: var(--ink); color: var(--white); box-shadow: 0 10px 26px rgba(22,24,26,.18); }
+.btn-dark:hover { background: #000; box-shadow: 0 16px 38px rgba(22,24,26,.26); }
+.btn-sage { background: var(--sage-deep); color: var(--white); box-shadow: 0 10px 26px rgba(79,92,69,.22); }
+.btn-sage:hover { background: #3F4A37; }
+.btn-ghost { border: 1px solid var(--line); color: var(--ink); background: var(--white); }
+.btn-ghost:hover { border-color: var(--ink); }
+.btn-outline-light { border: 1px solid rgba(255,255,255,.34); color: var(--white); }
+.btn-outline-light:hover { background: var(--white); color: var(--ink); }
+.btn-block { width: 100%; }
+.btn-lg { padding: 21px 32px; font-size: 14.5px; }
+.btn .arw { transition: transform .35s; }
+.btn:hover .arw { transform: translateX(4px); }
+
+/* ── NAV ── */
+.nav {
+  position: fixed; inset: 0 0 auto 0; z-index: 90;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px;
+  padding: 0 32px; height: 78px;
+  transition: background .4s, box-shadow .4s, height .4s, border-color .4s;
+  border-bottom: 1px solid transparent;
+}
+.nav.solid {
+  background: rgba(251,249,247,.9);
+  backdrop-filter: saturate(160%) blur(14px);
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+  border-bottom-color: var(--line);
+  height: 68px;
+}
+.brand { display: flex; flex-direction: column; gap: 2px; line-height: 1; }
+.brand-name {
+  font-family: var(--serif); font-size: 19px; letter-spacing: .16em; text-transform: uppercase;
+}
+.brand-sub { font-size: 9.5px; letter-spacing: .26em; text-transform: uppercase; color: var(--muted); }
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a {
+  font-size: 13.5px; font-weight: 500; color: var(--graphite); position: relative; padding: 4px 0;
+}
+.nav-links a::after {
+  content: ''; position: absolute; left: 0; bottom: 0; width: 0; height: 1px;
+  background: var(--rose); transition: width .3s;
+}
+.nav-links a:hover::after { width: 100%; }
+.nav-cta { padding: 13px 24px; font-size: 12px; }
+.nav-toggle { display: none; width: 42px; height: 42px; align-items: center; justify-content: center; }
+.nav-toggle span { display: block; width: 20px; height: 1.5px; background: var(--ink); position: relative; }
+.nav-toggle span::before, .nav-toggle span::after {
+  content: ''; position: absolute; left: 0; width: 20px; height: 1.5px; background: var(--ink); transition: transform .3s;
+}
+.nav-toggle span::before { top: -6px; }
+.nav-toggle span::after  { top: 6px; }
+.nav-drawer {
+  position: fixed; inset: 68px 0 auto 0; z-index: 89;
+  background: var(--white); border-bottom: 1px solid var(--line);
+  padding: 8px 24px 26px;
+  display: none; flex-direction: column;
+  box-shadow: var(--shadow-soft);
+}
+.nav-drawer.open { display: flex; }
+.nav-drawer a {
+  padding: 15px 2px; border-bottom: 1px solid var(--line); font-size: 15px; font-weight: 500;
+}
+.nav-drawer .btn { margin-top: 20px; }
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  padding: clamp(124px, 15vw, 172px) 0 clamp(64px, 8vw, 104px);
+  background:
+    radial-gradient(1100px 620px at 82% -6%, var(--rose-soft) 0%, rgba(251,237,241,0) 62%),
+    radial-gradient(900px 560px at 4% 104%, var(--sage-soft) 0%, rgba(238,241,234,0) 60%),
+    var(--bone);
+  overflow: hidden;
+}
+.hero-grid {
+  display: grid; grid-template-columns: 1.06fr .94fr; gap: clamp(36px, 5vw, 76px); align-items: center;
+}
+.hero-visual { position: relative; }
+.hero h1 { margin: 6px 0 26px; max-width: 13.5ch; }
+.hero h1 .br { display: block; }
+.hero-sub { font-size: clamp(16.5px, 1.5vw, 19.5px); color: var(--graphite); max-width: 52ch; line-height: 1.68; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 38px; }
+.hero-meta {
+  margin-top: 42px; padding-top: 28px; border-top: 1px solid var(--line);
+  display: flex; flex-wrap: wrap; gap: 14px 30px;
+}
+.hero-meta li { list-style: none; display: flex; align-items: center; gap: 9px; font-size: 13.5px; color: var(--graphite); }
+.hero-meta .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--sage); flex-shrink: 0; }
+
+/* Marco editorial de la fotografía */
+.portrait {
+  position: relative; aspect-ratio: 4 / 5; border-radius: 240px 240px var(--r-lg) var(--r-lg);
+  overflow: hidden;
+  background: linear-gradient(160deg, var(--rose-soft) 0%, var(--sand) 48%, var(--sage-soft) 100%);
+  box-shadow: var(--shadow-lift);
+}
+.portrait img { width: 100%; height: 100%; object-fit: cover; }
+.portrait-ph {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 10px; text-align: center; padding: 30px;
+}
+.portrait-ph .ico { width: 46px; height: 46px; opacity: .5; }
+.portrait-ph b { font-family: var(--serif); font-size: 19px; font-weight: 500; }
+.portrait-ph span { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); max-width: 100%; }
+.portrait-badge {
+  position: absolute; left: -46px; bottom: 30px; z-index: 3;
+  background: var(--white); border-radius: var(--r-md);
+  padding: 16px 20px; box-shadow: var(--shadow-lift); max-width: 232px;
+}
+.portrait-badge b { font-family: var(--serif); font-size: 15.5px; font-weight: 500; display: block; }
+.portrait-badge span { font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--rose); }
+
+/* ── BARRA DE MEDIOS ── */
+.media-bar { padding: 40px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--white); }
+.media-label { font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); text-align: center; margin-bottom: 24px; }
+.media-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+.logo-slot {
+  min-width: 140px; height: 58px; border: 1px dashed var(--line); border-radius: var(--r-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase; color: #B4B0AC;
+  flex: 0 1 160px;
+}
+
+/* ── AUTORIDAD ── */
+.auth-grid { display: grid; grid-template-columns: .92fr 1.08fr; gap: clamp(36px, 5vw, 72px); align-items: center; }
+.auth-photo {
+  aspect-ratio: 5 / 6; border-radius: var(--r-xl); overflow: hidden;
+  background: linear-gradient(150deg, var(--sage-soft), var(--sand) 60%, var(--rose-soft));
+  position: relative; box-shadow: var(--shadow-soft);
+}
+.stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 34px; }
+.stat {
+  border: 1px dashed var(--rose-line); border-radius: var(--r-md);
+  padding: 20px 22px; background: var(--white);
+}
+.stat .val {
+  font-family: var(--serif); font-size: 30px; line-height: 1; color: var(--rose); display: block; margin-bottom: 8px;
+}
+.stat .lbl { font-size: 12.5px; color: var(--graphite); line-height: 1.45; }
+.stat .edit { display: block; margin-top: 8px; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: #B4B0AC; }
+.auth-list { list-style: none; margin-top: 30px; display: grid; gap: 14px; }
+.auth-list li { display: flex; gap: 14px; align-items: flex-start; font-size: 15.5px; color: var(--graphite); }
+.auth-list .bullet {
+  width: 22px; height: 22px; border-radius: 50%; background: var(--sage-soft); color: var(--sage-deep);
+  display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; margin-top: 3px;
+}
+
+/* ── PROBLEMA ── */
+.noise-cloud { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; max-width: 900px; margin: 0 auto; }
+.noise-chip {
+  border: 1px solid var(--line); background: var(--white); border-radius: 100px;
+  padding: 12px 22px; font-size: 14.5px; color: var(--graphite);
+  box-shadow: 0 1px 2px rgba(22,24,26,.02);
+}
+.noise-chip.mute { color: var(--muted); opacity: .78; }
+.pivot {
+  margin: clamp(52px, 6vw, 80px) auto 0; max-width: 720px; text-align: center;
+  padding: clamp(34px, 4vw, 52px); border-radius: var(--r-xl);
+  background: var(--white); border: 1px solid var(--rose-line); box-shadow: var(--shadow-soft);
+}
+.pivot .q { font-family: var(--serif); font-size: clamp(22px, 2.6vw, 33px); font-style: italic; color: var(--ink); line-height: 1.28; }
+.pivot .a { margin-top: 26px; font-size: clamp(19px, 2.2vw, 26px); font-family: var(--serif); }
+.pivot .a b { color: var(--rose); font-weight: 400; }
+
+/* ── TRANSFORMACIÓN ── */
+.tf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: stretch; }
+.tf-card { border-radius: var(--r-xl); padding: clamp(30px, 3.4vw, 46px); }
+.tf-card.before { background: var(--white); border: 1px solid var(--line); }
+.tf-card.after  { background: var(--sage-deep); color: var(--white); box-shadow: var(--shadow-lift); }
+.tf-tag {
+  font-size: 11px; letter-spacing: .24em; text-transform: uppercase; margin-bottom: 8px;
+  color: var(--muted);
+}
+.tf-card.after .tf-tag { color: var(--sage-line); }
+.tf-card h3 { margin-bottom: 26px; }
+.tf-list { list-style: none; display: grid; gap: 13px; }
+.tf-list li { display: flex; gap: 13px; align-items: flex-start; font-size: 15.5px; line-height: 1.5; }
+.tf-list .mk { flex-shrink: 0; width: 18px; text-align: center; font-size: 13px; margin-top: 2px; }
+.tf-card.before .mk { color: #C9C5C1; }
+.tf-card.after .mk { color: var(--rose-line); }
+.tf-card.before li { color: var(--muted); }
+.tf-arrow {
+  display: flex; align-items: center; justify-content: center;
+  width: 62px; height: 62px; border-radius: 50%; background: var(--rose); color: var(--white);
+  margin: 0 auto; position: relative; z-index: 2;
+  box-shadow: 0 12px 30px rgba(196,105,127,.3);
+}
+
+/* ── MÉTODO 360 ── */
+.method-circle {
+  position: relative; width: 660px; height: 660px; margin: 0 auto;
+}
+.method-circle::before {
+  content: ''; position: absolute; inset: 118px; border-radius: 50%;
+  border: 1px dashed var(--sage-line);
+}
+.method-core {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: 258px; height: 258px; border-radius: 50%;
+  background: linear-gradient(150deg, var(--white), var(--sage-soft));
+  border: 1px solid var(--sage-line);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  padding: 26px; box-shadow: var(--shadow-soft);
+}
+.method-core .mini { font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase; color: var(--sage-deep); }
+.method-core b { font-family: var(--serif); font-size: 29px; font-weight: 400; line-height: 1.1; margin: 10px 0 8px; }
+.method-node-pos {
+  position: absolute; left: 50%; top: 50%; width: 196px; margin-left: -98px; margin-top: -68px;
+  transform: rotate(var(--a)) translate(246px) rotate(calc(-1 * var(--a)));
+}
+.method-node {
+  background: var(--white); border: 1px solid var(--line); border-radius: var(--r-md);
+  padding: 18px 20px; box-shadow: var(--shadow-soft);
+  transition: transform .35s, box-shadow .35s, border-color .35s;
+}
+.method-node:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); border-color: var(--rose-line); }
+.method-node .num {
+  font-family: var(--serif); font-size: 12px; letter-spacing: .12em; color: var(--rose); display: block; margin-bottom: 6px;
+}
+.method-node b { font-family: var(--serif); font-size: 19px; font-weight: 500; display: block; letter-spacing: .01em; }
+.method-node p { font-size: 13px; color: var(--muted); line-height: 1.48; margin-top: 6px; }
+.method-stack { display: none; }
+
+/* ── PARA TI / NO PARA TI ── */
+.fit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.fit-card { border-radius: var(--r-xl); padding: clamp(30px, 3.4vw, 46px); background: var(--white); border: 1px solid var(--line); }
+.fit-card.yes { border-color: var(--sage-line); background: linear-gradient(170deg, var(--white), var(--sage-soft) 190%); }
+.fit-card h3 { margin-bottom: 24px; }
+.fit-list { list-style: none; display: grid; gap: 15px; }
+.fit-list li { display: flex; gap: 14px; align-items: flex-start; font-size: 15.5px; line-height: 1.52; color: var(--graphite); }
+.fit-mark {
+  width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0; margin-top: 2px;
+  display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;
+}
+.fit-card.yes .fit-mark { background: var(--sage-deep); color: var(--white); }
+.fit-card.no .fit-mark { background: var(--sand); color: var(--muted); }
+.fit-card.no li { color: var(--muted); }
+
+/* ── ESCALERA DE PRODUCTOS ── */
+.ladder { display: grid; grid-template-columns: 1.24fr .88fr .88fr; gap: 22px; align-items: start; }
+.plan {
+  background: var(--white); border: 1px solid var(--line); border-radius: var(--r-xl);
+  padding: clamp(28px, 2.6vw, 38px); display: flex; flex-direction: column; height: 100%;
+  transition: transform .4s cubic-bezier(.2,.7,.3,1), box-shadow .4s;
+  position: relative;
+}
+.plan:hover { transform: translateY(-5px); box-shadow: var(--shadow-lift); }
+.plan-hero {
+  border: 1.5px solid var(--rose-line);
+  background: linear-gradient(168deg, var(--white) 0%, var(--rose-soft) 118%);
+  box-shadow: var(--shadow-lift);
+  padding: clamp(32px, 3vw, 48px);
+}
+.plan-tag {
+  display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
+  font-size: 10.5px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase;
+  padding: 9px 16px; border-radius: 100px; margin-bottom: 22px;
+}
+.plan-tag.gold { background: var(--rose); color: var(--white); }
+.plan-tag.soft { background: var(--sage-soft); color: var(--sage-deep); }
+.plan-tag.plain { background: var(--sand); color: var(--graphite); }
+.plan-rank {
+  position: absolute; top: 26px; right: 28px;
+  font-family: var(--serif); font-size: 12px; letter-spacing: .18em; color: #C9C5C1;
+}
+.plan h3 { letter-spacing: .01em; }
+.plan-hero h3 { font-size: clamp(30px, 3.2vw, 42px); }
+.plan-dur { margin-top: 10px; font-size: 13.5px; letter-spacing: .06em; color: var(--sage-deep); font-weight: 500; }
+.plan-desc { margin-top: 18px; font-size: 15px; color: var(--graphite); line-height: 1.6; }
+.price-block { margin: 26px 0 24px; padding-top: 24px; border-top: 1px solid var(--line); }
+.price-was { font-size: 14.5px; color: var(--muted); }
+.price-was small { display: block; font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; margin-bottom: 2px; color: #B4B0AC; }
+.price-was s { text-decoration: line-through; text-decoration-color: var(--rose); text-decoration-thickness: 1.5px; }
+.price-now { display: flex; align-items: baseline; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
+.price-now .hoy { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--rose); font-weight: 600; }
+.price-now .amt { font-family: var(--serif); font-size: clamp(34px, 3.6vw, 46px); line-height: 1; letter-spacing: -.02em; }
+.price-note { margin-top: 10px; font-size: 12px; color: var(--muted); letter-spacing: .02em; }
+.plan-includes-label {
+  font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px;
+}
+.plan-list { list-style: none; display: grid; gap: 11px; margin-bottom: 30px; }
+.plan-list li { display: flex; gap: 11px; align-items: flex-start; font-size: 14.6px; line-height: 1.5; color: var(--graphite); }
+.plan-list .ck { color: var(--sage); flex-shrink: 0; font-size: 12px; margin-top: 3px; }
+.plan-hero .plan-list .ck { color: var(--rose); }
+.plan-list.two-col { grid-template-columns: 1fr 1fr; gap: 11px 26px; }
+.plan-foot { margin-top: auto; }
+.plan-limit {
+  margin-top: 16px; font-size: 12.5px; color: var(--muted); line-height: 1.5; text-align: center;
+}
+.plan-bridge {
+  margin-top: 16px; font-size: 12.8px; color: var(--graphite); line-height: 1.55;
+  background: var(--sand); border-radius: var(--r-sm); padding: 14px 16px;
+}
+
+/* ── URGENCIA ÉTICA ── */
+.urgency {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px 30px;
+  border: 1px solid var(--sage-line); background: var(--sage-soft);
+  border-radius: var(--r-lg); padding: 26px 32px; margin-top: 34px;
+}
+.urgency p { font-size: 14.5px; color: var(--sage-deep); display: flex; align-items: center; gap: 12px; }
+.urgency .pulse {
+  width: 9px; height: 9px; border-radius: 50%; background: var(--sage); flex-shrink: 0;
+  box-shadow: 0 0 0 0 rgba(122,138,107,.6); animation: pulse 2.6s infinite;
+}
+@keyframes pulse {
+  70%  { box-shadow: 0 0 0 12px rgba(122,138,107,0); }
+  100% { box-shadow: 0 0 0 0 rgba(122,138,107,0); }
+}
+/* Countdown: sólo aparece si #countdown tiene data-deadline con una fecha REAL. */
+.countdown { display: none; align-items: center; gap: 10px; font-size: 14px; color: var(--sage-deep); }
+.countdown.on { display: flex; }
+.countdown b { font-family: var(--serif); font-size: 19px; font-weight: 500; }
+
+/* ── TABLA COMPARATIVA ── */
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 6px; }
+table.compare {
+  width: 100%; min-width: 760px; border-collapse: separate; border-spacing: 0;
+  background: var(--white); border-radius: var(--r-lg); overflow: hidden;
+  box-shadow: var(--shadow-soft);
+}
+table.compare th, table.compare td { padding: 17px 20px; text-align: center; border-bottom: 1px solid var(--line); font-size: 14.5px; }
+table.compare thead th { background: var(--bone); padding: 26px 20px; vertical-align: bottom; }
+table.compare thead th .pname { font-family: var(--serif); font-size: 19px; display: block; line-height: 1.2; }
+table.compare thead th .pprice { font-size: 12.5px; color: var(--muted); display: block; margin-top: 7px; }
+table.compare tbody th {
+  text-align: left; font-weight: 500; font-size: 14.5px; color: var(--ink);
+  background: var(--white); position: sticky; left: 0; z-index: 2; min-width: 240px;
+}
+table.compare tbody tr:nth-child(even) th,
+table.compare tbody tr:nth-child(even) td { background: var(--bone); }
+table.compare .col-hero { background: var(--rose-soft) !important; position: relative; }
+table.compare thead .col-hero { background: linear-gradient(180deg, var(--rose-soft), #F8E2E9) !important; }
+table.compare thead .col-hero .pname { color: var(--rose-deep); }
+table.compare .col-hero-mark {
+  display: inline-block; font-size: 9.5px; letter-spacing: .18em; text-transform: uppercase;
+  background: var(--rose); color: var(--white); padding: 5px 11px; border-radius: 100px; margin-bottom: 12px;
+}
+table.compare tbody tr:last-child th, table.compare tbody tr:last-child td { border-bottom: none; }
+.yes-ico { color: var(--sage-deep); font-size: 15px; }
+.col-hero .yes-ico { color: var(--rose-deep); }
+.no-ico { color: #CFCBC7; }
+.table-hint { display: none; text-align: center; font-size: 12px; color: var(--muted); margin-top: 16px; }
+
+/* ── TESTIMONIOS ── */
+.tst-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.tst {
+  background: var(--white); border: 1px dashed var(--rose-line); border-radius: var(--r-xl);
+  padding: clamp(26px, 2.6vw, 36px); display: flex; flex-direction: column; gap: 18px;
+}
+.tst-quote { font-family: var(--serif); font-style: italic; font-size: 19px; line-height: 1.45; color: var(--muted); }
+.tst-fields { list-style: none; display: grid; gap: 9px; font-size: 12.8px; color: var(--muted); }
+.tst-fields li { display: flex; gap: 9px; }
+.tst-fields b { color: var(--graphite); font-weight: 500; min-width: 104px; }
+.tst-person { display: flex; align-items: center; gap: 14px; margin-top: auto; padding-top: 18px; border-top: 1px solid var(--line); }
+.tst-avatar {
+  width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(140deg, var(--rose-soft), var(--sage-soft));
+  display: flex; align-items: center; justify-content: center; font-size: 9px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--muted); text-align: center; line-height: 1.2;
+}
+.tst-person .who b { font-family: var(--serif); font-size: 16px; font-weight: 500; display: block; }
+.tst-person .who span { font-size: 12px; color: var(--muted); }
+.editable-note {
+  display: inline-flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--rose); background: var(--rose-soft);
+  padding: 7px 14px; border-radius: 100px;
+}
+
+/* ── QUÉ RECIBO ── */
+.deliv-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.deliv {
+  background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg);
+  padding: 22px; transition: transform .4s, box-shadow .4s;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.deliv:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); }
+.deliv-mock {
+  height: 148px; border-radius: var(--r-md); background: var(--bone); border: 1px solid var(--line);
+  padding: 16px; display: flex; flex-direction: column; gap: 8px; overflow: hidden; position: relative;
+}
+.mk-line { height: 7px; border-radius: 4px; background: var(--line); }
+.mk-line.w70 { width: 70%; } .mk-line.w50 { width: 50%; } .mk-line.w85 { width: 85%; } .mk-line.w40 { width: 40%; }
+.mk-line.rose { background: var(--rose-line); } .mk-line.sage { background: var(--sage-line); }
+.mk-title { height: 10px; width: 56%; border-radius: 4px; background: var(--ink); opacity: .82; margin-bottom: 4px; }
+.mk-bars { display: flex; align-items: flex-end; gap: 7px; height: 66px; margin-top: auto; }
+.mk-bars i { flex: 1; border-radius: 4px 4px 2px 2px; background: var(--sage-line); display: block; }
+.mk-bars i.hi { background: var(--rose); }
+.mk-donut {
+  width: 74px; height: 74px; border-radius: 50%; margin: auto;
+  background: conic-gradient(var(--rose) 0 42%, var(--sage) 42% 74%, var(--sage-line) 74% 100%);
+  -webkit-mask: radial-gradient(circle, transparent 54%, #000 55%);
+  mask: radial-gradient(circle, transparent 54%, #000 55%);
+}
+.mk-check { display: flex; align-items: center; gap: 9px; }
+.mk-box { width: 13px; height: 13px; border-radius: 3px; border: 1.5px solid var(--sage); flex-shrink: 0; }
+.mk-box.on { background: var(--sage); }
+.mk-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-top: 6px; }
+.mk-cal i { aspect-ratio: 1; border-radius: 3px; background: var(--line); }
+.mk-cal i.on { background: var(--rose-line); }
+.mk-cal i.hi { background: var(--rose); }
+.mk-map { position: relative; flex: 1; }
+.mk-node {
+  position: absolute; width: 24px; height: 24px; border-radius: 7px; background: var(--white);
+  border: 1.5px solid var(--sage-line);
+}
+.mk-node.a { left: 6%;  top: 8%;  background: var(--rose-soft); border-color: var(--rose-line); }
+.mk-node.b { left: 44%; top: 40%; background: var(--sage-soft); }
+.mk-node.c { left: 78%; top: 12%; }
+.mk-node.d { left: 22%; top: 68%; }
+.mk-node.e { left: 66%; top: 66%; background: var(--rose-soft); border-color: var(--rose-line); }
+.mk-link { position: absolute; height: 1.5px; background: var(--sage-line); transform-origin: left center; }
+.deliv b { font-family: var(--serif); font-size: 18.5px; font-weight: 500; }
+.deliv p { font-size: 13.4px; color: var(--muted); line-height: 1.5; margin-top: 6px; }
+
+/* ── SOBRE ALISON ── */
+.about-grid { display: grid; grid-template-columns: .82fr 1.18fr; gap: clamp(34px, 5vw, 76px); align-items: center; }
+.about-photo {
+  aspect-ratio: 4 / 5; border-radius: var(--r-xl) var(--r-xl) 190px 190px; overflow: hidden;
+  background: linear-gradient(200deg, var(--rose-soft), var(--sand) 55%, var(--sage-soft));
+  position: relative;
+}
+.about-body p { font-size: 16.5px; color: var(--graphite); line-height: 1.75; margin-top: 20px; }
+.about-body p.first { font-size: 19px; color: var(--ink); }
+.sign {
+  margin-top: 30px; font-family: var(--serif); font-style: italic; font-size: 26px; color: var(--rose);
+}
+.about-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+.about-tags span {
+  font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--sage-deep);
+  border: 1px solid var(--sage-line); border-radius: 100px; padding: 9px 16px;
+}
+
+/* ── POSICIONAMIENTO ── */
+.split-claim { display: grid; grid-template-columns: 1fr auto 1fr; gap: clamp(24px, 3vw, 48px); align-items: center; }
+.claim-side p { font-family: var(--serif); font-size: clamp(21px, 2.4vw, 30px); line-height: 1.32; }
+.claim-side .tagline { font-family: var(--sans); font-size: 12px; letter-spacing: .22em; text-transform: uppercase; margin-bottom: 16px; }
+.claim-side.a { color: rgba(255,255,255,.52); }
+.claim-side.a .tagline { color: rgba(255,255,255,.4); }
+.claim-side.b .tagline { color: var(--rose-line); }
+.claim-div { width: 1px; height: 100%; min-height: 110px; background: rgba(255,255,255,.18); }
+
+/* ── FAQ ── */
+.faq-list { display: grid; gap: 10px; }
+.faq-item { background: var(--white); border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; transition: border-color .3s, box-shadow .3s; }
+.faq-item.open { border-color: var(--rose-line); box-shadow: var(--shadow-soft); }
+.faq-q {
+  width: 100%; text-align: left; display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  padding: 21px 24px; font-size: 16px; font-weight: 500; color: var(--ink); transition: background .3s;
+}
+.faq-q:hover { background: var(--bone); }
+.faq-ico { width: 26px; height: 26px; flex-shrink: 0; position: relative; border-radius: 50%; background: var(--rose-soft); }
+.faq-ico::before, .faq-ico::after {
+  content: ''; position: absolute; left: 50%; top: 50%; background: var(--rose); border-radius: 2px;
+  transform: translate(-50%, -50%); transition: transform .32s;
+}
+.faq-ico::before { width: 11px; height: 1.6px; }
+.faq-ico::after  { width: 1.6px; height: 11px; }
+.faq-item.open .faq-ico::after { transform: translate(-50%, -50%) scaleY(0); }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height .42s cubic-bezier(.3,.7,.3,1), padding .32s; }
+.faq-a p { padding: 0 24px 22px; font-size: 15.4px; color: var(--graphite); line-height: 1.68; max-width: 68ch; }
+.faq-item.open .faq-a { max-height: 460px; }
+
+/* ── CTA FINAL ── */
+.final { background: var(--ink); color: var(--white); position: relative; overflow: hidden; }
+.final::before {
+  content: ''; position: absolute; width: 760px; height: 760px; right: -240px; top: -300px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(196,105,127,.28), transparent 62%);
+}
+.final::after {
+  content: ''; position: absolute; width: 640px; height: 640px; left: -220px; bottom: -280px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(122,138,107,.24), transparent 64%);
+}
+.final .wrap { position: relative; z-index: 2; }
+.final h2 { font-size: clamp(33px, 5vw, 64px); }
+.final .lede { color: rgba(255,255,255,.72); }
+.final-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 44px; }
+
+/* ── FOOTER ── */
+.foot { background: var(--ink); color: rgba(255,255,255,.6); padding: 54px 0 40px; border-top: 1px solid rgba(255,255,255,.1); }
+.foot-grid { display: flex; flex-wrap: wrap; gap: 30px; justify-content: space-between; align-items: flex-start; }
+.foot .brand-name { color: var(--white); }
+.foot-links { display: flex; flex-wrap: wrap; gap: 10px 26px; list-style: none; font-size: 13.5px; }
+.foot-links a:hover { color: var(--white); }
+.foot-legal { margin-top: 36px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.1); font-size: 12.2px; line-height: 1.7; color: rgba(255,255,255,.45); max-width: 78ch; }
+
+/* ── CTA STICKY MOBILE ── */
+.sticky-cta {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 88;
+  display: none; align-items: center; gap: 12px;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+  background: rgba(255,255,255,.94); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid var(--line);
+}
+.sticky-cta .txt { flex: 1; min-width: 0; }
+.sticky-cta .txt b { font-family: var(--serif); font-size: 15px; font-weight: 500; display: block; line-height: 1.2; }
+.sticky-cta .txt span { font-size: 11.5px; color: var(--muted); }
+.sticky-cta .btn { padding: 15px 20px; font-size: 12px; white-space: nowrap; }
+
+/* ── ANIMACIONES ── */
+.rise { opacity: 0; transform: translateY(26px); transition: opacity .8s cubic-bezier(.2,.7,.3,1), transform .8s cubic-bezier(.2,.7,.3,1); }
+.rise.in { opacity: 1; transform: none; }
+.rise.d1 { transition-delay: .08s; } .rise.d2 { transition-delay: .16s; }
+.rise.d3 { transition-delay: .24s; } .rise.d4 { transition-delay: .32s; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .rise { opacity: 1; transform: none; transition: none; }
+  .urgency .pulse { animation: none; }
+  * { transition-duration: .01ms !important; }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1100px) {
+  .ladder { grid-template-columns: 1fr; }
+  .plan-hero .plan-list { grid-template-columns: 1fr 1fr; gap: 11px 26px; }
+  .deliv-grid { grid-template-columns: repeat(2, 1fr); }
+  .method-circle { width: 580px; height: 580px; }
+  .method-node-pos { transform: rotate(var(--a)) translate(216px) rotate(calc(-1 * var(--a))); width: 176px; margin-left: -88px; }
+  .method-core { width: 214px; height: 214px; }
+}
+@media (max-width: 980px) {
+  .nav-links, .nav .nav-cta { display: none; }
+  .nav-toggle { display: flex; }
+  .nav { height: 68px; padding: 0 20px; background: rgba(251,249,247,.92); backdrop-filter: blur(14px); border-bottom-color: var(--line); }
+  .hero-grid, .auth-grid, .about-grid { grid-template-columns: 1fr; }
+  .hero-grid { gap: 44px; }
+  .portrait { max-width: 430px; margin: 0 auto; }
+  .portrait-badge { left: 0; }
+  .auth-photo, .about-photo { max-width: 420px; margin: 0 auto; }
+  .tf-grid, .fit-grid { grid-template-columns: 1fr; }
+  .tst-grid { grid-template-columns: 1fr; }
+  .tst { border-style: solid; }
+  .split-claim { grid-template-columns: 1fr; text-align: left; }
+  .claim-div { width: 100%; height: 1px; min-height: 0; }
+  .method-circle { display: none; }
+  .method-stack { display: grid; gap: 12px; max-width: 620px; margin: 0 auto; }
+  .method-step {
+    display: flex; gap: 18px; align-items: flex-start; background: var(--white);
+    border: 1px solid var(--line); border-radius: var(--r-md); padding: 20px 22px;
+  }
+  .method-step .num {
+    font-family: var(--serif); font-size: 15px; color: var(--rose); flex-shrink: 0; width: 30px; padding-top: 2px;
+  }
+  .method-step b { font-family: var(--serif); font-size: 20px; font-weight: 500; display: block; }
+  .method-step p { font-size: 14px; color: var(--muted); margin-top: 4px; line-height: 1.5; }
+  .sticky-cta { display: flex; }
+  .table-hint { display: block; }
+  body { padding-bottom: 82px; }
+  section { padding: clamp(64px, 11vw, 96px) 0; }
+}
+@media (max-width: 680px) {
+  body { font-size: 16px; }
+  .wrap, .wrap-narrow { padding: 0 20px; }
+  .deliv-grid { grid-template-columns: 1fr; }
+  .plan-hero .plan-list, .plan-list.two-col { grid-template-columns: 1fr; }
+  .stat-grid { grid-template-columns: 1fr; }
+  .hero-actions .btn, .final-actions .btn { width: 100%; }
+  .final-actions { flex-direction: column; }
+  .noise-chip { font-size: 13.5px; padding: 10px 17px; }
+  .hero-meta { gap: 12px 20px; }
+  .portrait { border-radius: 170px 170px var(--r-lg) var(--r-lg); }
+  .logo-slot { flex: 1 1 128px; min-width: 128px; }
+  .urgency { padding: 22px; }
+  .about-photo { border-radius: var(--r-xl) var(--r-xl) 140px 140px; }
+}
+</style>
+<noscript><style>.rise { opacity: 1 !important; transform: none !important; }</style></noscript>
+</head>
+<body>
+
+<!-- ══════════ NAV ══════════ -->
+<nav class="nav" id="nav">
+  <a href="#top" class="brand">
+    <span class="brand-name">Alison Ramírez</span>
+    <span class="brand-sub">Estrategia Inmobiliaria</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#metodo">Método</a></li>
+    <li><a href="#planes">Programas</a></li>
+    <li><a href="#comparar">Comparar</a></li>
+    <li><a href="#alison">Sobre Alison</a></li>
+    <li><a href="#faq">Preguntas</a></li>
+  </ul>
+  <a href="#planes" class="btn btn-primary nav-cta">Quiero comenzar</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navDrawer"><span></span></button>
+</nav>
+<div class="nav-drawer" id="navDrawer">
+  <a href="#metodo">Método Patrimonio 360°</a>
+  <a href="#planes">Programas</a>
+  <a href="#comparar">Comparar programas</a>
+  <a href="#recibo">Qué recibes</a>
+  <a href="#alison">Sobre Alison</a>
+  <a href="#faq">Preguntas frecuentes</a>
+  <a href="#planes" class="btn btn-primary btn-block">Quiero diseñar mi estrategia</a>
+</div>
+
+<!-- ══════════ HERO ══════════ -->
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow rise in">De comprar propiedades a construir patrimonio</p>
+      <h1 class="rise in d1 display-caps">
+        ¿Y si tu próxima propiedad fuera
+        <span class="tone-rose italic" style="text-transform:none;">mucho más</span>
+        que una propiedad?
+      </h1>
+      <p class="hero-sub rise in d2">
+        Diseña una estrategia inmobiliaria personalizada, toma mejores decisiones de inversión
+        y construye una cartera que tenga sentido para tus objetivos.
+      </p>
+      <div class="hero-actions rise in d3">
+        <a href="#planes" class="btn btn-primary btn-lg">Quiero diseñar mi estrategia <span class="arw">→</span></a>
+        <a href="#planes" class="btn btn-ghost btn-lg">Conoce los programas</a>
+      </div>
+      <ul class="hero-meta rise in d4">
+        <li><span class="dot"></span> Acompañamiento 1:1</li>
+        <li><span class="dot"></span> Estrategia antes que propiedad</li>
+        <li><span class="dot"></span> Decisiones basadas en números</li>
+      </ul>
+    </div>
+
+    <div class="hero-visual rise in d2">
+      <div class="portrait">
+        <!-- EDITABLE · Reemplazar el placeholder por la fotografía profesional de Alison:
+             <img src="img/alison-hero.jpg" alt="Alison Ramírez, estratega inmobiliaria"> -->
+        <div class="portrait-ph">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#8A8F84" stroke-width="1.1">
+            <rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><circle cx="8.5" cy="10" r="2"/>
+            <path d="M3 17l5.5-5 4 3.5L16 12l5 5"/>
+          </svg>
+          <b>Fotografía editorial de Alison</b>
+          <span>Campo editable · 4:5</span>
+        </div>
+      </div>
+      <div class="portrait-badge">
+        <span>Estrategia, no catálogo</span>
+        <b>Un broker te muestra propiedades. Una estrategia te ayuda a decidir.</b>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════ BARRA DE MEDIOS · EDITABLE ══════════ -->
+<section class="media-bar" style="padding:40px 0;">
+  <div class="wrap">
+    <p class="media-label">Medios y espacios donde ha participado Alison</p>
+    <!-- EDITABLE · Sustituir cada slot por el logo real del medio: <img src="img/medios/xxx.svg" alt="Medio"> -->
+    <div class="media-row rise">
+      <div class="logo-slot">Logo medio 01</div>
+      <div class="logo-slot">Logo medio 02</div>
+      <div class="logo-slot">Logo medio 03</div>
+      <div class="logo-slot">Logo medio 04</div>
+      <div class="logo-slot">Logo medio 05</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ AUTORIDAD ══════════ -->
+<section class="bg-bone" id="autoridad">
+  <div class="wrap">
+    <div class="auth-grid">
+      <div class="rise">
+        <div class="auth-photo">
+          <!-- EDITABLE · Foto profesional (retrato de trabajo / reunión / medios) -->
+          <div class="portrait-ph">
+            <b>Retrato profesional</b>
+            <span>Campo editable · 5:6</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rise d1">
+        <p class="eyebrow">Autoridad</p>
+        <h2 class="display-caps">No es solo lo que sabes.<br><span class="tone-rose italic" style="text-transform:none;">Es quién te acompaña</span> a tomar la decisión.</h2>
+        <p class="lede" style="margin-top:22px;">
+          El mercado inmobiliario está lleno de información. Lo que escasea es el criterio para
+          ordenarla, interpretarla y convertirla en una decisión que tenga sentido para tu caso.
+          Ahí es donde entra el acompañamiento.
+        </p>
+
+        <ul class="auth-list">
+          <li><span class="bullet">✓</span><span><b>Trayectoria en el mercado inmobiliario chileno</b> — <span style="color:var(--muted)">campo editable: años de experiencia y foco</span></span></li>
+          <li><span class="bullet">✓</span><span><b>Análisis de proyectos, números y financiamiento</b> — evaluación antes de comprometer capital</span></li>
+          <li><span class="bullet">✓</span><span><b>Participación en medios de comunicación</b> — <span style="color:var(--muted)">campo editable: televisión, radio, prensa</span></span></li>
+          <li><span class="bullet">✓</span><span><b>Comunidad y contenido propio</b> — <span style="color:var(--muted)">campo editable: redes y audiencia real</span></span></li>
+        </ul>
+
+        <!-- EDITABLE · Sólo completar con cifras reales y verificables. No publicar estimaciones. -->
+        <div class="stat-grid">
+          <div class="stat"><span class="val">—</span><span class="lbl">Años en el mercado inmobiliario</span><span class="edit">Campo editable</span></div>
+          <div class="stat"><span class="val">—</span><span class="lbl">Personas acompañadas en sus decisiones</span><span class="edit">Campo editable</span></div>
+          <div class="stat"><span class="val">—</span><span class="lbl">Proyectos y propiedades analizadas</span><span class="edit">Campo editable</span></div>
+          <div class="stat"><span class="val">—</span><span class="lbl">Apariciones en medios</span><span class="edit">Campo editable</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ PROBLEMA ══════════ -->
+<section id="problema">
+  <div class="wrap">
+    <div class="sec-head center rise">
+      <p class="eyebrow center">El problema real</p>
+      <h2 class="display-caps">El problema no es que<br>no haya propiedades.</h2>
+      <p class="lede center" style="margin-top:20px;">El problema es que hay demasiadas. Y casi todas llegan con la misma promesa.</p>
+    </div>
+
+    <div class="noise-cloud rise d1">
+      <span class="noise-chip">20 proyectos por WhatsApp</span>
+      <span class="noise-chip mute">Promesas de rentabilidad</span>
+      <span class="noise-chip">Bono pie</span>
+      <span class="noise-chip mute">Descuentos</span>
+      <span class="noise-chip">Arriendo garantizado</span>
+      <span class="noise-chip mute">Tasas</span>
+      <span class="noise-chip">Promociones</span>
+      <span class="noise-chip mute">“Últimas unidades”</span>
+      <span class="noise-chip">“Oportunidad imperdible”</span>
+      <span class="noise-chip mute">Planos, brochures, cotizaciones</span>
+    </div>
+
+    <div class="pivot rise d2">
+      <p class="q">Y aun así, la pregunta que nadie responde sigue siendo la misma:<br>“¿Cuál realmente tiene sentido para mí?”</p>
+      <p class="a">No necesitas más proyectos.<br><b>Necesitas criterio.</b></p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ TRANSFORMACIÓN ══════════ -->
+<section class="bg-bone" id="transformacion">
+  <div class="wrap">
+    <div class="sec-head center rise">
+      <p class="eyebrow center">La transformación</p>
+      <h2 class="display-caps">Lo que cambia cuando<br>hay una estrategia detrás</h2>
+    </div>
+
+    <div class="tf-grid">
+      <div class="tf-card before rise">
+        <p class="tf-tag">Antes</p>
+        <h3>Comprar propiedades</h3>
+        <ul class="tf-list">
+          <li><span class="mk">—</span> Confusión frente a demasiadas alternativas</li>
+          <li><span class="mk">—</span> Decisiones impulsivas</li>
+          <li><span class="mk">—</span> Comprar porque “está barato”</li>
+          <li><span class="mk">—</span> No saber cuánto invertir</li>
+          <li><span class="mk">—</span> No saber cuándo volver a comprar</li>
+          <li><span class="mk">—</span> Propiedades sueltas, sin conexión entre sí</li>
+          <li><span class="mk">—</span> Avanzar sin un plan de crecimiento</li>
+        </ul>
+      </div>
+
+      <div class="tf-card after rise d1">
+        <p class="tf-tag">Después</p>
+        <h3>Construir patrimonio</h3>
+        <ul class="tf-list">
+          <li><span class="mk">✦</span> Una estrategia clara y escrita</li>
+          <li><span class="mk">✦</span> Objetivos definidos en el tiempo</li>
+          <li><span class="mk">✦</span> Criterios de inversión propios</li>
+          <li><span class="mk">✦</span> Propiedades filtradas con método</li>
+          <li><span class="mk">✦</span> Números claros antes de decidir</li>
+          <li><span class="mk">✦</span> Un plan de crecimiento y seguimiento</li>
+          <li><span class="mk">✦</span> Patrimonio con dirección</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tf-arrow rise d2" style="margin-top:34px;" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </div>
+    <p class="center lede" style="margin:22px auto 0; max-width:640px;">
+      Comprar una propiedad puede ser una decisión puntual.
+      <b style="font-weight:500;">Construir patrimonio inmobiliario es una estrategia.</b>
+    </p>
+  </div>
+</section>
+
+<!-- ══════════ MÉTODO ══════════ -->
+<section id="metodo">
+  <div class="wrap">
+    <div class="sec-head center rise">
+      <p class="eyebrow center sage">Metodología propia</p>
+      <h2 class="display-caps">Método Patrimonio 360°</h2>
+      <p class="lede center" style="margin-top:20px;">
+        Seis etapas que se repiten en el tiempo. No es un curso ni una lista de proyectos:
+        es un proceso de decisión que se ajusta a medida que tu patrimonio crece.
+      </p>
+    </div>
+
+    <!-- Versión circular (desktop) -->
+    <div class="method-circle rise d1" aria-hidden="true">
+      <div class="method-core">
+        <span class="mini">Método</span>
+        <b>Patrimonio<br>360°</b>
+        <span class="mini">Proceso continuo</span>
+      </div>
+      <div class="method-node-pos" style="--a:-90deg"><div class="method-node"><span class="num">01</span><b>Diagnosticar</b><p>Entendemos tu situación actual.</p></div></div>
+      <div class="method-node-pos" style="--a:-30deg"><div class="method-node"><span class="num">02</span><b>Diseñar</b><p>Construimos tu estrategia inmobiliaria.</p></div></div>
+      <div class="method-node-pos" style="--a:30deg"><div class="method-node"><span class="num">03</span><b>Evaluar</b><p>Analizamos oportunidades y números.</p></div></div>
+      <div class="method-node-pos" style="--a:90deg"><div class="method-node"><span class="num">04</span><b>Ejecutar</b><p>Tomamos decisiones y avanzamos.</p></div></div>
+      <div class="method-node-pos" style="--a:150deg"><div class="method-node"><span class="num">05</span><b>Escalar</b><p>Definimos cómo seguir construyendo patrimonio.</p></div></div>
+      <div class="method-node-pos" style="--a:210deg"><div class="method-node"><span class="num">06</span><b>Monitorear</b><p>Revisamos y ajustamos tu estrategia.</p></div></div>
+    </div>
+
+    <!-- Versión vertical (mobile) -->
+    <div class="method-stack">
+      <div class="method-step rise"><span class="num">01</span><div><b>Diagnosticar</b><p>Entendemos tu situación actual.</p></div></div>
+      <div class="method-step rise"><span class="num">02</span><div><b>Diseñar</b><p>Construimos tu estrategia inmobiliaria.</p></div></div>
+      <div class="method-step rise"><span class="num">03</span><div><b>Evaluar</b><p>Analizamos oportunidades y números.</p></div></div>
+      <div class="method-step rise"><span class="num">04</span><div><b>Ejecutar</b><p>Tomamos decisiones y avanzamos.</p></div></div>
+      <div class="method-step rise"><span class="num">05</span><div><b>Escalar</b><p>Definimos cómo seguir construyendo patrimonio.</p></div></div>
+      <div class="method-step rise"><span class="num">06</span><div><b>Monitorear</b><p>Revisamos y ajustamos tu estrategia.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ ES PARA TI / NO ES PARA TI ══════════ -->
+<section class="bg-bone" id="para-ti">
+  <div class="wrap">
+    <div class="sec-head center rise">
+      <p class="eyebrow center">Criterio de entrada</p>
+      <h2 class="display-caps">Este programa no es<br>para todo el mundo</h2>
+      <p class="lede center" style="margin-top:20px;">Trabajar con estrategia exige involucrarse. Por eso prefiero decirlo antes.</p>
+    </div>
+
+    <div class="fit-grid">
+      <div class="fit-card yes rise">
+        <h3>Este programa es para ti si…</h3>
+        <ul class="fit-list">
+          <li><span class="fit-mark">✓</span> Quieres invertir con estrategia.</li>
+          <li><span class="fit-mark">✓</span> Quieres dejar de comprar propiedades de manera aislada.</li>
+          <li><span class="fit-mark">✓</span> Quieres construir patrimonio.</li>
+          <li><span class="fit-mark">✓</span> Quieres entender los números antes de decidir.</li>
+          <li><span class="fit-mark">✓</span> Quieres tener una persona que te acompañe durante el proceso.</li>
+          <li><span class="fit-mark">✓</span> Estás dispuesto/a a tomar decisiones y ejecutar.</li>
+        </ul>
+      </div>
+
+      <div class="fit-card no rise d1">
+        <h3>Este programa no es para ti si…</h3>
+        <ul class="fit-list">
+          <li><span class="fit-mark">✕</span> Solo buscas que alguien te mande proyectos.</li>
+          <li><span class="fit-mark">✕</span> Quieres comprar cualquier propiedad porque tiene descuento.</li>
+          <li><span class="fit-mark">✕</span> Esperas que alguien decida por ti.</li>
+          <li><span class="fit-mark">✕</span> Buscas resultados rápidos sin involucrarte.</li>
+          <li><span class="fit-mark">✕</span> No estás dispuesto/a a entregar información para construir una estrategia personalizada.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ ESCALERA DE PRODUCTOS ══════════ -->
+<section id="planes">
+  <div class="wrap">
+    <div class="sec-head center rise">
+      <p class="eyebrow center">Programas</p>
+      <h2 class="display-caps">Elige el nivel de acompañamiento<br>que necesitas</h2>
+      <p class="lede center" style="margin-top:20px;">
+        Tres formas de entrar. Una misma lógica: primero la estrategia, después la propiedad.
+      </p>
+    </div>
+
+    <div class="ladder">
+
+      <!-- ─────── 01 · PATRIMONIO 360 ─────── -->
+      <article class="plan plan-hero rise">
+        <span class="plan-rank">01</span>
+        <span class="plan-tag gold">El programa más completo</span>
+        <h3 class="display-caps">Patrimonio 360</h3>
+        <p class="plan-dur">6 meses de acompañamiento estratégico + 12 meses de seguimiento</p>
+        <p class="plan-desc">
+          Para quienes no quieren simplemente comprar una propiedad. Quieren construir
+          y hacer crecer una cartera inmobiliaria.
+        </p>
+
+        <div class="price-block">
+          <p class="price-was"><small>Precio normal</small><s>$1.500.000</s></p>
+          <p class="price-now"><span class="hoy">Hoy</span><span class="amt">$990.000</span></p>
+          <p class="price-note">Precio especial de incorporación.</p>
+        </div>
+
+        <p class="plan-includes-label">Incluye</p>
+        <ul class="plan-list two-col">
+          <li><span class="ck">✓</span> Diagnóstico patrimonial.</li>
+          <li><span class="ck">✓</span> Mapa de patrimonio inmobiliario.</li>
+          <li><span class="ck">✓</span> Estrategia personalizada de crecimiento.</li>
+          <li><span class="ck">✓</span> Plan para múltiples propiedades.</li>
+          <li><span class="ck">✓</span> Definición de objetivos de inversión.</li>
+          <li><span class="ck">✓</span> Estrategia de compra.</li>
+          <li><span class="ck">✓</span> Análisis de oportunidades.</li>
+          <li><span class="ck">✓</span> Revisión de números.</li>
+          <li><span class="ck">✓</span> Evaluación de financiamiento.</li>
+          <li><span class="ck">✓</span> Curaduría de oportunidades.</li>
+          <li><span class="ck">✓</span> Seguimiento de cartera.</li>
+          <li><span class="ck">✓</span> Una sesión 1:1 cada 15 días durante los 6 meses intensivos.</li>
+          <li><span class="ck">✓</span> Seguimiento post compra.</li>
+          <li><span class="ck">✓</span> Ajuste de estrategia.</li>
+          <li><span class="ck">✓</span> 12 meses adicionales de seguimiento.</li>
+          <li><span class="ck">✓</span> Una sesión 1:1 mensual durante esos 12 meses.</li>
+          <li><span class="ck">✓</span> Seguimiento vía WhatsApp durante el período de acompañamiento.</li>
+          <li><span class="ck">✓</span> Revisión de evolución de patrimonio.</li>
+          <li><span class="ck">✓</span> Planificación de próximas compras.</li>
+        </ul>
+
+        <div class="plan-foot">
+          <!-- EDITABLE · Reemplazar href por el link real de pago o de agenda -->
+          <a href="#contacto" class="btn btn-primary btn-block btn-lg">Quiero construir mi patrimonio <span class="arw">→</span></a>
+          <p class="plan-limit">
+            Cupos limitados. Este programa requiere acompañamiento personalizado
+            y tiene un número limitado de clientes activos.
+          </p>
+        </div>
+      </article>
+
+      <!-- ─────── 02 · TU MEJOR INVERSIÓN ─────── -->
+      <article class="plan rise d1">
+        <span class="plan-rank">02</span>
+        <span class="plan-tag soft">El más elegido</span>
+        <h3 class="display-caps">Tu Mejor Inversión</h3>
+        <p class="plan-dur">90 días</p>
+        <p class="plan-desc">
+          Para quienes quieren realizar una inversión inmobiliaria y necesitan una estrategia
+          antes de tomar la decisión.
+        </p>
+
+        <div class="price-block">
+          <p class="price-was"><small>Precio normal</small><s>$799.000</s></p>
+          <p class="price-now"><span class="hoy">Hoy</span><span class="amt">$499.000</span></p>
+          <p class="price-note">Precio especial de incorporación.</p>
+        </div>
+
+        <p class="plan-includes-label">Incluye</p>
+        <ul class="plan-list">
+          <li><span class="ck">✓</span> Diagnóstico inmobiliario.</li>
+          <li><span class="ck">✓</span> Definición de objetivos.</li>
+          <li><span class="ck">✓</span> Estrategia personalizada.</li>
+          <li><span class="ck">✓</span> Definición de ticket de inversión.</li>
+          <li><span class="ck">✓</span> Curaduría de oportunidades.</li>
+          <li><span class="ck">✓</span> Análisis de propiedades.</li>
+          <li><span class="ck">✓</span> Revisión de rentabilidad.</li>
+          <li><span class="ck">✓</span> Revisión de financiamiento.</li>
+          <li><span class="ck">✓</span> Comparación de alternativas.</li>
+          <li><span class="ck">✓</span> Acompañamiento durante la decisión.</li>
+          <li><span class="ck">✓</span> Sesión 1:1 cada 15 días.</li>
+          <li><span class="ck">✓</span> Seguimiento por WhatsApp durante el programa.</li>
+          <li><span class="ck">✓</span> Plan de acción personalizado.</li>
+        </ul>
+
+        <div class="plan-foot">
+          <!-- EDITABLE · Link real de pago o agenda -->
+          <a href="#contacto" class="btn btn-dark btn-block">Quiero mi mejor inversión</a>
+        </div>
+      </article>
+
+      <!-- ─────── 03 · SESIÓN DIAGNÓSTICO ─────── -->
+      <article class="plan rise d2">
+        <span class="plan-rank">03</span>
+        <span class="plan-tag plain">Punto de partida</span>
+        <h3 class="display-caps">Sesión Diagnóstico</h3>
+        <p class="plan-dur">Una sesión 1:1</p>
+        <p class="plan-desc">
+          Una sesión 1:1 para entender dónde estás, qué quieres conseguir y cuál podría ser
+          el camino inmobiliario más adecuado para ti.
+        </p>
+
+        <div class="price-block">
+          <p class="price-now" style="margin-top:0;"><span class="amt">$49.900</span></p>
+          <p class="price-note">Valor único. Esta sesión no tiene descuento.</p>
+        </div>
+
+        <p class="plan-includes-label">Incluye</p>
+        <ul class="plan-list">
+          <li><span class="ck">✓</span> Diagnóstico inicial.</li>
+          <li><span class="ck">✓</span> Objetivos.</li>
+          <li><span class="ck">✓</span> Situación actual.</li>
+          <li><span class="ck">✓</span> Capacidad de inversión.</li>
+          <li><span class="ck">✓</span> Primer análisis estratégico.</li>
+          <li><span class="ck">✓</span> Recomendaciones iniciales.</li>
+          <li><span class="ck">✓</span> Próximos pasos.</li>
+        </ul>
+
+        <div class="plan-foot">
+          <!-- EDITABLE · Link real de pago o agenda -->
+          <a href="#contacto" class="btn btn-ghost btn-block">Quiero mi diagnóstico</a>
+          <p class="plan-bridge">
+            Si después de esta sesión quieres avanzar a uno de los programas de acompañamiento,
+            podremos evaluar cuál tiene más sentido para ti.
+          </p>
+        </div>
+      </article>
+    </div>
+
+    <!-- ── URGENCIA ÉTICA ── -->
+    <div class="urgency rise d2">
+      <p><span class="pulse"></span> Cupos limitados por capacidad de acompañamiento personalizado.</p>
+      <!--
+        EDITABLE · Contador opcional.
+        Sólo se activa si existe una fecha REAL de término de la oferta.
+        Para activarlo: data-deadline="2026-12-31T23:59:00-03:00" en el div de abajo.
+        Sin fecha, el bloque permanece oculto: no se usa escasez falsa.
+      -->
+      <div class="countdown" id="countdown" data-deadline="">
+        <span>Precio especial disponible hasta <b id="cdDate">—</b> ·</span>
+        <b id="cdClock">—</b>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ TABLA COMPARATIVA ══════════ -->
+<section class="bg-bone" id="comparar">
+  <div class="wrap">
+    <div class="sec-head center rise">
+      <p class="eyebrow center">Comparar</p>
+      <h2 class="display-caps">Qué incluye cada programa</h2>
+    </div>
+
+    <div class="table-scroll rise d1">
+      <table class="compare">
+        <thead>
+          <tr>
+            <th style="text-align:left;"><span style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)">Comparación</span></th>
+            <th>
+              <span class="pname">Sesión Diagnóstico</span>
+              <span class="pprice">$49.900</span>
+            </th>
+            <th>
+              <span class="pname">Tu Mejor Inversión</span>
+              <span class="pprice">$799.000 → <b style="color:var(--ink)">$499.000</b></span>
+            </th>
+            <th class="col-hero">
+              <span class="col-hero-mark">Recomendado</span>
+              <span class="pname">Patrimonio 360</span>
+              <span class="pprice">$1.500.000 → <b style="color:var(--rose-deep)">$990.000</b></span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th>Diagnóstico inicial</th><td><span class="yes-ico">✓</span></td><td><span class="yes-ico">✓</span></td><td class="col-hero"><span class="yes-ico">✓</span> Patrimonial</td></tr>
+          <tr><th>Estrategia personalizada</th><td>Primer análisis</td><td><span class="yes-ico">✓</span></td><td class="col-hero"><span class="yes-ico">✓</span> De crecimiento</td></tr>
+          <tr><th>Curaduría de oportunidades</th><td><span class="no-ico">—</span></td><td><span class="yes-ico">✓</span></td><td class="col-hero"><span class="yes-ico">✓</span></td></tr>
+          <tr><th>Análisis de propiedades y números</th><td><span class="no-ico">—</span></td><td><span class="yes-ico">✓</span></td><td class="col-hero"><span class="yes-ico">✓</span></td></tr>
+          <tr><th>Sesiones 1:1</th><td>1 sesión</td><td><span class="yes-ico">✓</span></td><td class="col-hero"><span class="yes-ico">✓</span></td></tr>
+          <tr><th>Frecuencia de sesiones</th><td>Sesión única</td><td>Cada 15 días</td><td class="col-hero">Cada 15 días (6 meses)<br>+ mensual (12 meses)</td></tr>
+          <tr><th>Acompañamiento por WhatsApp</th><td><span class="no-ico">—</span></td><td><span class="yes-ico">✓</span></td><td class="col-hero"><span class="yes-ico">✓</span></td></tr>
+          <tr><th>Estrategia para múltiples propiedades</th><td><span class="no-ico">—</span></td><td><span class="no-ico">—</span></td><td class="col-hero"><span class="yes-ico">✓</span></td></tr>
+          <tr><th>Seguimiento de cartera</th><td><span class="no-ico">—</span></td><td><span class="no-ico">—</span></td><td class="col-hero"><span class="yes-ico">✓</span></td></tr>
+          <tr><th>Seguimiento post compra</th><td><span class="no-ico">—</span></td><td><span class="no-ico">—</span></td><td class="col-hero"><span class="yes-ico">✓</span></td></tr>
+          <tr><th>Seguimiento posterior</th><td><span class="no-ico">—</span></td><td><span class="no-ico">—</span></td><td class="col-hero">12 meses adicionales</td></tr>
+          <tr><th>Duración</th><td>1 sesión</td><td>90 días</td><td class="col-hero">6 meses + 12 meses</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-hint">Desliza la tabla horizontalmente para ver los tres programas.</p>
+  </div>
+</section>
+
+<!-- ══════════ POSICIONAMIENTO ══════════ -->
+<section class="bg-ink" id="posicionamiento">
+  <div class="wrap">
+    <div class="split-claim rise">
+      <div class="claim-side a">
+        <p class="tagline">Lo habitual</p>
+        <p>Un broker te puede mostrar una propiedad.</p>
+      </div>
+      <div class="claim-div" aria-hidden="true"></div>
+      <div class="claim-side b">
+        <p class="tagline">Lo que hacemos aquí</p>
+        <p>Una estrategia te ayuda a decidir <span class="italic tone-rose">qué propiedad tiene sentido para ti</span>.</p>
+      </div>
+    </div>
+    <p class="lede" style="color:rgba(255,255,255,.68); margin-top:44px; max-width:66ch;">
+      No se trata de vender metros cuadrados. Se trata de acompañar decisiones: qué comprar,
+      cuándo comprar, con qué números y cómo seguir creciendo después.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════ QUÉ RECIBO ══════════ -->
+<section id="recibo">
+  <div class="wrap">
+    <div class="sec-head center rise">
+      <p class="eyebrow center sage">Entregables</p>
+      <h2 class="display-caps">¿Qué recibo?</h2>
+      <p class="lede center" style="margin-top:20px;">
+        Documentos de trabajo concretos. No teoría: material sobre el que se toman decisiones.
+      </p>
+    </div>
+
+    <div class="deliv-grid">
+      <article class="deliv rise">
+        <div class="deliv-mock">
+          <div class="mk-title"></div>
+          <div class="mk-line w85"></div><div class="mk-line w70 rose"></div>
+          <div class="mk-line w50"></div><div class="mk-line w85"></div><div class="mk-line w40 sage"></div>
+        </div>
+        <div><b>Plan estratégico</b><p>Tu estrategia inmobiliaria escrita: objetivos, criterios y horizonte.</p></div>
+      </article>
+
+      <article class="deliv rise d1">
+        <div class="deliv-mock">
+          <div class="mk-title"></div>
+          <div class="mk-map">
+            <span class="mk-link" style="left:14%;top:16%;width:34%;transform:rotate(26deg);"></span>
+            <span class="mk-link" style="left:50%;top:22%;width:30%;transform:rotate(-16deg);"></span>
+            <span class="mk-link" style="left:28%;top:52%;width:26%;transform:rotate(-28deg);"></span>
+            <span class="mk-link" style="left:52%;top:52%;width:22%;transform:rotate(22deg);"></span>
+            <span class="mk-node a"></span><span class="mk-node b"></span><span class="mk-node c"></span>
+            <span class="mk-node d"></span><span class="mk-node e"></span>
+          </div>
+        </div>
+        <div><b>Mapa patrimonial</b><p>Dónde estás hoy y cómo se conectan tus próximos movimientos.</p></div>
+      </article>
+
+      <article class="deliv rise d2">
+        <div class="deliv-mock">
+          <div class="mk-title"></div>
+          <div class="mk-line w70"></div>
+          <div class="mk-bars">
+            <i style="height:38%"></i><i style="height:58%"></i><i class="hi" style="height:86%"></i>
+            <i style="height:46%"></i><i style="height:66%"></i><i style="height:30%"></i>
+          </div>
+        </div>
+        <div><b>Análisis de inversión</b><p>Números, escenarios y comparación real entre alternativas.</p></div>
+      </article>
+
+      <article class="deliv rise d3">
+        <div class="deliv-mock">
+          <div class="mk-title"></div>
+          <div class="mk-donut"></div>
+          <div class="mk-line w50 sage"></div>
+        </div>
+        <div><b>Dashboard de cartera</b><p>La evolución de tu patrimonio en una sola vista.</p></div>
+      </article>
+
+      <article class="deliv rise">
+        <div class="deliv-mock">
+          <div class="mk-title"></div>
+          <div class="mk-check"><span class="mk-box on"></span><span class="mk-line w70" style="flex:1"></span></div>
+          <div class="mk-check"><span class="mk-box on"></span><span class="mk-line w85" style="flex:1"></span></div>
+          <div class="mk-check"><span class="mk-box"></span><span class="mk-line w50" style="flex:1"></span></div>
+          <div class="mk-check"><span class="mk-box"></span><span class="mk-line w70" style="flex:1"></span></div>
+        </div>
+        <div><b>Checklist de compra</b><p>Qué revisar, en qué orden y qué no dejar pasar.</p></div>
+      </article>
+
+      <article class="deliv rise d1">
+        <div class="deliv-mock">
+          <div class="mk-title"></div>
+          <div class="mk-cal">
+            <i></i><i></i><i class="on"></i><i></i><i></i><i class="hi"></i><i></i>
+            <i></i><i class="on"></i><i></i><i></i><i class="hi"></i><i></i><i></i>
+            <i class="on"></i><i></i><i></i><i class="on"></i><i></i><i></i><i class="hi"></i>
+          </div>
+        </div>
+        <div><b>Calendario de seguimiento</b><p>Tus sesiones 1:1 y los hitos de revisión, agendados.</p></div>
+      </article>
+
+      <article class="deliv rise d2">
+        <div class="deliv-mock">
+          <div class="mk-title"></div>
+          <div class="mk-line w40 rose"></div><div class="mk-line w85"></div>
+          <div class="mk-line w40 rose"></div><div class="mk-line w70"></div>
+          <div class="mk-line w40 rose"></div><div class="mk-line w50"></div>
+        </div>
+        <div><b>Plan de acción</b><p>Los próximos pasos concretos, con responsable y plazo.</p></div>
+      </article>
+
+      <article class="deliv rise d3">
+        <div class="deliv-mock">
+          <div class="mk-title"></div>
+          <div class="mk-line w85 sage"></div><div class="mk-line w70"></div>
+          <div class="mk-bars" style="height:48px">
+            <i style="height:52%"></i><i class="hi" style="height:78%"></i><i style="height:40%"></i><i style="height:64%"></i>
+          </div>
+        </div>
+        <div><b>Revisión de evolución</b><p>Cómo avanza tu patrimonio y qué ajustar en la estrategia.</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ TESTIMONIOS · PLACEHOLDERS EDITABLES ══════════ -->
+<section class="bg-bone" id="testimonios">
+  <div class="wrap">
+    <div class="sec-head center rise">
+      <p class="eyebrow center">Testimonios</p>
+      <h2 class="display-caps">Personas que ya tomaron<br>una decisión diferente</h2>
+      <p style="margin-top:22px;"><span class="editable-note">Espacio reservado para testimonios reales</span></p>
+    </div>
+
+    <!-- EDITABLE · Completar con testimonios reales y autorizados. No publicar casos inventados. -->
+    <div class="tst-grid">
+      <article class="tst rise">
+        <p class="tst-quote">“Testimonio real pendiente.”</p>
+        <ul class="tst-fields">
+          <li><b>Situación inicial</b> <span>—</span></li>
+          <li><b>Qué consiguió</b> <span>—</span></li>
+          <li><b>La experiencia</b> <span>—</span></li>
+        </ul>
+        <div class="tst-person">
+          <div class="tst-avatar">Foto</div>
+          <div class="who"><b>Nombre</b><span>Ciudad</span></div>
+        </div>
+      </article>
+
+      <article class="tst rise d1">
+        <p class="tst-quote">“Testimonio real pendiente.”</p>
+        <ul class="tst-fields">
+          <li><b>Situación inicial</b> <span>—</span></li>
+          <li><b>Qué consiguió</b> <span>—</span></li>
+          <li><b>La experiencia</b> <span>—</span></li>
+        </ul>
+        <div class="tst-person">
+          <div class="tst-avatar">Foto</div>
+          <div class="who"><b>Nombre</b><span>Ciudad</span></div>
+        </div>
+      </article>
+
+      <article class="tst rise d2">
+        <p class="tst-quote">“Testimonio real pendiente.”</p>
+        <ul class="tst-fields">
+          <li><b>Situación inicial</b> <span>—</span></li>
+          <li><b>Qué consiguió</b> <span>—</span></li>
+          <li><b>La experiencia</b> <span>—</span></li>
+        </ul>
+        <div class="tst-person">
+          <div class="tst-avatar">Foto</div>
+          <div class="who"><b>Nombre</b><span>Ciudad</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SOBRE ALISON ══════════ -->
+<section id="alison">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="rise">
+        <div class="about-photo">
+          <!-- EDITABLE · Foto cercana, editorial (oficina, terreno, cámara) -->
+          <div class="portrait-ph">
+            <b>Fotografía cercana</b>
+            <span>Campo editable · 4:5</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-body rise d1">
+        <p class="eyebrow">Sobre Alison</p>
+        <h2 class="display-caps">No quiero que compres<br>una propiedad.<br>
+          <span class="tone-rose italic" style="text-transform:none;">Quiero que entiendas por qué la estás comprando.</span>
+        </h2>
+
+        <p class="first">
+          He visto a demasiadas personas tomar una decisión de millones de pesos con la misma
+          información con la que se elige un electrodoméstico: un descuento, una promesa y prisa.
+        </p>
+        <p>
+          Trabajo en el mundo inmobiliario y sé cómo se vende. Sé qué se dice en una sala de ventas,
+          qué números se muestran y cuáles no. Y también sé que una propiedad puede ser una excelente
+          decisión para una persona y una muy mala para otra, aunque sea exactamente la misma propiedad.
+        </p>
+        <p>
+          Por eso mi trabajo no es mostrarte alternativas, sino ayudarte a construir el criterio con el
+          que vas a evaluarlas: tus objetivos, tu capacidad real, tus números, tus tiempos y qué papel
+          juega cada compra dentro de un patrimonio que quieres ver crecer.
+        </p>
+        <p>
+          No prometo rentabilidades ni garantizo plusvalías: nadie serio puede hacerlo. Lo que sí hago
+          es acompañarte para que cada decisión esté analizada, ordenada y tomada con información.
+        </p>
+        <p class="sign">Alison Ramírez</p>
+
+        <div class="about-tags">
+          <span>Estrategia</span><span>Criterio</span><span>Números</span><span>Acompañamiento</span><span>Patrimonio</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FAQ ══════════ -->
+<section class="bg-bone" id="faq">
+  <div class="wrap-narrow">
+    <div class="sec-head center rise">
+      <p class="eyebrow center">Preguntas frecuentes</p>
+      <h2 class="display-caps">Lo que suelen preguntarme</h2>
+    </div>
+
+    <div class="faq-list rise d1">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿Necesito tener una propiedad para entrar?<span class="faq-ico"></span></button>
+        <div class="faq-a"><p>No. Trabajo tanto con personas que van por su primera inversión como con quienes ya tienen una o más propiedades y quieren ordenar su estrategia para seguir creciendo.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿Puedo entrar si es mi primera inversión?<span class="faq-ico"></span></button>
+        <div class="faq-a"><p>Sí. De hecho, es el momento en que una estrategia tiene más impacto: la primera compra condiciona tu capacidad de financiamiento y tus siguientes movimientos.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿Trabajan con propiedades nuevas y usadas?<span class="faq-ico"></span></button>
+        <div class="faq-a"><p>Sí. El análisis parte de tus objetivos, no del tipo de producto. Evaluamos lo que corresponda según tu estrategia: proyectos en blanco o verde, entrega inmediata o propiedades usadas.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿El programa incluye financiamiento?<span class="faq-ico"></span></button>
+        <div class="faq-a"><p>El programa no otorga financiamiento. Lo que hacemos es revisar tu situación, evaluar alternativas de financiamiento y entender cómo afectan tus números y tu capacidad de seguir comprando.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿Me van a mostrar proyectos?<span class="faq-ico"></span></button>
+        <div class="faq-a"><p>Hay curaduría de oportunidades, pero llega después de la estrategia, no antes. Primero definimos criterios; luego filtramos y analizamos sólo lo que calza con ellos. La idea es justamente dejar de recibir proyectos al azar.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿Puedo participar si vivo fuera de Santiago?<span class="faq-ico"></span></button>
+        <div class="faq-a"><p>Sí. El acompañamiento es online: sesiones 1:1 por videollamada y seguimiento por WhatsApp durante el programa.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿Puedo participar si vivo fuera de Chile?<span class="faq-ico"></span></button>
+        <div class="faq-a"><p>Sí, siempre que tu interés sea invertir en el mercado inmobiliario chileno. Coordinamos las sesiones considerando la diferencia horaria.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿La estrategia garantiza rentabilidad?<span class="faq-ico"></span></button>
+        <div class="faq-a"><p>No. Ninguna inversión puede garantizar rentabilidad ni plusvalía, y desconfía de quien lo prometa. Lo que sí cambia es la calidad de la decisión: analizada, comparada y tomada con criterios claros en lugar de por impulso.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿Puedo comprar más de una propiedad?<span class="faq-ico"></span></button>
+        <div class="faq-a"><p>Sí, y es precisamente el foco de Patrimonio 360: planificar una cartera de varias propiedades, con orden, tiempos y capacidad de financiamiento proyectada.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿Qué pasa si durante el programa decido no comprar?<span class="faq-ico"></span></button>
+        <div class="faq-a"><p>También es una decisión válida y, a veces, la correcta. El programa entrega criterio y análisis; si la conclusión es esperar, ajustamos la estrategia y definimos qué condiciones deberían darse para avanzar.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿Puedo seguir después de los seis meses?<span class="faq-ico"></span></button>
+        <div class="faq-a"><p>Patrimonio 360 ya contempla 12 meses adicionales de seguimiento con una sesión 1:1 mensual después de los 6 meses intensivos. Si al terminar ese período quieres continuar, lo evaluamos según tu momento.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿Cuánto tiempo tengo acceso a WhatsApp?<span class="faq-ico"></span></button>
+        <div class="faq-a"><p>Durante el período de acompañamiento de tu programa: los 90 días en Tu Mejor Inversión y el período de acompañamiento en Patrimonio 360. Es un canal de seguimiento entre sesiones, con tiempos de respuesta en días hábiles.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">¿Qué diferencia existe entre Tu Mejor Inversión y Patrimonio 360?<span class="faq-ico"></span></button>
+        <div class="faq-a"><p>Tu Mejor Inversión está diseñado alrededor de una decisión de inversión: estrategia, análisis y acompañamiento durante 90 días. Patrimonio 360 está diseñado alrededor de una cartera: mapa patrimonial, plan para múltiples propiedades, seguimiento post compra y 12 meses adicionales de acompañamiento para seguir escalando.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CTA FINAL ══════════ -->
+<section class="final" id="contacto">
+  <div class="wrap center">
+    <p class="eyebrow center light rise">Comienza aquí</p>
+    <h2 class="display-caps rise d1">Tu patrimonio no se<br>construye por casualidad.<br>
+      <span class="tone-rose italic" style="text-transform:none;">Se construye con decisiones.</span>
+    </h2>
+    <p class="lede center rise d2" style="margin-top:26px;">
+      Elige el nivel de acompañamiento que necesitas y comienza a diseñar una estrategia
+      inmobiliaria que tenga sentido para ti.
+    </p>
+
+    <!-- EDITABLE · Reemplazar los href por los links reales de pago, formulario o agenda -->
+    <div class="final-actions rise d3">
+      <a href="#" class="btn btn-primary btn-lg">Quiero Patrimonio 360 <span class="arw">→</span></a>
+      <a href="#" class="btn btn-outline-light btn-lg">Quiero Tu Mejor Inversión</a>
+      <a href="#" class="btn btn-outline-light btn-lg">Quiero mi diagnóstico</a>
+    </div>
+
+    <p class="small rise d4" style="margin-top:28px; color:rgba(255,255,255,.5);">
+      Cupos limitados por capacidad de acompañamiento personalizado.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="brand">
+        <span class="brand-name">Alison Ramírez</span>
+        <span class="brand-sub">Estrategia Inmobiliaria · Patrimonio</span>
+      </div>
+      <ul class="foot-links">
+        <li><a href="#metodo">Método</a></li>
+        <li><a href="#planes">Programas</a></li>
+        <li><a href="#comparar">Comparar</a></li>
+        <li><a href="#alison">Sobre Alison</a></li>
+        <li><a href="#faq">Preguntas</a></li>
+      </ul>
+      <ul class="foot-links">
+        <!-- EDITABLE · Enlaces reales de contacto y redes -->
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">LinkedIn</a></li>
+        <li><a href="#">WhatsApp</a></li>
+        <li><a href="#">Correo</a></li>
+      </ul>
+    </div>
+    <p class="foot-legal">
+      Este sitio entrega acompañamiento estratégico y análisis para la toma de decisiones inmobiliarias.
+      No constituye asesoría financiera, tributaria ni legal, y no garantiza rentabilidades, plusvalías
+      ni resultados de inversión. Toda decisión de compra es responsabilidad de cada persona.
+      © <span id="year">2026</span> Alison Ramírez. Todos los derechos reservados.
+    </p>
+  </div>
+</footer>
+
+<!-- ══════════ CTA STICKY MOBILE ══════════ -->
+<div class="sticky-cta">
+  <div class="txt">
+    <b>Patrimonio 360</b>
+    <span><s style="color:#B4B0AC">$1.500.000</s> &nbsp;Hoy $990.000</span>
+  </div>
+  <a href="#planes" class="btn btn-primary">Quiero comenzar</a>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── Nav: fondo sólido al hacer scroll ── */
+  var nav = document.getElementById('nav');
+  var onScroll = function () {
+    if (window.scrollY > 24) { nav.classList.add('solid'); }
+    else { nav.classList.remove('solid'); }
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* ── Menú mobile ── */
+  var toggle = document.getElementById('navToggle');
+  var drawer = document.getElementById('navDrawer');
+  toggle.addEventListener('click', function () {
+    var open = drawer.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+  });
+  drawer.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      drawer.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  /* ── Reveal al hacer scroll ── */
+  var items = document.querySelectorAll('.rise:not(.in)');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+    items.forEach(function (el) { io.observe(el); });
+  } else {
+    items.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* ── FAQ acordeón ── */
+  document.querySelectorAll('.faq-q').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var item = btn.parentElement;
+      var open = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function (other) {
+        other.classList.remove('open');
+        other.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+      });
+      if (!open) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  /* ── Countdown ético ──
+     Sólo se activa si data-deadline contiene una fecha real y futura.
+     Sin fecha configurada, el bloque permanece oculto. */
+  var cd = document.getElementById('countdown');
+  var raw = cd && cd.getAttribute('data-deadline');
+  if (raw) {
+    var end = new Date(raw);
+    if (!isNaN(end.getTime()) && end.getTime() > Date.now()) {
+      var fmt = new Intl.DateTimeFormat('es-CL', { day: 'numeric', month: 'long' });
+      document.getElementById('cdDate').textContent = fmt.format(end);
+      var clock = document.getElementById('cdClock');
+      var tick = function () {
+        var ms = end.getTime() - Date.now();
+        if (ms <= 0) { cd.classList.remove('on'); clearInterval(timer); return; }
+        var d = Math.floor(ms / 86400000);
+        var h = Math.floor(ms % 86400000 / 3600000);
+        var m = Math.floor(ms % 3600000 / 60000);
+        clock.textContent = d + 'd ' + h + 'h ' + m + 'm';
+      };
+      tick();
+      var timer = setInterval(tick, 30000);
+      cd.classList.add('on');
+    }
+  }
+
+  /* ── Año en el footer ── */
+  document.getElementById('year').textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
