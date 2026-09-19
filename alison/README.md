@@ -23,9 +23,7 @@ Todos los puntos pendientes están marcados en el HTML con el comentario `EDITAB
 | Logos de medios | `.logo-slot` en la barra de medios |
 | Cifras de trayectoria | `.stat` en la sección de autoridad — **sólo cifras reales** |
 | Testimonios | `.tst` en la sección de testimonios — **sólo testimonios reales y autorizados** |
-| Links de pago / agenda | objeto `LINKS_DE_PAGO` al inicio del `<script>` — un solo lugar para los tres programas |
-| WhatsApp y correo | enlaces del footer |
-| Redes sociales | enlaces del footer |
+| Redes sociales, WhatsApp y correo | enlaces del footer |
 
 ## Links de pago
 
@@ -34,14 +32,14 @@ al inicio del `<script>`:
 
 ```js
 var LINKS_DE_PAGO = {
-  'patrimonio-360':     '',   // $990.000
-  'tu-mejor-inversion': '',   // $490.000
-  'diagnostico':        ''    // $49.900
+  'patrimonio-360':     'https://mpago.la/2jQNgz8',   // $990.000
+  'tu-mejor-inversion': 'https://mpago.la/1w9bRFf',   // $490.000
+  'diagnostico':        'https://mpago.la/2aEGwZE'    // $49.900
 };
 ```
 
-Basta pegar cada link entre las comillas. Mientras estén vacíos, los botones llevan a la sección de
-programas, así que la página nunca queda con un botón muerto.
+Para cambiar un link basta reemplazar el texto entre comillas. Si alguno se deja vacío, ese botón
+vuelve a llevar a la sección de programas, así que la página nunca queda con un botón muerto.
 
 ## Urgencia
 
