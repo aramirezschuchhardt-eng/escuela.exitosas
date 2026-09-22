@@ -58,11 +58,11 @@ export const config = {
 
   correo: {
     /** Destino obligatorio de cada respuesta de la encuesta. */
-    destino: texto('ENCUESTA_CORREO_DESTINO', 'Alison@larutainmobiliaria.cl'),
+    destino: texto('ENCUESTA_CORREO_DESTINO', 'Alison@avanceinmobiliario.cl'),
     copias: lista('ENCUESTA_CORREO_COPIA'),
     remitente: texto(
       'ENCUESTA_CORREO_REMITENTE',
-      'Encuesta La Ruta Inmobiliaria <encuesta@larutainmobiliaria.cl>',
+      'Encuesta La Ruta Inmobiliaria <encuesta@avanceinmobiliario.cl>',
     ),
     /** Si se responde el correo, la respuesta llega al participante. */
     responderAlParticipante: booleano('ENCUESTA_CORREO_RESPONDER_AL_PARTICIPANTE', true),

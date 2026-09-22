@@ -26,7 +26,7 @@ const servidor = spawn(
       ENCUESTA_HOST: '127.0.0.1',
       ENCUESTA_BASE_DATOS: join(carpeta, 'encuesta.sqlite'),
       ENCUESTA_TRANSPORTE_CORREO: 'registro',
-      ENCUESTA_CORREO_DESTINO: 'Alison@larutainmobiliaria.cl',
+      ENCUESTA_CORREO_DESTINO: 'Alison@avanceinmobiliario.cl',
     },
     stdio: ['ignore', 'pipe', 'pipe'],
   },
@@ -100,7 +100,7 @@ try {
   await new Promise((resolver) => setTimeout(resolver, 600));
 
   revisar(salida.includes('Nuevo participante — Encuesta La Ruta Inmobiliaria Expo'), 'el correo usa el asunto pedido');
-  revisar(salida.includes('Para: Alison@larutainmobiliaria.cl'), 'el correo va dirigido a Alison@larutainmobiliaria.cl');
+  revisar(salida.includes('Para: Alison@avanceinmobiliario.cl'), 'el correo va dirigido a Alison@avanceinmobiliario.cl');
   revisar(salida.includes('☑ Oportunidades de inversión'), 'el correo lista las alternativas marcadas');
   revisar(salida.includes('Origen:\nExpo — La Ruta Inmobiliaria'), 'el correo incluye el origen del registro');
 

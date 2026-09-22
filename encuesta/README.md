@@ -2,7 +2,7 @@
 
 Encuesta para el stand de la Expo: la persona responde en la tablet, sus datos
 quedan **guardados en la base de datos** y salen **automáticamente por correo a
-`Alison@larutainmobiliaria.cl`** apenas presiona **«¡YA ESTÁS PARTICIPANDO!»**.
+`Alison@avanceinmobiliario.cl`** apenas presiona **«¡YA ESTÁS PARTICIPANDO!»**.
 
 La identidad visual es la de **La Ruta Inmobiliaria**; **Radio Agricultura**
 acompaña como marca asociada en la parte superior de todas las pantallas.
@@ -70,7 +70,7 @@ solo:
 | `registro` | Desarrollo: el correo se escribe en la consola y no se envía. | — |
 
 El destino se configura en `ENCUESTA_CORREO_DESTINO` y viene fijado en
-`Alison@larutainmobiliaria.cl`. Todas las variables están documentadas en
+`Alison@avanceinmobiliario.cl`. Todas las variables están documentadas en
 [`.env.example`](.env.example); `.env` no se versiona.
 
 ### Formato del correo

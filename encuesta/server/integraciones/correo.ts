@@ -1,7 +1,7 @@
 /**
  * Integración obligatoria: cada respuesta de la encuesta se envía por correo a
  * La Ruta Inmobiliaria (`ENCUESTA_CORREO_DESTINO`, por defecto
- * Alison@larutainmobiliaria.cl) inmediatamente después de guardarla.
+ * Alison@avanceinmobiliario.cl) inmediatamente después de guardarla.
  */
 
 import { config } from '../config.ts';
