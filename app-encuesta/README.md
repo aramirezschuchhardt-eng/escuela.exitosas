@@ -32,7 +32,7 @@ dependa del mouse y sin gestos finos.
 ## Puesta en marcha
 
 ```bash
-cd encuesta
+cd app-encuesta
 npm install
 cp .env.example .env     # completar con las credenciales del correo
 npm run build            # compila la aplicación en dist/
@@ -161,10 +161,10 @@ Para revisar la encuesta desde cualquier navegador, sin servidor detrás:
 npm run build:demo
 ```
 
-Deja el sitio compilado en la carpeta `encuesta-demo/` de la raíz del
-repositorio, que GitHub Pages publica junto a la landing y el cotizador:
+Deja el sitio compilado en la carpeta `encuesta/` de la raíz del repositorio,
+que GitHub Pages publica junto a la landing y el cotizador:
 
-<https://aramirezschuchhardt-eng.github.io/escuela.exitosas/encuesta-demo/>
+<https://aramirezschuchhardt-eng.github.io/escuela.exitosas/encuesta/>
 
 En este modo (`VITE_VISTA_PREVIA=1`) la aplicación **no guarda ni envía nada** y
 muestra un aviso permanente que lo advierte, para que no se confunda con la
@@ -205,7 +205,7 @@ Para agregar o cambiar una alternativa basta con editar ese archivo
 ## Estructura
 
 ```
-encuesta/
+app-encuesta/
 ├─ src/
 │  ├─ compartido/   definición de la encuesta, tipos, validación, fechas, marca
 │  ├─ componentes/  encabezado con las dos marcas, barra de progreso, campos

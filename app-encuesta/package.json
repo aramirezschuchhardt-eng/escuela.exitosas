@@ -15,7 +15,7 @@
     "lint": "oxlint",
     "e2e": "node e2e/humo.mjs",
     "capturas": "node e2e/capturas.mjs",
-    "build:demo": "VITE_VISTA_PREVIA=1 vite build --base ./ --outDir ../encuesta-demo --emptyOutDir"
+    "build:demo": "VITE_VISTA_PREVIA=1 vite build --base ./ --outDir ../encuesta --emptyOutDir"
   },
   "dependencies": {
     "nodemailer": "^10.0.10",
