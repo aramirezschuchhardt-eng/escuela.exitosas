@@ -21,8 +21,8 @@ export const MARCA = {
     rojoVivo: '#F4616A',
     rojoOscuro: '#B3212A',
     /** Granates del fondo y de los títulos. */
-    granate: '#6F0F15',
-    granateProfundo: '#4D0A0F',
+    granate: '#A81820',
+    granateProfundo: '#7E1017',
     /** Superficies cálidas de apoyo. */
     rosa: '#F7CCD0',
     rosaSuave: '#FDEFF0',

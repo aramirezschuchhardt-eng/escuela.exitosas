@@ -9,11 +9,11 @@
   archivo vectorial oficial se reemplaza este SVG (mismo nombre y proporción)
   sin tocar código.
 -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 374 96" role="img" aria-label="La Ruta Inmobiliaria">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 396 96" role="img" aria-label="La Ruta Inmobiliaria">
   <g fill="none" stroke="#ffffff" stroke-width="12" stroke-linejoin="miter" stroke-linecap="butt">
     <path d="M10 80 V42 L46 11 L82 42 V80"/>
     <path d="M54 80 V42 L90 11 L126 42 V80"/>
   </g>
-  <text x="142" y="45" font-family="Montserrat, Arial, 'Segoe UI', system-ui, sans-serif" font-size="26" font-weight="800" letter-spacing="0.4" fill="#ffffff">LA RUTA</text>
-  <text x="142" y="79" font-family="Montserrat, Arial, 'Segoe UI', system-ui, sans-serif" font-size="26" font-weight="800" letter-spacing="0.4" fill="#ffffff">INMOBILIARIA</text>
+  <text x="162" y="45" font-family="Montserrat, Arial, 'Segoe UI', system-ui, sans-serif" font-size="26" font-weight="800" letter-spacing="0.4" fill="#ffffff">LA RUTA</text>
+  <text x="162" y="79" font-family="Montserrat, Arial, 'Segoe UI', system-ui, sans-serif" font-size="26" font-weight="800" letter-spacing="0.4" fill="#ffffff">INMOBILIARIA</text>
 </svg>

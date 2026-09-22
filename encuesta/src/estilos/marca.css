@@ -19,8 +19,8 @@
   --radio-rojo: #e23a42;
   --radio-rojo-vivo: #f4616a;
   --radio-rojo-oscuro: #b3212a;
-  --radio-granate: #6f0f15;
-  --radio-granate-profundo: #4d0a0f;
+  --radio-granate: #a81820;
+  --radio-granate-profundo: #7e1017;
 
   /* Superficies cálidas de apoyo */
   --radio-rosa: #f7ccd0;
@@ -43,9 +43,9 @@
 
   /* Superficies y sombras */
   --fondo-encuesta:
-    radial-gradient(85% 60% at 85% 0%, rgba(244, 97, 106, 0.42) 0%, transparent 62%),
-    radial-gradient(70% 55% at 0% 100%, rgba(226, 58, 66, 0.38) 0%, transparent 65%),
-    linear-gradient(160deg, var(--radio-granate-profundo) 0%, var(--radio-granate) 48%, var(--radio-rojo-oscuro) 100%);
+    radial-gradient(85% 60% at 85% 0%, rgba(255, 122, 130, 0.38) 0%, transparent 60%),
+    radial-gradient(75% 60% at 0% 100%, rgba(150, 16, 23, 0.45) 0%, transparent 66%),
+    linear-gradient(160deg, var(--radio-rojo) 0%, #cf242d 46%, var(--radio-rojo-oscuro) 100%);
   --sombra-tarjeta: 0 24px 60px rgba(58, 6, 10, 0.34);
   --sombra-suave: 0 8px 20px rgba(58, 6, 10, 0.14);
 

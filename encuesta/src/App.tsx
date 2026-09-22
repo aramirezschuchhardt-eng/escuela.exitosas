@@ -223,11 +223,12 @@ export default function App() {
                 Volver
               </button>
               {indicePaso < PASOS.length - 1 ? (
-                <button type="button" className="boton boton--primario" onClick={avanzar}>
+                <button key="continuar" type="button" className="boton boton--primario" onClick={avanzar}>
                   Continuar
                 </button>
               ) : (
                 <button
+                  key="participar"
                   type="button"
                   className="boton boton--destacado"
                   onClick={() => void participar()}

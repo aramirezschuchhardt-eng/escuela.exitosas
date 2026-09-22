@@ -82,6 +82,7 @@ try {
 
   await pagina.getByRole('button', { name: 'Continuar' }).click();
   await pagina.getByRole('button', { name: 'Sí, autorizo' }).click();
+  await pagina.waitForTimeout(400);
   await pagina.screenshot({ path: join(DESTINO, '05-cierre.png'), fullPage: true });
 
   await pagina.getByRole('button', { name: '¡YA ESTÁS PARTICIPANDO!' }).click();

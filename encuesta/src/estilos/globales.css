@@ -85,7 +85,7 @@ button {
 }
 
 .encabezado__logo {
-  height: 54px;
+  height: 76px;
   width: auto;
 }
 
@@ -104,7 +104,7 @@ button {
 }
 
 .encabezado__etiqueta {
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--radio-rosa);
@@ -112,7 +112,7 @@ button {
 }
 
 .encabezado__logo-asociada {
-  height: 38px;
+  height: 52px;
   width: auto;
 }
 
@@ -727,6 +727,14 @@ button {
 }
 
 @media (max-width: 520px) {
+  .encabezado__logo {
+    height: 54px;
+  }
+
+  .encabezado__logo-asociada {
+    height: 38px;
+  }
+
   .tarjeta {
     padding: 22px 18px;
   }
