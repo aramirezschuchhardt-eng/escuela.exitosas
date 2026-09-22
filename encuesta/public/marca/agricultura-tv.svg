@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Agricultura TV. Misma «a» con serifas, con el «TV» volado y el punto, en rojo
+  sobre blanco, según los archivos entregados por el cliente. Reemplazar por el
+  vector oficial cuando esté disponible.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 92 64" role="img" aria-label="Agricultura TV">
+  <rect x="0" y="0" width="92" height="64" rx="15" fill="#ffffff"/>
+  <text x="11" y="47" font-family="Georgia, 'Times New Roman', serif" font-size="47" fill="#E23A42">a</text>
+  <text x="46" y="27" font-family="Arial, 'Segoe UI', system-ui, sans-serif" font-size="21" font-weight="700" fill="#E23A42">TV</text>
+  <circle cx="57" cy="42" r="6" fill="#E23A42"/>
+</svg>

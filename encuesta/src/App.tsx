@@ -20,6 +20,7 @@ import {
 } from './compartido/validacion.ts';
 import type { Participante, RespuestaBorrador } from './compartido/tipos.ts';
 import { enviarRespuesta } from './lib/api.ts';
+import { VISTA_PREVIA } from './lib/entorno.ts';
 import { encolar, vigilarCola } from './lib/cola.ts';
 
 type Vista = 'bienvenida' | 'encuesta' | 'confirmacion';
@@ -45,7 +46,10 @@ export default function App() {
   const [enviando, setEnviando] = useState(false);
 
   // La cola local reintenta sola lo que no se pudo enviar (wifi de la Expo).
-  useEffect(() => vigilarCola(), []);
+  useEffect(() => {
+    if (VISTA_PREVIA) return;
+    return vigilarCola();
+  }, []);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -127,6 +131,12 @@ export default function App() {
       return;
     }
 
+    if (VISTA_PREVIA) {
+      // Demostración: se muestra la confirmación sin guardar ni enviar nada.
+      setVista('confirmacion');
+      return;
+    }
+
     setEnviando(true);
     try {
       await enviarRespuesta(borrador);
@@ -196,6 +206,11 @@ export default function App() {
     <div className="app">
       <div className="contenedor">
         <Encabezado />
+        {VISTA_PREVIA ? (
+          <p className="aviso-demo">
+            Vista previa de la encuesta · las respuestas no se guardan ni se envían
+          </p>
+        ) : null}
 
         {vista === 'bienvenida' ? <Bienvenida alComenzar={() => setVista('encuesta')} /> : null}
 

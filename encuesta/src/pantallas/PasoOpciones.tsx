@@ -18,7 +18,7 @@ export function PasoOpciones({ ojo, titulo, bajada, opciones, seleccionados, alA
       <div className="tarjeta__encabezado">
         <span className="tarjeta__ojo">{ojo}</span>
         <h2 className="tarjeta__titulo">{titulo}</h2>
-        <div className="subrayado-dorado" />
+        <div className="subrayado" />
         <p className="tarjeta__bajada">{bajada}</p>
       </div>
 

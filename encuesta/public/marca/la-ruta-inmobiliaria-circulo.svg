@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Versión circular completa del logotipo (azul con el dibujo en blanco), para
+  usarla sobre fondos claros: correo, documentos impresos o el ícono de la
+  aplicación. Reemplazar por el archivo oficial cuando esté disponible.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" role="img" aria-label="La Ruta Inmobiliaria">
+  <circle cx="110" cy="110" r="110" fill="#1F4289"/>
+  <g fill="none" stroke="#ffffff" stroke-width="16" stroke-linejoin="miter">
+    <path d="M36 128 V76 L78 38 L120 76 V128"/>
+    <path d="M100 128 V76 L142 38 L184 76 V128"/>
+  </g>
+  <text x="110" y="164" text-anchor="middle" font-family="Montserrat, Arial, 'Segoe UI', system-ui, sans-serif" font-size="27" font-weight="800" fill="#ffffff">LA RUTA</text>
+  <text x="110" y="194" text-anchor="middle" font-family="Montserrat, Arial, 'Segoe UI', system-ui, sans-serif" font-size="27" font-weight="800" fill="#ffffff">INMOBILIARIA</text>
+</svg>

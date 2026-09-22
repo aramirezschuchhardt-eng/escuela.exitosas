@@ -1,43 +1,45 @@
 /**
- * Identidad visual de La Ruta Inmobiliaria.
+ * Identidad visual de la encuesta.
+ *
+ * La interfaz usa los colores de Agricultura (el rojo de su isotipo «a») y La
+ * Ruta Inmobiliaria aparece con su logotipo en blanco, que es la versión que
+ * corresponde sobre fondo de color.
  *
  * Este archivo y `src/estilos/marca.css` son el ÚNICO lugar donde viven los
- * colores de la aplicación: pantalla de bienvenida, botones, tarjetas, títulos,
- * barra de progreso, estados seleccionados, confirmación y panel administrativo
- * leen de aquí. Si llega el manual de marca con los códigos exactos, se cambian
- * estos valores (y sus gemelos en `marca.css`) y toda la aplicación queda
- * alineada sin tocar componentes.
- *
- * Radio Agricultura aparece como marca asociada en la barra superior; su rojo
- * se usa exclusivamente en ese logotipo, nunca como color de interfaz.
+ * colores: pantalla de bienvenida, botones, tarjetas, títulos, barra de
+ * progreso, estados seleccionados, confirmación y panel administrativo leen de
+ * aquí. Si llega el manual de marca con los códigos exactos, se cambian estos
+ * valores (y sus gemelos en `marca.css`) y toda la aplicación queda alineada
+ * sin tocar componentes.
  */
 
 export const MARCA = {
-  ruta: {
-    nombre: 'La Ruta Inmobiliaria',
-    /** Azul profundo del logotipo: fondos y títulos. */
-    azulNoche: '#06213C',
-    azulProfundo: '#0A2E52',
-    /** Azul principal de acción: botones y estados seleccionados. */
-    azul: '#14528F',
-    azulClaro: '#3E8FD6',
-    /** Celeste de apoyo para fondos suaves y bordes. */
-    celeste: '#D6E7F6',
-    /** Dorado de la señalética del programa: acentos y progreso. */
-    dorado: '#E9B23C',
-    doradoOscuro: '#C98F1E',
-    hueso: '#F4F7FB',
+  radio: {
+    nombre: 'Agricultura',
+    /** Rojo del isotipo «a»: botones, estados seleccionados y acentos. */
+    rojo: '#E23A42',
+    rojoVivo: '#F4616A',
+    rojoOscuro: '#B3212A',
+    /** Granates del fondo y de los títulos. */
+    granate: '#6F0F15',
+    granateProfundo: '#4D0A0F',
+    /** Superficies cálidas de apoyo. */
+    rosa: '#F7CCD0',
+    rosaSuave: '#FDEFF0',
+    hueso: '#FDF7F7',
     blanco: '#FFFFFF',
   },
-  radioAgricultura: {
-    nombre: 'Radio Agricultura',
-    rojo: '#C8102E',
+  ruta: {
+    nombre: 'La Ruta Inmobiliaria',
+    /** Azul del logotipo; se usa en su versión circular sobre fondo claro. */
+    azul: '#1F4289',
   },
 } as const;
 
-/** Programa radial al que pertenece la encuesta. */
+/** Programa radial al que pertenece la encuesta y sus señales. */
 export const PROGRAMA = {
   nombre: 'La Ruta Inmobiliaria',
-  emisora: 'Radio Agricultura',
+  emisora: 'Agricultura',
+  emisoraTv: 'Agricultura TV',
   horario: 'Sábados, 11:00 h',
 } as const;

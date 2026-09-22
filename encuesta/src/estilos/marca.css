@@ -1,5 +1,5 @@
 /*
-  IDENTIDAD VISUAL — LA RUTA INMOBILIARIA
+  IDENTIDAD VISUAL — COLORES DE AGRICULTURA (RADIO) + LA RUTA INMOBILIARIA
 
   Único lugar donde viven los colores de la aplicación. Fondo, botones,
   tarjetas, títulos, barra de progreso, estados seleccionados, bienvenida,
@@ -7,35 +7,34 @@
   código hexadecimal cambia toda la experiencia de forma coherente.
 
   Los mismos valores están en `src/compartido/marca.ts`, que es lo que usa el
-  correo HTML. Si llega el manual de marca con los códigos exactos del logo,
-  se actualizan ambos archivos y nada más.
+  correo HTML. Si llega el manual de marca con los códigos exactos, se
+  actualizan ambos archivos y nada más.
 
-  El rojo de Radio Agricultura está reservado para su logotipo como marca
-  asociada; no se usa como color de interfaz.
+  El rojo se tomó del isotipo «a» de Agricultura; el azul de La Ruta
+  Inmobiliaria queda reservado para su logotipo y para detalles puntuales.
 */
 
 :root {
-  /* Azules de La Ruta Inmobiliaria */
-  --ruta-azul-noche: #06213c;
-  --ruta-azul-profundo: #0a2e52;
-  --ruta-azul: #14528f;
-  --ruta-azul-claro: #3e8fd6;
-  --ruta-celeste: #d6e7f6;
-  --ruta-celeste-suave: #eaf3fb;
+  /* Rojos de Agricultura */
+  --radio-rojo: #e23a42;
+  --radio-rojo-vivo: #f4616a;
+  --radio-rojo-oscuro: #b3212a;
+  --radio-granate: #6f0f15;
+  --radio-granate-profundo: #4d0a0f;
 
-  /* Dorado de acento */
-  --ruta-dorado: #e9b23c;
-  --ruta-dorado-oscuro: #c98f1e;
+  /* Superficies cálidas de apoyo */
+  --radio-rosa: #f7ccd0;
+  --radio-rosa-suave: #fdeff0;
+  --radio-hueso: #fdf7f7;
 
   /* Neutros */
-  --ruta-hueso: #f4f7fb;
   --blanco: #ffffff;
-  --texto: #0d2540;
-  --texto-suave: #5b7189;
-  --borde: #d9e5f0;
+  --texto: #2b1114;
+  --texto-suave: #7d6063;
+  --borde: #f0d5d7;
 
   /* Marca asociada */
-  --agricultura-rojo: #c8102e;
+  --ruta-azul: #1f4289;
 
   /* Señales */
   --exito: #1f8a5b;
@@ -44,11 +43,11 @@
 
   /* Superficies y sombras */
   --fondo-encuesta:
-    radial-gradient(90% 60% at 85% 0%, rgba(233, 178, 60, 0.18) 0%, transparent 60%),
-    radial-gradient(70% 55% at 0% 100%, rgba(62, 143, 214, 0.22) 0%, transparent 65%),
-    linear-gradient(160deg, var(--ruta-azul-noche) 0%, var(--ruta-azul-profundo) 55%, #0d3c68 100%);
-  --sombra-tarjeta: 0 24px 60px rgba(4, 20, 38, 0.28);
-  --sombra-suave: 0 8px 20px rgba(4, 20, 38, 0.1);
+    radial-gradient(85% 60% at 85% 0%, rgba(244, 97, 106, 0.42) 0%, transparent 62%),
+    radial-gradient(70% 55% at 0% 100%, rgba(226, 58, 66, 0.38) 0%, transparent 65%),
+    linear-gradient(160deg, var(--radio-granate-profundo) 0%, var(--radio-granate) 48%, var(--radio-rojo-oscuro) 100%);
+  --sombra-tarjeta: 0 24px 60px rgba(58, 6, 10, 0.34);
+  --sombra-suave: 0 8px 20px rgba(58, 6, 10, 0.14);
 
   /* Radios y ritmo */
   --radio-tarjeta: 26px;

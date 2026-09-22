@@ -126,7 +126,7 @@ export function PanelAdmin() {
           <div className="tarjeta__encabezado">
             <span className="tarjeta__ojo">Acceso</span>
             <h2 className="tarjeta__titulo">Ingresa el token del panel</h2>
-            <div className="subrayado-dorado" />
+            <div className="subrayado" />
             <p className="tarjeta__bajada">
               Es el valor de <code>ENCUESTA_TOKEN_ADMIN</code> configurado en el servidor.
             </p>

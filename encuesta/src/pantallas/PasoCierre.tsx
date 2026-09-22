@@ -17,7 +17,7 @@ export function PasoCierre({ borrador, alAutorizar }: Props) {
       <div className="tarjeta__encabezado">
         <span className="tarjeta__ojo">Paso 4 de 4</span>
         <h2 className="tarjeta__titulo">Revisa y participa</h2>
-        <div className="subrayado-dorado" />
+        <div className="subrayado" />
         <p className="tarjeta__bajada">Si está todo bien, toca el botón y quedas participando.</p>
       </div>
 

@@ -23,7 +23,7 @@ body {
   margin: 0;
   font-family: var(--fuente-texto);
   color: var(--texto);
-  background: var(--ruta-azul-noche);
+  background: var(--radio-granate);
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
   overscroll-behavior-y: contain;
@@ -33,7 +33,7 @@ h1,
 h2,
 h3 {
   font-family: var(--fuente-titulo);
-  color: var(--ruta-azul-noche);
+  color: var(--radio-granate);
   line-height: 1.12;
   margin: 0;
   letter-spacing: -0.015em;
@@ -57,7 +57,7 @@ button {
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: var(--ruta-azul-profundo);
+  background-color: var(--radio-granate-profundo);
   background-image: var(--fondo-encuesta);
   background-repeat: no-repeat;
   background-size: cover;
@@ -84,35 +84,35 @@ button {
   padding: 6px 4px 0;
 }
 
-.encabezado__ruta {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
 .encabezado__logo {
-  height: 52px;
+  height: 54px;
   width: auto;
 }
 
-.encabezado__asociada {
+.encabezado__asociadas {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 4px;
+  gap: 6px;
   text-align: right;
+}
+
+.encabezado__marcas {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .encabezado__etiqueta {
   font-size: 10px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--ruta-celeste);
-  opacity: 0.85;
+  color: var(--radio-rosa);
+  opacity: 0.9;
 }
 
 .encabezado__logo-asociada {
-  height: 34px;
+  height: 38px;
   width: auto;
 }
 
@@ -134,7 +134,7 @@ button {
 .progreso__avance {
   height: 100%;
   border-radius: var(--radio-chip);
-  background: linear-gradient(90deg, var(--ruta-azul-claro) 0%, var(--ruta-dorado) 100%);
+  background: linear-gradient(90deg, var(--radio-rosa) 0%, var(--blanco) 100%);
   transition: width 320ms ease;
 }
 
@@ -157,12 +157,12 @@ button {
 }
 
 .progreso__paso--activo {
-  color: var(--ruta-dorado);
-  font-weight: 700;
+  color: var(--blanco);
+  font-weight: 800;
 }
 
 .progreso__paso--completado {
-  color: var(--ruta-celeste);
+  color: var(--radio-rosa);
 }
 
 /* ── Tarjetas ───────────────────────────────────────────────────────── */
@@ -188,7 +188,7 @@ button {
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--ruta-azul);
+  color: var(--radio-rojo);
 }
 
 .tarjeta__titulo {
@@ -202,11 +202,11 @@ button {
   line-height: 1.5;
 }
 
-.subrayado-dorado {
+.subrayado {
   height: 4px;
   width: 64px;
   border-radius: 2px;
-  background: var(--ruta-dorado);
+  background: var(--blanco);
 }
 
 /* ── Botones ────────────────────────────────────────────────────────── */
@@ -237,22 +237,22 @@ button {
 }
 
 .boton--primario {
-  background: linear-gradient(135deg, var(--ruta-azul) 0%, var(--ruta-azul-claro) 100%);
+  background: linear-gradient(135deg, var(--radio-rojo) 0%, var(--radio-rojo-vivo) 100%);
   color: var(--blanco);
   box-shadow: var(--sombra-suave);
 }
 
 .boton--destacado {
-  background: linear-gradient(135deg, var(--ruta-dorado) 0%, var(--ruta-dorado-oscuro) 100%);
-  color: var(--ruta-azul-noche);
-  box-shadow: 0 14px 28px rgba(233, 178, 60, 0.32);
+  background: var(--blanco);
+  color: var(--radio-rojo);
+  box-shadow: 0 14px 30px rgba(41, 4, 7, 0.34);
   font-size: 20px;
   letter-spacing: 0.02em;
 }
 
 .boton--secundario {
-  background: var(--ruta-celeste-suave);
-  color: var(--ruta-azul);
+  background: var(--radio-rosa-suave);
+  color: var(--radio-rojo);
 }
 
 .boton--fantasma {
@@ -302,7 +302,7 @@ button {
 .campo__etiqueta {
   font-size: 14px;
   font-weight: 700;
-  color: var(--ruta-azul-noche);
+  color: var(--radio-granate);
 }
 
 .campo__entrada {
@@ -310,16 +310,16 @@ button {
   padding: 0 18px;
   border-radius: var(--radio-control);
   border: 2px solid var(--borde);
-  background: var(--ruta-hueso);
+  background: var(--radio-hueso);
   font-size: 18px;
   transition: border-color 140ms ease, background 140ms ease;
 }
 
 .campo__entrada:focus {
   outline: none;
-  border-color: var(--ruta-azul);
+  border-color: var(--radio-rojo);
   background: var(--blanco);
-  box-shadow: 0 0 0 4px var(--ruta-celeste-suave);
+  box-shadow: 0 0 0 4px var(--radio-rosa-suave);
 }
 
 .campo__entrada--error {
@@ -346,15 +346,15 @@ button {
   border-radius: var(--radio-chip);
   border: 1px solid var(--borde);
   background: var(--blanco);
-  color: var(--ruta-azul);
+  color: var(--radio-rojo);
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
 }
 
 .chip--activo {
-  background: var(--ruta-azul);
-  border-color: var(--ruta-azul);
+  background: var(--radio-rojo);
+  border-color: var(--radio-rojo);
   color: var(--blanco);
 }
 
@@ -373,7 +373,7 @@ button {
   padding: 14px 20px;
   border-radius: var(--radio-control);
   border: 2px solid var(--borde);
-  background: var(--ruta-hueso);
+  background: var(--radio-hueso);
   text-align: left;
   font-size: 18px;
   font-weight: 600;
@@ -388,10 +388,10 @@ button {
 }
 
 .opcion--activa {
-  border-color: var(--ruta-azul);
-  background: var(--ruta-celeste-suave);
-  color: var(--ruta-azul-noche);
-  box-shadow: inset 0 0 0 1px var(--ruta-azul);
+  border-color: var(--radio-rojo);
+  background: var(--radio-rosa-suave);
+  color: var(--radio-granate);
+  box-shadow: inset 0 0 0 1px var(--radio-rojo);
 }
 
 .opcion__marca {
@@ -399,7 +399,7 @@ button {
   width: 34px;
   height: 34px;
   border-radius: 11px;
-  border: 2px solid var(--ruta-azul-claro);
+  border: 2px solid var(--radio-rojo-vivo);
   background: var(--blanco);
   display: grid;
   place-items: center;
@@ -409,8 +409,8 @@ button {
 }
 
 .opcion--activa .opcion__marca {
-  background: var(--ruta-azul);
-  border-color: var(--ruta-azul);
+  background: var(--radio-rojo);
+  border-color: var(--radio-rojo);
   color: var(--blanco);
 }
 
@@ -422,7 +422,7 @@ button {
   gap: 12px;
   padding: 20px;
   border-radius: var(--radio-control);
-  background: var(--ruta-celeste-suave);
+  background: var(--radio-rosa-suave);
   border: 1px solid var(--borde);
 }
 
@@ -449,7 +449,7 @@ button {
   border: 1px solid var(--borde);
   border-radius: var(--radio-control);
   padding: 16px 18px;
-  background: var(--ruta-hueso);
+  background: var(--radio-hueso);
 }
 
 .resumen__titulo {
@@ -458,7 +458,7 @@ button {
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--ruta-azul);
+  color: var(--radio-rojo);
 }
 
 .resumen__valor {
@@ -494,7 +494,7 @@ button {
   font-weight: 700;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--ruta-dorado);
+  color: var(--radio-rosa);
 }
 
 .bienvenida__titulo {
@@ -507,7 +507,7 @@ button {
   margin: 0;
   font-size: clamp(17px, 2.4vw, 21px);
   line-height: 1.55;
-  color: var(--ruta-celeste);
+  color: var(--radio-rosa);
   max-width: 46ch;
 }
 
@@ -563,7 +563,7 @@ button {
 .confirmacion__texto {
   margin: 0;
   font-size: 20px;
-  color: var(--ruta-celeste);
+  color: var(--radio-rosa);
   max-width: 40ch;
   line-height: 1.5;
 }
@@ -571,12 +571,12 @@ button {
 .confirmacion__sello {
   padding: 16px 30px;
   border-radius: var(--radio-chip);
-  background: linear-gradient(135deg, var(--ruta-dorado) 0%, var(--ruta-dorado-oscuro) 100%);
-  color: var(--ruta-azul-noche);
+  background: var(--blanco);
+  color: var(--radio-rojo);
   font-family: var(--fuente-titulo);
   font-size: clamp(20px, 4vw, 28px);
   font-weight: 800;
-  box-shadow: 0 16px 34px rgba(233, 178, 60, 0.3);
+  box-shadow: 0 16px 34px rgba(41, 4, 7, 0.3);
 }
 
 /* ── Panel administrativo ───────────────────────────────────────────── */
@@ -613,7 +613,7 @@ button {
   font-family: var(--fuente-titulo);
   font-size: 30px;
   font-weight: 800;
-  color: var(--ruta-azul-noche);
+  color: var(--radio-granate);
 }
 
 .metrica__etiqueta {
@@ -635,13 +635,13 @@ button {
   grid-column: 1 / -1;
   height: 8px;
   border-radius: var(--radio-chip);
-  background: var(--ruta-celeste-suave);
+  background: var(--radio-rosa-suave);
   overflow: hidden;
 }
 
 .barra-dato__avance {
   height: 100%;
-  background: linear-gradient(90deg, var(--ruta-azul) 0%, var(--ruta-azul-claro) 100%);
+  background: linear-gradient(90deg, var(--radio-rojo) 0%, var(--radio-rojo-vivo) 100%);
 }
 
 .tabla {
@@ -701,6 +701,18 @@ button {
   border: 1px solid rgba(192, 57, 43, 0.25);
   color: var(--error);
   font-weight: 600;
+}
+
+.aviso-demo {
+  margin: 0;
+  padding: 10px 16px;
+  border-radius: var(--radio-chip);
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--blanco);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
 }
 
 .nota-pie {

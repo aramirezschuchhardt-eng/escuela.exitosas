@@ -19,7 +19,7 @@ export function PasoDatos({ participante, alCambiar, errores }: Props) {
       <div className="tarjeta__encabezado">
         <span className="tarjeta__ojo">Paso 1 de 4</span>
         <h2 className="tarjeta__titulo">👤 Tus datos</h2>
-        <div className="subrayado-dorado" />
+        <div className="subrayado" />
         <p className="tarjeta__bajada">Los necesitamos para contactarte si resultas ganador.</p>
       </div>
 

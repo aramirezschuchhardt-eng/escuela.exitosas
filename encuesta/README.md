@@ -4,8 +4,10 @@ Encuesta para el stand de la Expo: la persona responde en la tablet, sus datos
 quedan **guardados en la base de datos** y salen **automáticamente por correo a
 `Alison@avanceinmobiliario.cl`** apenas presiona **«¡YA ESTÁS PARTICIPANDO!»**.
 
-La identidad visual es la de **La Ruta Inmobiliaria**; **Radio Agricultura**
-acompaña como marca asociada en la parte superior de todas las pantallas.
+La interfaz usa los **colores de Agricultura** (el rojo de su isotipo «a»); el
+logotipo de **La Ruta Inmobiliaria** va arriba a la izquierda en su versión
+blanca, y **Agricultura** y **Agricultura TV** acompañan como marcas asociadas
+en todas las pantallas.
 
 ---
 
@@ -129,21 +131,45 @@ Los colores están definidos **en un solo lugar**:
 
 | | |
 |---|---|
-| Azul noche | `#06213C` — fondos y títulos |
-| Azul profundo | `#0A2E52` |
-| Azul de acción | `#14528F` — botones y estados seleccionados |
-| Azul claro | `#3E8FD6` |
-| Celeste | `#D6E7F6` — bordes y superficies suaves |
-| Dorado | `#E9B23C` — acentos, barra de progreso y llamada final |
-| Rojo Radio Agricultura | `#C8102E` — **sólo** en su logotipo |
+| Rojo Agricultura | `#E23A42` — botones, estados seleccionados y acentos |
+| Rojo vivo | `#F4616A` |
+| Rojo oscuro | `#B3212A` |
+| Granate | `#6F0F15` — fondo y títulos |
+| Granate profundo | `#4D0A0F` |
+| Rosa | `#F7CCD0` — bordes y superficies suaves |
+| Rosa suave | `#FDEFF0` — alternativa seleccionada |
+| Azul La Ruta Inmobiliaria | `#1F4289` — su logotipo circular sobre fondo claro |
 
-> **Pendiente de la marca:** no se recibió el manual gráfico ni los archivos del
-> logo, así que la paleta se construyó a partir de la identidad del programa
-> (azul institucional + dorado) y los logotipos de
-> [`public/marca/`](public/marca) son versiones de trabajo en SVG. Al recibir
-> los archivos oficiales: reemplazar esos dos SVG (mismo nombre) y ajustar los
-> códigos en los dos archivos de arriba. No hay colores sueltos en ningún
+Logotipos en [`public/marca/`](public/marca): `la-ruta-inmobiliaria.svg` (versión
+blanca para fondo de color), `la-ruta-inmobiliaria-circulo.svg` (versión azul
+para fondo claro), `agricultura.svg` y `agricultura-tv.svg`.
+
+> **Pendiente de la marca:** los logotipos se redibujaron en SVG a partir de las
+> imágenes entregadas por el cliente y los colores se tomaron a ojo de esas
+> mismas imágenes, no de un manual. Al recibir los archivos vectoriales
+> oficiales: reemplazar los SVG de `public/marca/` (mismos nombres) y ajustar
+> los códigos en los dos archivos de arriba. No hay colores sueltos en ningún
 > componente, así que no se toca nada más.
+
+---
+
+## Vista previa pública
+
+Para revisar la encuesta desde cualquier navegador, sin servidor detrás:
+
+```bash
+npm run build:demo
+```
+
+Deja el sitio compilado en la carpeta `encuesta-demo/` de la raíz del
+repositorio, que GitHub Pages publica junto a la landing y el cotizador:
+
+<https://aramirezschuchhardt-eng.github.io/escuela.exitosas/encuesta-demo/>
+
+En este modo (`VITE_VISTA_PREVIA=1`) la aplicación **no guarda ni envía nada** y
+muestra un aviso permanente que lo advierte, para que no se confunda con la
+encuesta real. Para la Expo se usa el build normal (`npm run build`) con el
+servidor, que es el que guarda y envía los correos.
 
 ---
 
