@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Agricultura (radio). Isotipo de la marca: la «a» minúscula con serifas y los
+  dos puntos, en rojo sobre blanco, según los archivos entregados por el
+  cliente. La letra está compuesta con una tipografía serif del sistema; al
+  recibir el vector oficial se reemplaza este SVG (mismo nombre y proporción).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 64" role="img" aria-label="Agricultura">
+  <rect x="0" y="0" width="68" height="64" rx="15" fill="#ffffff"/>
+  <text x="11" y="47" font-family="Georgia, 'Times New Roman', serif" font-size="47" fill="#E23A42">a</text>
+  <circle cx="49" cy="28" r="4.6" fill="#E23A42"/>
+  <circle cx="49" cy="43" r="4.6" fill="#E23A42"/>
+</svg>

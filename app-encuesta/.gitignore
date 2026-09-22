@@ -1,0 +1,12 @@
+node_modules
+dist
+e2e/capturas/
+datos/
+*.local
+*.sqlite
+*.sqlite-journal
+.env
+.env.*
+!.env.example
+.DS_Store
+*.tsbuildinfo
