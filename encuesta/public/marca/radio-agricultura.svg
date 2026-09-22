@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Logotipo de trabajo de Radio Agricultura, que acompaña como marca asociada en
+  la parte superior. Reemplazar por el archivo oficial cuando esté disponible.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 58" role="img" aria-label="Radio Agricultura">
+  <g transform="translate(4 6)">
+    <circle cx="23" cy="23" r="22" fill="#c8102e"/>
+    <circle cx="23" cy="23" r="5.5" fill="#ffffff"/>
+    <path d="M32 14 a13 13 0 0 1 0 18" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M38 8 a21 21 0 0 1 0 30" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.75"/>
+    <path d="M14 14 a13 13 0 0 0 0 18" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </g>
+  <text x="58" y="26" font-family="Montserrat, 'Segoe UI', system-ui, sans-serif" font-size="17" font-weight="800" letter-spacing="1.5" fill="#ffffff">RADIO</text>
+  <text x="58" y="46" font-family="Montserrat, 'Segoe UI', system-ui, sans-serif" font-size="17" font-weight="500" letter-spacing="1.5" fill="#ffffff" opacity="0.9">AGRICULTURA</text>
+</svg>

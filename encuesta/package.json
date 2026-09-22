@@ -1,0 +1,37 @@
+{
+  "name": "encuesta-ruta-inmobiliaria",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Encuesta de la Expo para La Ruta Inmobiliaria: captura de participantes, guardado en base de datos y envío automático por correo.",
+  "scripts": {
+    "dev": "concurrently -n web,api -c cyan,magenta \"vite\" \"npm:dev:api\"",
+    "dev:api": "node --experimental-strip-types --watch server/index.ts",
+    "build": "tsc -b && vite build",
+    "start": "node --experimental-strip-types server/index.ts",
+    "preview": "npm run build && npm start",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "oxlint",
+    "e2e": "node e2e/humo.mjs",
+    "capturas": "node e2e/capturas.mjs"
+  },
+  "dependencies": {
+    "nodemailer": "^10.0.10",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "@types/nodemailer": "^7.0.4",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "concurrently": "^9.2.1",
+    "oxlint": "^1.81.0",
+    "playwright": "^1.63.0",
+    "typescript": "~6.0.2",
+    "vite": "^8.3.0",
+    "vitest": "^5.0.0"
+  }
+}

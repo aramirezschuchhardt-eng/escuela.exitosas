@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Logotipo de trabajo de La Ruta Inmobiliaria, dibujado con los colores de la
+  marca para que la aplicación se vea completa. Al recibir el archivo oficial,
+  se reemplaza este SVG (mismo nombre y proporción) y no hay que tocar código.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 72" role="img" aria-label="La Ruta Inmobiliaria">
+  <g fill="none" stroke-linecap="round">
+    <path d="M10 60 C 28 60, 30 22, 48 22 C 66 22, 68 60, 86 60" stroke="#ffffff" stroke-width="9" opacity="0.92"/>
+    <path d="M10 60 C 28 60, 30 22, 48 22 C 66 22, 68 60, 86 60" stroke="#e9b23c" stroke-width="2.5" stroke-dasharray="7 7"/>
+    <path d="M64 30 l10 -10 l10 10" stroke="#e9b23c" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M68 30 v10 h12 v-10" stroke="#ffffff" stroke-width="4" stroke-linejoin="round"/>
+  </g>
+  <text x="104" y="34" font-family="Montserrat, 'Segoe UI', system-ui, sans-serif" font-size="25" font-weight="800" letter-spacing="0.5" fill="#ffffff">LA RUTA</text>
+  <text x="104" y="57" font-family="Montserrat, 'Segoe UI', system-ui, sans-serif" font-size="17.5" font-weight="500" letter-spacing="4.2" fill="#e9b23c">INMOBILIARIA</text>
+</svg>

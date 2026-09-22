@@ -1,0 +1,65 @@
+/*
+  IDENTIDAD VISUAL — LA RUTA INMOBILIARIA
+
+  Único lugar donde viven los colores de la aplicación. Fondo, botones,
+  tarjetas, títulos, barra de progreso, estados seleccionados, bienvenida,
+  confirmación y panel administrativo leen estas variables: cambiar aquí un
+  código hexadecimal cambia toda la experiencia de forma coherente.
+
+  Los mismos valores están en `src/compartido/marca.ts`, que es lo que usa el
+  correo HTML. Si llega el manual de marca con los códigos exactos del logo,
+  se actualizan ambos archivos y nada más.
+
+  El rojo de Radio Agricultura está reservado para su logotipo como marca
+  asociada; no se usa como color de interfaz.
+*/
+
+:root {
+  /* Azules de La Ruta Inmobiliaria */
+  --ruta-azul-noche: #06213c;
+  --ruta-azul-profundo: #0a2e52;
+  --ruta-azul: #14528f;
+  --ruta-azul-claro: #3e8fd6;
+  --ruta-celeste: #d6e7f6;
+  --ruta-celeste-suave: #eaf3fb;
+
+  /* Dorado de acento */
+  --ruta-dorado: #e9b23c;
+  --ruta-dorado-oscuro: #c98f1e;
+
+  /* Neutros */
+  --ruta-hueso: #f4f7fb;
+  --blanco: #ffffff;
+  --texto: #0d2540;
+  --texto-suave: #5b7189;
+  --borde: #d9e5f0;
+
+  /* Marca asociada */
+  --agricultura-rojo: #c8102e;
+
+  /* Señales */
+  --exito: #1f8a5b;
+  --alerta: #b3541e;
+  --error: #c0392b;
+
+  /* Superficies y sombras */
+  --fondo-encuesta:
+    radial-gradient(90% 60% at 85% 0%, rgba(233, 178, 60, 0.18) 0%, transparent 60%),
+    radial-gradient(70% 55% at 0% 100%, rgba(62, 143, 214, 0.22) 0%, transparent 65%),
+    linear-gradient(160deg, var(--ruta-azul-noche) 0%, var(--ruta-azul-profundo) 55%, #0d3c68 100%);
+  --sombra-tarjeta: 0 24px 60px rgba(4, 20, 38, 0.28);
+  --sombra-suave: 0 8px 20px rgba(4, 20, 38, 0.1);
+
+  /* Radios y ritmo */
+  --radio-tarjeta: 26px;
+  --radio-control: 18px;
+  --radio-chip: 999px;
+
+  /* Tipografía */
+  --fuente-titulo: 'Montserrat', 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
+  --fuente-texto: 'DM Sans', 'Inter', 'Segoe UI', system-ui, sans-serif;
+
+  /* Tamaños mínimos pensados para pantalla táctil de la Expo */
+  --alto-tactil: 64px;
+  --alto-opcion: 74px;
+}
